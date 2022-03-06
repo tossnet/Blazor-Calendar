@@ -1,0 +1,48 @@
+﻿@using System.Globalization
+
+@{
+    double w = (WidthWindow / Months);
+    string largeur = Convert.ToString(w, CultureInfo.InvariantCulture);
+    string labelMonth = "";
+    string labelDay = "";
+}
+
+<div class="calendar-contener">
+
+@for (var month = 0; month <= Months; month++)
+{
+    m = FirstDate.AddMonths(month);
+    labelMonth = new DateTime(m.Year, m.Month, 1).ToString("MMMM");
+
+    <div class="month-column">
+	    <div class="Month Month-bg centertext noselect" style="width:@(largeur)px">
+            @labelMonth
+        </div>
+        
+        @{
+            d = new DateTime(FirstDate.Year, m.Month, 1);
+        }
+
+        @for (var i = 0; i < 32; i++)
+        {
+            var j = d.AddDays(i);
+            if (j.Month != m.Month)
+            {
+                labelDay = "";  
+            }
+            else
+            {
+                string jour = j.ToString("ddd").Substring(0, 1).ToUpper();
+                labelDay = $"{jour} {j.ToString("dd")}";
+            }  
+            <div class="Day noselect">
+            @labelDay
+            </div>        
+            
+        }
+
+    </div>
+}
+
+</div>
+
