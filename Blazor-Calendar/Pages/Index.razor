@@ -1,18 +1,24 @@
 ﻿@page "/"
+@using Blazor_Calendar.Models
 
 
 <input type="date" value="@(today.ToString("yyyy-MM-dd"))" @onchange="@(e => ChangeFirstDate(e.Value.ToString()))" />
 <input type="number" name="quantity" min="1" @bind-value="months">
 
-<AnnualCalendar FirstDate="today" Months="months"></AnnualCalendar>
+<AnnualCalendar FirstDate="today" Months="months" TasksList="TasksList.ToArray()"></AnnualCalendar>
 
 @code{
 	private DateTime today = DateTime.Today;  
 	private int months = 12;
+	private List<Tasks> TasksList;
 
 	protected override void OnInitialized()
 	{
-		
+		TasksList = new()
+		{
+			new Tasks { ID = 1, DateStart = today.AddDays(8), DateEnd = today.AddDays(8), Code = "CP", Color = "#267F00" },
+			new Tasks { ID = 2, DateStart = today.AddDays(50), DateEnd = today.AddDays(52), Code = "DEV", Color = "#FFD800" }
+		};
 	}
 
 	private void ChangeFirstDate(string value)

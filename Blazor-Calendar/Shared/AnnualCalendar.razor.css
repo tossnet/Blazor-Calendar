@@ -27,6 +27,7 @@
 
 .calendar-contener {
     width: 98.5%;
+    height: 80vh;
     border-top-color: #d6d8db;
     border-top-style: solid;
     border-top-width: 0.05vw;
@@ -36,7 +37,6 @@
 }
 
 .month-column {
-    width: 100%;
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -53,6 +53,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     color: var(--mud-palette-text-primary);
+    
 }
 
 .month-cellule {
@@ -70,6 +71,11 @@
 
 .day {
     width: 30%;
+    max-width: 2.5vw;
+}
+.task {
+    flex: 1;
+    text-align: center;
     word-wrap: break-word;
     overflow: hidden;
     text-overflow: ellipsis;

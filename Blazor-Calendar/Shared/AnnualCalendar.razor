@@ -1,4 +1,5 @@
 ﻿@using System.Globalization
+@using Blazor_Calendar.Models
 
 @{
     double w = (WidthWindow / Months);
@@ -6,6 +7,8 @@
     string labelMonth = "";
     string labelDay = "";
     string CSSbackground = "";
+    string taskContent = "";
+    string taskColor = "";
 }
 
 <div class="calendar-contener">
@@ -21,7 +24,7 @@
         </div>
         
         @{
-            day = new DateTime(FirstDate.Year, m.Month, 1);
+            day = new DateTime(m.Year, m.Month, 1);
         }
 
         @for (var i = 0; i < 31; i++)
@@ -30,7 +33,8 @@
             var j = day.AddDays(i);
             if (j.Month != m.Month)
             {
-                labelDay = "";  
+                labelDay = "";
+                taskContent = "";
             }
             else
             {
@@ -46,13 +50,27 @@
 
                 string jour = j.ToString("ddd").Substring(0, 1).ToUpper();
                 labelDay = $"{jour} {j.Day.ToString()}";
+                
+                taskContent = "";
+                taskColor = "";
+                for (var k = 0; k < TasksList.Length; k++)
+                {
+                     Tasks t = TasksList[k];
+
+                     if ( t.DateStart.Date >= j.Date && j.Date >= t.DateEnd.Date  )
+                    {
+                        taskContent = t.Code;
+                        taskColor = $"background:{t.Color}";
+                        break;
+                    }
+                }
             }  
             <div class="day-cellule noselect">
                 <div class="@($"day{CSSbackground}")">
                     @labelDay
                 </div>
-                <div class="task">
-                     T
+                <div class="task" style="@taskColor">
+                     @taskContent
                 </div>
             </div>        
             
