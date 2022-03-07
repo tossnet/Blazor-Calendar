@@ -5,6 +5,7 @@
     string largeur = Convert.ToString(w, CultureInfo.InvariantCulture);
     string labelMonth = "";
     string labelDay = "";
+    string CSSbackground = "";
 }
 
 <div class="calendar-contener">
@@ -14,33 +15,48 @@
     m = FirstDate.AddMonths(month);
     labelMonth = new DateTime(m.Year, m.Month, 1).ToString("MMMM");
 
-    <div class="month-column">
-	    <div class="Month Month-bg centertext noselect" style="width:@(largeur)px">
+    <div class="month-column" style="width:@(largeur)px">
+	    <div class="month month-cellule centertext noselect" >
             @labelMonth
         </div>
         
         @{
-            d = new DateTime(FirstDate.Year, m.Month, 1);
+            day = new DateTime(FirstDate.Year, m.Month, 1);
         }
 
-        @for (var i = 0; i < 32; i++)
+        @for (var i = 0; i < 31; i++)
         {
-            var j = d.AddDays(i);
+            CSSbackground = "";
+            var j = day.AddDays(i);
             if (j.Month != m.Month)
             {
                 labelDay = "";  
             }
             else
             {
+                int d = (int)j.DayOfWeek;
+                if (d == 6)
+                {
+                    CSSbackground = " Saturday";
+                }
+                else if (d == 0)
+                {
+                    CSSbackground = " Sunday";
+                }
+
                 string jour = j.ToString("ddd").Substring(0, 1).ToUpper();
-                labelDay = $"{jour} {j.ToString("dd")}";
+                labelDay = $"{jour} {j.Day.ToString()}";
             }  
-            <div class="Day noselect">
-            @labelDay
+            <div class="day-cellule noselect">
+                <div class="@($"day{CSSbackground}")">
+                    @labelDay
+                </div>
+                <div class="task">
+                     T
+                </div>
             </div>        
             
         }
-
     </div>
 }
 

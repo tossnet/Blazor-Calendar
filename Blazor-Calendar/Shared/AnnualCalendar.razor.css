@@ -27,6 +27,9 @@
 
 .calendar-contener {
     width: 98.5%;
+    border-top-color: #d6d8db;
+    border-top-style: solid;
+    border-top-width: 0.05vw;
     display: flex;
     flex-direction: row;
     flex: 1;
@@ -34,27 +37,49 @@
 
 .month-column {
     width: 100%;
-    min-height: 60px;
     display: flex;
     flex: 1;
     flex-direction: column;
-    /*border: 1px solid red;*/
 }
 
 
-.Month,
-.Day {
-    position: relative;
+.month,
+.day-cellule {
+    height: 20px;
     border: solid #d6d8db;
-    border-width: 0.05vw 0.05vw 0.05vw 0.05vw;
+    border-width: 0.00vw 0.05vw 0.05vw 0.05vw;
     font-family: "Verdana";
-    font-size: 12px;
     word-wrap: break-word;
     overflow: hidden;
     text-overflow: ellipsis;
     color: var(--mud-palette-text-primary);
 }
 
-.Month-bg {
+.month-cellule {
     background: #e6eaee;
+    font-weight: 700;
+    font-size: 0.6em;
 }
+
+.day-cellule {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    font-size: 0.5em;
+}
+
+.day {
+    width: 30%;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.Saturday {
+    background: #DBE4F2;
+}
+
+.Sunday {
+    background: #CBD9ED;
+}
+

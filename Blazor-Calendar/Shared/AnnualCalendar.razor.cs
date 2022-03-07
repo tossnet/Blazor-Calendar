@@ -37,6 +37,8 @@ namespace Blazor_Calendar.Shared
         [Parameter] public int WidthWindow { get; set; } = 800;
 
         private DateTime m = DateTime.Today;
-        private DateTime d = default;
+        private DateTime day = default;
+
+
     }
 }

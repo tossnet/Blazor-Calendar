@@ -1,7 +1,23 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<input type="date" value="@(today.ToString("yyyy-MM-dd"))" @onchange="@(e => ChangeFirstDate(e.Value.ToString()))" />
+<input type="number" name="quantity" min="1" @bind-value="months">
 
-<AnnualCalendar></AnnualCalendar>
+<AnnualCalendar FirstDate="today" Months="months"></AnnualCalendar>
+
+@code{
+	private DateTime today = DateTime.Today;  
+	private int months = 12;
+
+	protected override void OnInitialized()
+	{
+		
+	}
+
+	private void ChangeFirstDate(string value)
+    {
+        if (string.IsNullOrEmpty(value)) return;
+		today = DateTime.Parse(value.ToString());
+	}
+}
