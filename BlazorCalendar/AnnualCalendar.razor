@@ -1,5 +1,5 @@
 ﻿@using System.Globalization
-@using Blazor_Calendar.Models
+@using BlazorCalendar.Models
 
 @{
     double w = (WidthWindow / Months);
@@ -61,19 +61,22 @@
                     classPin = null;
                     classPointer = null;
                     tasksNumber = 0;
-                    for (var k = 0; k < TasksList.Length; k++)
+                    if ( TasksList!= null )
                     {
-                         Tasks t = TasksList[k];
-
-                        if ( t.DateStart.Date <= j.Date && j.Date <= t.DateEnd.Date )
+                        for (var k = 0; k < TasksList.Length; k++)
                         {
-                            tasksNumber++;
-                            taskContent = t.Code;
-                            taskColor = $"background:{t.Color};color:{t.ForeColor}";
-                            taskComment = t.Comment;
-                            classPin = string.IsNullOrWhiteSpace(t.Comment) ? null : " pin";
-                            classPointer = " pointer";
-                        }
+                             Tasks t = TasksList[k];
+
+                            if ( t.DateStart.Date <= j.Date && j.Date <= t.DateEnd.Date )
+                            {
+                                tasksNumber++;
+                                taskContent = t.Code;
+                                taskColor = $"background:{t.Color};color:{t.ForeColor}";
+                                taskComment = t.Comment;
+                                classPin = string.IsNullOrWhiteSpace(t.Comment) ? null : " pin";
+                                classPointer = " pointer";
+                            }
+                        }   
                     }
                     if ( tasksNumber > 1 )
                     {

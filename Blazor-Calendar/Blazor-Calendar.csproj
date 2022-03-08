@@ -8,4 +8,8 @@
     <RootNamespace>Blazor_Calendar</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BlazorCalendar\BlazorCalendar.csproj" />
+  </ItemGroup>
+
 </Project>

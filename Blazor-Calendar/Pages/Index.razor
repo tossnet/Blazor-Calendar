@@ -1,11 +1,11 @@
 ﻿@page "/"
-@using Blazor_Calendar.Models
+@using BlazorCalendar.Models
 
 
 <input type="date" value="@(today.ToString("yyyy-MM-dd"))" @onchange="@(e => ChangeFirstDate(e.Value.ToString()))" />
-<input type="number" name="quantity" min="1" @bind-value="months">
+<input type="number" min="1" @bind-value="months">
 
-<AnnualCalendar FirstDate="today" Months="months" TasksList="TasksList.ToArray()" TaskClick="TaskClick"></AnnualCalendar>
+<BlazorCalendar.AnnualCalendar  FirstDate="today" Months="months" TaskClick="TaskClick" TasksList="TasksList.ToArray()"></BlazorCalendar.AnnualCalendar>
 
 <br />
 <div class="console">@fakeConsole</div>
@@ -24,7 +24,8 @@
 			new Tasks { ID = 2, DateStart = today.AddDays(50), DateEnd = today.AddDays(52), Code = "DEV", Color = "#FFD800", Comment="on Teams template" },
 			new Tasks { ID = 3, DateStart = today.AddDays(40), DateEnd = today.AddDays(41), Code = "FORM", Color = "#FFC3FF", ForeColor = "#FF0000" },
 			new Tasks { ID = 4, DateStart = today.AddDays(62), DateEnd = today.AddDays(62), Code = "DEV", Color = "#FFD800" },
-			new Tasks { ID = 5, DateStart = today.AddDays(62), DateEnd = today.AddDays(62), Code = "FORM", Color = "#FFC3FF" }
+			new Tasks { ID = 5, DateStart = today.AddDays(62), DateEnd = today.AddDays(62), Code = "FORM", Color = "#FFC3FF" } ,
+			new Tasks { ID = 6, DateStart = today.AddDays(73).AddHours(8), DateEnd = today.AddDays(73).AddHours(9), Code = "MEETING", Color = "#2DD7D7", Comment="Julien's test" }
 		};
 	}
 

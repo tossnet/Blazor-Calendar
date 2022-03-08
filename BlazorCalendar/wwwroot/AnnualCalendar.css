@@ -51,6 +51,7 @@
     width: 30%;
     max-width: 2.5vw;
 }
+
 .task {
     flex: 1;
     text-align: center;
