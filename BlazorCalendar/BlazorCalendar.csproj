@@ -4,6 +4,14 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Description>annual calendar for Blazor application</Description>
+    <Copyright>Copyright 2022</Copyright>
+    <PackageProjectUrl>https://github.com/tossnet/Blazor-Calendar</PackageProjectUrl>
+    <PackageIcon>icon.png</PackageIcon>
+    <RepositoryUrl>https://github.com/tossnet/Blazor-Calendar</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>blazor, calendar, schedule, component</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +25,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
