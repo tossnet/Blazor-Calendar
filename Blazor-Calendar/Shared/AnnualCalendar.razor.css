@@ -1,22 +1,6 @@
-﻿.root-wrapper {
-    --planning-backgound-header: #808080;
-    --planning-backgound-week: var(--mud-palette-surface);
-    --planning-backgound-saturday: #DBE4F2;
-    --planning-backgound-sunday: #CBD9ED;
-    --planning-backgound-holiday-global: #DCDCDC;
-    --planning-backgound-holiday: #EAEAEA;
-    --planning-height-header: 60px;
-    --planning-border-header: darkgrey;
-    --planning-border-cell: lightgrey;
-    --planning-height-user: 40px;
-}
-
-.noselect {
+﻿.noselect {
     -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-    -moz-user-select: none; /* Old versions of Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently supported by Chrome, Opera and Firefox */
+    user-select: none;
 }
 
 .centertext {
@@ -42,18 +26,12 @@
     flex-direction: column;
 }
 
-
 .month,
 .day-cellule {
     height: 20px;
     border: solid #d6d8db;
     border-width: 0.00vw 0.05vw 0.05vw 0.05vw;
     font-family: "Verdana";
-    word-wrap: break-word;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: var(--mud-palette-text-primary);
-    
 }
 
 .month-cellule {
@@ -76,9 +54,15 @@
 .task {
     flex: 1;
     text-align: center;
+    font-weight: 600;
     word-wrap: break-word;
     overflow: hidden;
     text-overflow: ellipsis;
+    position: relative;
+}
+
+.pointer {
+    cursor: pointer;
 }
 
 .Saturday {
@@ -89,3 +73,22 @@
     background: #CBD9ED;
 }
 
+.pin:after {
+    /*http://apps.eky.hk/css-triangle-generator */
+    content: "";
+    position: absolute;
+    height: 100%;
+    right: 0px;
+    border-style: solid;
+    border-width: 0 0 7px 7px;
+    border-color: transparent transparent #007bff transparent;
+}
+
+.pin-top:after {
+    content: "";
+    position: absolute;
+    right: 0px;
+    border-style: solid;
+    border-width: 0 7px 7px 0;
+    border-color: transparent #9900ff transparent transparent;
+}

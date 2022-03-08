@@ -8,7 +8,11 @@
     string labelDay = "";
     string CSSbackground = "";
     string taskContent = "";
-    string taskColor = "";
+    string? taskColor = null;
+    string? taskComment = null;
+    string? classPin = null;
+    string? classPointer = null;
+    int tasksNumber;
 }
 
 <div class="calendar-contener">
@@ -29,7 +33,7 @@
 
         @for (var i = 0; i < 31; i++)
         {
-            CSSbackground = "";
+            CSSbackground = null;
             var j = day.AddDays(i);
             if (j.Month != m.Month)
             {
@@ -50,26 +54,40 @@
 
                 string jour = j.ToString("ddd").Substring(0, 1).ToUpper();
                 labelDay = $"{jour} {j.Day.ToString()}";
-                
-                taskContent = "";
-                taskColor = "";
-                for (var k = 0; k < TasksList.Length; k++)
-                {
-                     Tasks t = TasksList[k];
 
-                     if ( t.DateStart.Date >= j.Date && j.Date >= t.DateEnd.Date  )
+                    taskContent = "";
+                    taskColor = null;
+                    taskComment = null;
+                    classPin = null;
+                    classPointer = null;
+                    tasksNumber = 0;
+                    for (var k = 0; k < TasksList.Length; k++)
                     {
-                        taskContent = t.Code;
-                        taskColor = $"background:{t.Color}";
-                        break;
+                         Tasks t = TasksList[k];
+
+                        if ( t.DateStart.Date <= j.Date && j.Date <= t.DateEnd.Date )
+                        {
+                            tasksNumber++;
+                            taskContent = t.Code;
+                            taskColor = $"background:{t.Color};color:{t.ForeColor}";
+                            taskComment = t.Comment;
+                            classPin = string.IsNullOrWhiteSpace(t.Comment) ? null : " pin";
+                            classPointer = " pointer";
+                        }
                     }
-                }
+                    if ( tasksNumber > 1 )
+                    {
+                        taskContent = "…";
+                        taskComment = null;
+                        taskColor = null;
+                        classPin = " pin-top";
+                    }
             }  
             <div class="day-cellule noselect">
                 <div class="@($"day{CSSbackground}")">
                     @labelDay
                 </div>
-                <div class="task" style="@taskColor">
+                <div class="@($"task{classPin}{classPointer}")" style="@taskColor" title="@taskComment" @onclick="e => TaskClickInternal(e, j)">
                      @taskContent
                 </div>
             </div>        
