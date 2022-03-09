@@ -35,9 +35,8 @@ public partial class AnnualCalendar
             _firstdate = value;
         }
     }
-    [Parameter] public int HeigthWindow { get; set; } = 500;
     [Parameter] public int WidthWindow { get; set; } = 800;
-    [Parameter] public Tasks[] TasksList { get; set; }
+    [Parameter] public Tasks[]? TasksList { get; set; }
     [Parameter] public EventCallback<ClickTaskParameter> TaskClick { get; set; }
 
     private DateTime m = DateTime.Today;
@@ -47,13 +46,16 @@ public partial class AnnualCalendar
     {
         // There can be several tasks in one day :
         List<int> listID = new();
-        for (var k = 0; k < TasksList.Length; k++)
+        if (TasksList != null )
         {
-            Tasks t = TasksList[k];
-
-            if (t.DateStart.Date <= day.Date && day.Date <= t.DateEnd.Date)
+            for (var k = 0; k < TasksList.Length; k++)
             {
-                listID.Add(t.ID);
+                Tasks t = TasksList[k];
+
+                if (t.DateStart.Date <= day.Date && day.Date <= t.DateEnd.Date)
+                {
+                    listID.Add(t.ID);
+                }
             }
         }
 
