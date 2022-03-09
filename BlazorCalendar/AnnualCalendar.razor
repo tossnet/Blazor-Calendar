@@ -1,6 +1,9 @@
 ﻿@using System.Globalization
 @using BlazorCalendar.Models
 
+
+@inherits CalendarBase
+
 @{
     double w = (WidthWindow / Months);
     string largeur = Convert.ToString(w, CultureInfo.InvariantCulture);
@@ -15,15 +18,15 @@
     int tasksNumber;
 }
 
-<div class="calendar-contener">
+<div class="calendar-contener" Style="@Style">
 
 @for (var month = 0; month <= Months; month++)
 {
     m = FirstDate.AddMonths(month);
     labelMonth = new DateTime(m.Year, m.Month, 1).ToString("MMMM");
 
-    <div class="month-column" style="width:@(largeur)px">
-	    <div class="month month-cellule centertext noselect" >
+    <div class="month-column" >
+	    <div class="cellule month centertext noselect" >
             @labelMonth
         </div>
         
@@ -39,6 +42,10 @@
             {
                 labelDay = "";
                 taskContent = "";
+                taskColor = null;
+                taskComment = null;
+                classPin = null;
+                classPointer = null;
             }
             else
             {
@@ -86,7 +93,7 @@
                         classPin = " pin-top";
                     }
             }  
-            <div class="day-cellule noselect">
+            <div class="cellule day-cellule noselect">
                 <div class="@($"day{CSSbackground}")">
                     @labelDay
                 </div>

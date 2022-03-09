@@ -16,28 +16,26 @@
     border-top-style: solid;
     border-top-width: 0.05vw;
     display: flex;
-    flex-direction: row;
-    flex: 1;
 }
 
 .month-column {
     display: flex;
     flex: 1;
     flex-direction: column;
+    overflow: hidden;
 }
 
-.month,
-.day-cellule {
-    height: 20px;
+.cellule {
     border: solid #d6d8db;
     border-width: 0.00vw 0.05vw 0.05vw 0.05vw;
-    font-family: "Verdana";
 }
 
-.month-cellule {
+.month {
     background: #e6eaee;
-    font-weight: 700;
     font-size: 0.6em;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .day-cellule {
@@ -45,6 +43,10 @@
     flex: 1;
     flex-direction: row;
     font-size: 0.5em;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .day {
