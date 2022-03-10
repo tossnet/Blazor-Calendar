@@ -40,7 +40,16 @@ partial class AnnualCalendar : CalendarBase
     
     [Parameter] 
     public Tasks[]? TasksList { get; set; }
-    
+
+    [Parameter]
+    public string WeekDaysColor { get; set; } = "#FFF";
+
+    [Parameter]
+    public string SaturdayColor { get; set; } = "#DBE4F2";
+
+    [Parameter]
+    public string SundayColor { get; set; } = "#CBD9ED";
+
     [Parameter]
     public EventCallback<ClickTaskParameter> TaskClick { get; set; }
 

@@ -52,11 +52,15 @@
                 int d = (int)j.DayOfWeek;
                 if (d == 6)
                 {
-                    CSSbackground = " Saturday";
+                    CSSbackground = SaturdayColor;
                 }
                 else if (d == 0)
                 {
-                    CSSbackground = " Sunday";
+                    CSSbackground = SundayColor;
+                }
+                else
+                {
+                    CSSbackground = WeekDaysColor;
                 }
 
                 string jour = j.ToString("ddd").Substring(0, 1).ToUpper();
@@ -93,8 +97,8 @@
                         classPin = " pin-top";
                     }
             }  
-            <div class="cellule day-cellule noselect">
-                <div class="@($"day{CSSbackground}")">
+            <div class="cellule day-cellule noselect" style="@($"background:{WeekDaysColor}")">
+                <div class="day" style="@($"background:{CSSbackground}")">
                     @labelDay
                 </div>
                 <div class="@($"task{classPin}{classPointer}")" style="@taskColor" title="@taskComment" @onclick="e => TaskClickInternal(e, j)">

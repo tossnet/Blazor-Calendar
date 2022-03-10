@@ -6,7 +6,7 @@
 <input type="date" value="@(today.ToString("yyyy-MM-dd"))" @onchange="@(e => ChangeFirstDate(e.Value.ToString()))" />
 <input type="number" min="1" @bind-value="months">
 
-<AnnualCalendar FirstDate="today" Months="months" TaskClick="TaskClick" TasksList="TasksList.ToArray()" Style="height:200px"></AnnualCalendar>
+<AnnualCalendar FirstDate="today" Months="months" TaskClick="TaskClick" TasksList="TasksList.ToArray()" Style="height:600px"></AnnualCalendar>
 
 <br />
 <div class="console">@fakeConsole</div>

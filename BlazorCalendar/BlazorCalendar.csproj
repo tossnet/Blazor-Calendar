@@ -12,8 +12,8 @@
     <RepositoryUrl>https://github.com/tossnet/Blazor-Calendar</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>blazor, calendar, schedule, component</PackageTags>
-    <PackageReleaseNotes>some improvements and bug fixed</PackageReleaseNotes>
-    <Version>1.0.2</Version>
+    <PackageReleaseNotes>added parameters to change background colors</PackageReleaseNotes>
+    <Version>1.0.3</Version>
     <Authors>Christophe Peugnet</Authors>
   </PropertyGroup>
 
