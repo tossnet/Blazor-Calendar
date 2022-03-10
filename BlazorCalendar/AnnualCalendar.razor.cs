@@ -53,6 +53,9 @@ partial class AnnualCalendar : CalendarBase
     [Parameter]
     public EventCallback<ClickTaskParameter> TaskClick { get; set; }
 
+    [Parameter]
+    public PriorityLabel PriorityDisplay { get; set; } = PriorityLabel.Code;
+
 
 
     private DateTime m = DateTime.Today;

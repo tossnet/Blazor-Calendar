@@ -5,8 +5,13 @@
 
 <input type="date" value="@(today.ToString("yyyy-MM-dd"))" @onchange="@(e => ChangeFirstDate(e.Value.ToString()))" />
 <input type="number" min="1" @bind-value="months">
+<select @bind="@PriorityDisplay">
+	  <option value="@PriorityLabel.Code" selected>priority Code</option>
+	  <option value="@PriorityLabel.Caption">priority Caption</option>
+</select>
 
-<AnnualCalendar FirstDate="today" Months="months" TaskClick="TaskClick" TasksList="TasksList.ToArray()" Style="height:600px"></AnnualCalendar>
+<AnnualCalendar FirstDate="today" Months="months" TaskClick="TaskClick" TasksList="TasksList.ToArray()" 
+				Style="height:600px" PriorityDisplay="@PriorityDisplay" />
 
 <br />
 <div class="console">@fakeConsole</div>
@@ -16,16 +21,17 @@
     private int months = 12;
     private List<Tasks> TasksList;
     private string fakeConsole = "";
+	private BlazorCalendar.PriorityLabel PriorityDisplay = PriorityLabel.Code; 
 
 	protected override void OnInitialized()
 	{
 		TasksList = new()
 		{
-			new Tasks { ID = 1, DateStart = today.AddDays(8), DateEnd = today.AddDays(8), Code = "CP", Color = "#19C319" },
-			new Tasks { ID = 2, DateStart = today.AddDays(50), DateEnd = today.AddDays(52), Code = "DEV", Color = "#FFD800", Comment="on Teams template" },
-			new Tasks { ID = 3, DateStart = today.AddDays(40), DateEnd = today.AddDays(41), Code = "FORM", Color = "#FFC3FF", ForeColor = "#FF0000" },
+			new Tasks { ID = 1, DateStart = today.AddDays(8), DateEnd = today.AddDays(8), Code = "CP", Color = "#19C319", Caption = "Lorem ipsum dolor sit amet" },
+			new Tasks { ID = 2, DateStart = today.AddDays(50), DateEnd = today.AddDays(52), Code = "DEV", Color = "#FFD800", Comment="on Teams template", Caption = "Fusce quis purus eu ante" },
+			new Tasks { ID = 3, DateStart = today.AddDays(40), DateEnd = today.AddDays(41), Code = "FORM", Color = "#FFC3FF", ForeColor = "#FF0000", Caption = "Lorem ipsum dolor sit amet" },
 			new Tasks { ID = 4, DateStart = today.AddDays(62), DateEnd = today.AddDays(62), Code = "DEV", Color = "#FFD800" },
-			new Tasks { ID = 5, DateStart = today.AddDays(62), DateEnd = today.AddDays(62), Code = "FORM", Color = "#FFC3FF" } ,
+			new Tasks { ID = 5, DateStart = today.AddDays(62), DateEnd = today.AddDays(62), Code = "FORM", Color = "#FFC3FF", Caption = "Ut sit amet turpis eget" } ,
 			new Tasks { ID = 6, DateStart = today.AddDays(73).AddHours(8), DateEnd = today.AddDays(73).AddHours(9), Code = "MEETING", Color = "#2DD7D7", Comment="Julien's test" }
 		};
 	}

@@ -81,7 +81,14 @@
                             if ( t.DateStart.Date <= j.Date && j.Date <= t.DateEnd.Date )
                             {
                                 tasksNumber++;
-                                taskContent = t.Code;
+                                if ( PriorityDisplay == PriorityLabel.Code )
+                                {   
+                                    taskContent = string.IsNullOrWhiteSpace(t.Code) ? t.Caption : t.Code;
+                                }
+                                else
+                                {   
+                                    taskContent = string.IsNullOrWhiteSpace(t.Caption) ? t.Code : t.Caption;
+                                }
                                 taskColor = $"background:{t.Color};color:{t.ForeColor}";
                                 taskComment = t.Comment;
                                 classPin = string.IsNullOrWhiteSpace(t.Comment) ? null : " pin";
