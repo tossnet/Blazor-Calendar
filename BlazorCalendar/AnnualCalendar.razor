@@ -1,7 +1,6 @@
 ﻿@using System.Globalization
 @using BlazorCalendar.Models
 
-
 @inherits CalendarBase
 
 @{
@@ -9,7 +8,7 @@
     string largeur = Convert.ToString(w, CultureInfo.InvariantCulture);
     string labelMonth = "";
     string labelDay = "";
-    string CSSbackground = "";
+    string? CSSbackground = null;
     string taskContent = "";
     string? taskColor = null;
     string? taskComment = null;
@@ -25,8 +24,8 @@
     m = FirstDate.AddMonths(month);
     labelMonth = new DateTime(m.Year, m.Month, 1).ToString("MMMM");
 
-    <div class="month-column" >
-	    <div class="cellule month centertext noselect" >
+    <div class="month-column">
+	    <div class="cellule month centertext noselect">
             @labelMonth
         </div>
         
@@ -40,6 +39,7 @@
             var j = day.AddDays(i);
             if (j.Month != m.Month)
             {
+                j = default;
                 labelDay = "";
                 taskContent = "";
                 taskColor = null;
@@ -108,7 +108,7 @@
                 <div class="day" style="@($"background:{CSSbackground}")">
                     @labelDay
                 </div>
-                <div class="@($"task{classPin}{classPointer}")" style="@taskColor" title="@taskComment" @onclick="e => TaskClickInternal(e, j)">
+                <div class="@($"task{classPin}{classPointer}")" style="@taskColor" title="@taskComment" @onclick="e => ClickInternal(e, j)">
                      @taskContent
                 </div>
             </div>        

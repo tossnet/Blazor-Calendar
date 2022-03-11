@@ -10,8 +10,9 @@
 	  <option value="@PriorityLabel.Caption">priority Caption</option>
 </select>
 
-<AnnualCalendar FirstDate="today" Months="months" TaskClick="TaskClick" TasksList="TasksList.ToArray()" 
-				Style="height:600px" PriorityDisplay="@PriorityDisplay" />
+<AnnualCalendar FirstDate="today" Months="months"  TasksList="TasksList.ToArray()" 
+				Style="height:600px" PriorityDisplay="@PriorityDisplay"
+				TaskClick="TaskClick" EmptyDayClick="EmptyDayClick"/>
 
 <br />
 <div class="console">@fakeConsole</div>
@@ -45,5 +46,10 @@
 	private void TaskClick(ClickTaskParameter clickTaskParameter)
     {
         fakeConsole = "ID task(s) :" + string.Join(", ", clickTaskParameter.IDList);
+    }	
+
+	private void EmptyDayClick(ClickEmptyDayParameter clickEmptyDayParameter)
+    {
+        fakeConsole = "Empty day :" + clickEmptyDayParameter.Day.ToShortDateString();
     }
 }

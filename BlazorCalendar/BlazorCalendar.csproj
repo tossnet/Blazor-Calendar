@@ -12,8 +12,8 @@
     <RepositoryUrl>https://github.com/tossnet/Blazor-Calendar</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>blazor, calendar, schedule, component</PackageTags>
-    <PackageReleaseNotes>added parameter PriorityDisplay</PackageReleaseNotes>
-    <Version>1.0.4</Version>
+    <PackageReleaseNotes>add EmptyDayClick event click</PackageReleaseNotes>
+    <Version>1.0.5</Version>
     <Authors>Christophe Peugnet</Authors>
   </PropertyGroup>
 

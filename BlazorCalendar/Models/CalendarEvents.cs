@@ -6,3 +6,10 @@ public class ClickTaskParameter
     public double X { get; set; }
     public double Y { get; set; }
 }
+
+public class ClickEmptyDayParameter
+{
+    public DateTime Day { get; set; }
+    public double X { get; set; }
+    public double Y { get; set; }
+}

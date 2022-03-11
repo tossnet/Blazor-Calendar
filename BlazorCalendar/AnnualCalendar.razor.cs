@@ -51,18 +51,24 @@ partial class AnnualCalendar : CalendarBase
     public string SundayColor { get; set; } = "#CBD9ED";
 
     [Parameter]
+    public PriorityLabel PriorityDisplay { get; set; } = PriorityLabel.Code;
+
+    [Parameter]
     public EventCallback<ClickTaskParameter> TaskClick { get; set; }
 
     [Parameter]
-    public PriorityLabel PriorityDisplay { get; set; } = PriorityLabel.Code;
+    public EventCallback<ClickEmptyDayParameter> EmptyDayClick { get; set; }
+
 
 
 
     private DateTime m = DateTime.Today;
     private DateTime day = default;
 
-    private async Task TaskClickInternal(MouseEventArgs e, DateTime day)
+    private async Task ClickInternal(MouseEventArgs e, DateTime day)
     {
+        if (day == default) return;
+
         // There can be several tasks in one day :
         List<int> listID = new();
         if (TasksList != null )
@@ -88,6 +94,17 @@ partial class AnnualCalendar : CalendarBase
             };
 
             await TaskClick.InvokeAsync(clickTaskParameter);
+        }
+        else
+        {
+            ClickEmptyDayParameter clickEmptyDayParameter = new()
+            {
+                Day = day,
+                X = e.ClientX,
+                Y = e.ClientY
+            };
+
+            await EmptyDayClick.InvokeAsync(clickEmptyDayParameter);
         }
     }
 }
