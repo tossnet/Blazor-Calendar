@@ -23,3 +23,5 @@ For client-side and server-side Blazor - add script section to _Layout.cshtml (h
  <link href="_content/BlazorCalendar/AnnualCalendar.css" rel="stylesheet" />
 ```
 
+# Documentation
+https://github.com/tossnet/Blazor-Calendar/wiki/Usage
