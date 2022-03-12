@@ -12,8 +12,8 @@
     <RepositoryUrl>https://github.com/tossnet/Blazor-Calendar</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>blazor, calendar, schedule, component</PackageTags>
-    <PackageReleaseNotes>add EmptyDayClick event click</PackageReleaseNotes>
-    <Version>1.0.5</Version>
+    <PackageReleaseNotes>Possibility to do a drag and drop</PackageReleaseNotes>
+    <Version>1.1.0</Version>
     <Authors>Christophe Peugnet</Authors>
   </PropertyGroup>
 

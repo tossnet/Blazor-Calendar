@@ -13,3 +13,9 @@ public class ClickEmptyDayParameter
     public double X { get; set; }
     public double Y { get; set; }
 }
+
+public class DragDropParameter
+{
+    public DateTime Day { get; set; }
+    public int taskID { get; set; }
+}

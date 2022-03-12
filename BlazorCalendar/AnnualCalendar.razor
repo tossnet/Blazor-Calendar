@@ -15,6 +15,9 @@
     string? classPin = null;
     string? classPointer = null;
     int tasksNumber;
+    bool draggable = false;
+    string? ondragover = null;
+    
 }
 
 <div class="calendar-contener" Style="@Style">
@@ -37,6 +40,7 @@
         {
             CSSbackground = null;
             var j = day.AddDays(i);
+            int taskID = -1;
             if (j.Month != m.Month)
             {
                 j = default;
@@ -46,6 +50,9 @@
                 taskComment = null;
                 classPin = null;
                 classPointer = null;
+                draggable = false;
+                ondragover = null;
+                taskID = -1;
             }
             else
             {
@@ -66,53 +73,63 @@
                 string jour = j.ToString("ddd").Substring(0, 1).ToUpper();
                 labelDay = $"{jour} {j.Day.ToString()}";
 
-                    taskContent = "";
-                    taskColor = null;
-                    taskComment = null;
-                    classPin = null;
-                    classPointer = null;
-                    tasksNumber = 0;
-                    if ( TasksList != null )
+                taskContent = "";
+                taskColor = null;
+                taskComment = null;
+                classPin = null;
+                classPointer = null;
+                tasksNumber = 0;    
+                ondragover = "event.preventDefault();";
+                if ( TasksList != null )
+                {
+                    for (var k = 0; k < TasksList.Length; k++)
                     {
-                        for (var k = 0; k < TasksList.Length; k++)
-                        {
-                             Tasks t = TasksList[k];
+                        Tasks t = TasksList[k];
 
-                            if ( t.DateStart.Date <= j.Date && j.Date <= t.DateEnd.Date )
-                            {
-                                tasksNumber++;
-                                if ( PriorityDisplay == PriorityLabel.Code )
-                                {   
-                                    taskContent = string.IsNullOrWhiteSpace(t.Code) ? t.Caption : t.Code;
-                                }
-                                else
-                                {   
-                                    taskContent = string.IsNullOrWhiteSpace(t.Caption) ? t.Code : t.Caption;
-                                }
-                                taskColor = $"background:{t.Color};color:{t.ForeColor}";
-                                taskComment = t.Comment;
-                                classPin = string.IsNullOrWhiteSpace(t.Comment) ? null : " pin";
-                                classPointer = " pointer";
+                        if ( t.DateStart.Date <= j.Date && j.Date <= t.DateEnd.Date )
+                        {                
+                            taskID = t.ID;
+                            tasksNumber++;
+                            if ( PriorityDisplay == PriorityLabel.Code )
+                            {   
+                                taskContent = string.IsNullOrWhiteSpace(t.Code) ? t.Caption : t.Code;
                             }
-                        }   
-                    }
-                    if ( tasksNumber > 1 )
-                    {
-                        taskContent = "…";
-                        taskComment = null;
-                        taskColor = null;
-                        classPin = " pin-top";
-                    }
+                            else
+                            {   
+                                taskContent = string.IsNullOrWhiteSpace(t.Caption) ? t.Code : t.Caption;
+                            }
+                            taskColor = $"background:{t.Color};color:{t.ForeColor}";
+                            taskComment = t.Comment;
+                            classPin = string.IsNullOrWhiteSpace(t.Comment) ? null : " pin";
+                            classPointer = " pointer";
+                        }
+                    }   
+                }
+                if ( tasksNumber > 1 )
+                {
+                    taskContent = "…";
+                    taskComment = null;
+                    taskColor = null;
+                    classPin = " pin-top";
+                    draggable = false; 
+                    taskID = -1;
+                }
+                else if ( tasksNumber == 1 )
+                {  
+                    draggable = Draggable != true ? false : true; 
+                }
             }  
-            <div class="cellule day-cellule noselect" style="@($"background:{WeekDaysColor}")">
+            <div class="cellule day-cellule noselect" style="@($"background:{WeekDaysColor}")" ondragover="@ondragover" @ondrop="() => HandleDayOnDrop(j)">
                 <div class="day" style="@($"background:{CSSbackground}")">
                     @labelDay
                 </div>
-                <div class="@($"task{classPin}{classPointer}")" style="@taskColor" title="@taskComment" @onclick="e => ClickInternal(e, j)">
-                     @taskContent
+                <div class="@($"task{classPin}{classPointer}")" style="@taskColor" title="@taskComment" 
+                    @onclick="e => ClickInternal(e, j)" 
+                    @ondragstart="() => HandleDragStart(j, taskID)"
+                    draggable="@draggable.ToString()" >
+                        @taskContent
                 </div>
-            </div>        
-            
+            </div>  
         }
     </div>
 }

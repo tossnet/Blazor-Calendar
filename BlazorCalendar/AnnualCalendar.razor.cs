@@ -59,11 +59,19 @@ partial class AnnualCalendar : CalendarBase
     [Parameter]
     public EventCallback<ClickEmptyDayParameter> EmptyDayClick { get; set; }
 
+    [Parameter]
+    public bool Draggable { get; set; } = false;
 
+    [Parameter]
+    public EventCallback<DragDropParameter> DragStart { get; set; }
+
+    [Parameter]
+    public EventCallback<DragDropParameter> DropTask { get; set; }
 
 
     private DateTime m = DateTime.Today;
     private DateTime day = default;
+    private Tasks? TaskDragged;
 
     private async Task ClickInternal(MouseEventArgs e, DateTime day)
     {
@@ -106,5 +114,34 @@ partial class AnnualCalendar : CalendarBase
 
             await EmptyDayClick.InvokeAsync(clickEmptyDayParameter);
         }
+    }
+
+    private async Task HandleDragStart(DateTime day, int taskID) 
+    {
+        TaskDragged = new Tasks()
+        {
+            ID = taskID
+        };
+
+        DragDropParameter dragDropParameter = new()
+        {
+            Day = day,
+            taskID = TaskDragged.ID
+        };
+
+        await DragStart.InvokeAsync(dragDropParameter);
+    }
+
+    private async Task HandleDayOnDrop(DateTime day)
+    {
+        if (TaskDragged == null) return;
+
+        DragDropParameter dragDropParameter = new()
+        {
+            Day = day,
+            taskID = TaskDragged.ID
+        };
+
+        await DropTask.InvokeAsync(dragDropParameter);
     }
 }
