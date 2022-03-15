@@ -25,7 +25,7 @@ For client-side and server-side Blazor - add script section to _Layout.cshtml (h
 ```
 
 ## Documentation
-https://github.com/tossnet/Blazor-Calendar/wiki/Usage
+https://github.com/tossnet/Blazor-Calendar/wiki
 
 
 ## <a name="ReleaseNotes"></a>Release Notes
