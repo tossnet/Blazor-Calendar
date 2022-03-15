@@ -15,11 +15,14 @@
 	</div>		 
 </div>
 
-<AnnualCalendar FirstDate="today" Months="months"  TasksList="TasksList.ToArray()" 
-				Style="height:600px" PriorityDisplay="@PriorityDisplay"
+@**@
+<CalendarContainer FirstDate="today" TasksList="TasksList.ToArray()" >
+	<AnnualView Months="months" Style="height:600px"  
+				PriorityDisplay="@PriorityDisplay"
 				TaskClick="TaskClick" EmptyDayClick="EmptyDayClick"
 				Draggable="@draggable"
-				DragStart="DragStart" DropTask="DropTask"/>
+				DragStart="DragStart" DropTask="DropTask"  />
+</CalendarContainer>
 
 <br />
 <div class="console">@fakeConsole</div>

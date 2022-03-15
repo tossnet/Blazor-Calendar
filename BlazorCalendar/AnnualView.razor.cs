@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components.Web;
 
 namespace BlazorCalendar;
 
-partial class AnnualCalendar : CalendarBase
+partial class AnnualView : CalendarBase
 {
     private int _months = 11;
     [Parameter]
@@ -22,7 +22,7 @@ partial class AnnualCalendar : CalendarBase
     }
 
     private DateTime _firstdate;
-    [Parameter]
+    [CascadingParameter(Name = "FirstDate")]
     public DateTime FirstDate
     {
         get
@@ -35,10 +35,8 @@ partial class AnnualCalendar : CalendarBase
             _firstdate = value;
         }
     }
-    [Parameter] 
-    public int WidthWindow { get; set; } = 800;
     
-    [Parameter] 
+    [CascadingParameter(Name = "TasksList")]
     public Tasks[]? TasksList { get; set; }
 
     [Parameter]

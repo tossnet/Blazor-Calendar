@@ -12,13 +12,13 @@
     <RepositoryUrl>https://github.com/tossnet/Blazor-Calendar</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>blazor, calendar, schedule, component</PackageTags>
-    <PackageReleaseNotes>Possibility to do a drag and drop</PackageReleaseNotes>
-    <Version>1.1.0</Version>
+    <PackageReleaseNotes>https://github.com/tossnet/Blazor-Calendar#release-notes</PackageReleaseNotes>
+    <Version>2.0.0</Version>
     <Authors>Christophe Peugnet</Authors>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\AnnualCalendar.css" />
+    <None Include="wwwroot\BlazorCalendar.css" />
   </ItemGroup>
 
 

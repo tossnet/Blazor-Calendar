@@ -1,11 +1,7 @@
-﻿@using System.Globalization
-@using BlazorCalendar.Models
-
+﻿@using BlazorCalendar.Models
 @inherits CalendarBase
 
 @{
-    double w = (WidthWindow / Months);
-    string largeur = Convert.ToString(w, CultureInfo.InvariantCulture);
     string labelMonth = "";
     string labelDay = "";
     string? CSSbackground = null;
@@ -17,10 +13,9 @@
     int tasksNumber;
     bool draggable = false;
     string? ondragover = null;
-    
 }
 
-<div class="calendar-contener" Style="@Style">
+<div class=@($"calendar-contener {Class}") style="@Style">
 
 @for (var month = 0; month <= Months; month++)
 {
