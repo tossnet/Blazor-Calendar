@@ -66,7 +66,6 @@ partial class AnnualView : CalendarBase
     [Parameter]
     public EventCallback<DragDropParameter> DropTask { get; set; }
 
-
     private DateTime m = DateTime.Today;
     private DateTime day = default;
     private Tasks? TaskDragged;
