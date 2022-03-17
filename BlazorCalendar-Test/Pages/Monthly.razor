@@ -1,12 +1,15 @@
-﻿@page "/"
+﻿@page "/monthlyview"
 @using BlazorCalendar
 @using BlazorCalendar.Models
+@using System.Globalization
 
-<div class="d-flex flex-row mb-2">
-	<button type="button" @onclick="@(m => ClicMonthNavigate(-1))">◀️</button>  
-	<button type="button" @onclick="@(m => ClicMonthNavigate(1))" class="me-2">▶️</button>
+<div class="d-flex flex-row mb-2"> 
+	<div class="me-2">
+	⚠️<b>under development</b>	
+	</div>	
+	<button type="button" @onclick="@(m => ClicMonthNavigate(-1))">🔼</button>  
+	<button type="button" @onclick="@(m => ClicMonthNavigate(1))" class="me-2">🔽</button>
 	<input type="date" class="me-2" value="@(today.ToString("yyyy-MM-dd"))" @onchange="@(e => ChangeFirstDate(e.Value.ToString()))" />
-	<input type="number" class="me-2" min="1" @bind-value="months">
 	<select @bind="@PriorityDisplay" class="me-2">
 		<option value="@PriorityLabel.Code" selected>priority Code</option>
 		<option value="@PriorityLabel.Caption">priority Caption</option>
@@ -14,15 +17,11 @@
 	<div>
 		<input type="checkbox" @bind="draggable" id="is-draggable" />
 		<label for="is-draggable">Draggable</label>
-	</div>		 
+	</div>	
 </div>
 
 <CalendarContainer FirstDate="today" TasksList="TasksList.ToArray()" >
-	<AnnualView Months="months" Style="height:80vh"  
-				PriorityDisplay="@PriorityDisplay"
-				TaskClick="TaskClick" EmptyDayClick="EmptyDayClick"
-				Draggable="@draggable"
-				DragStart="DragStart" DropTask="DropTask"  />
+	<MonthlyView  />
 </CalendarContainer>
 
 <br />
@@ -38,6 +37,8 @@
 
 	protected override void OnInitialized()
 	{
+		//CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("dz-DZ");
+
 		TasksList = new()
 		{
 			new Tasks { ID = 1, DateStart = today.AddDays(8), DateEnd = today.AddDays(8), Code = "CP", Color = "#19C319", Caption = "Lorem ipsum dolor sit amet" },
@@ -53,7 +54,7 @@
 	{
 		if (string.IsNullOrEmpty(value)) return;
 		today = DateTime.Parse(value.ToString());
-	}
+	}	  
 
 	private void ClicMonthNavigate(int monthToAdd)
     {

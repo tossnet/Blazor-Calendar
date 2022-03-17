@@ -3,13 +3,28 @@
     user-select: none;
 }
 
-.centertext {
-    text-align: center;
-    vertical-align: middle;
-    line-height: 20px; /* The same as div height */
+.pointer {
+    cursor: pointer;
 }
 
-.calendar-contener {
+.header-name {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #72777b;
+    text-align: center;
+    border-bottom: 1px solid rgba(166, 168, 179, 0.12);
+    line-height: 40px;
+    font-weight: 500;
+}
+
+.cellule-disabled {
+    background: linear-gradient(-45deg, #F4F6F7 25%, #FF000000 25%, #FF000000 50%, #F4F6F7 50%, #F4F6F7 75%, #FF000000 75%, #FF000000);
+    background-size: 8px 8px;
+}
+
+
+/* AnnualView.razor */
+.calendar-container {
     width: 98.5%;
     height: 80vh;
     border-top-color: #d6d8db;
@@ -43,6 +58,7 @@
     flex: 1;
     flex-direction: row;
     font-size: 0.8em;
+    color: #72777b;
     word-wrap: break-word;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -58,14 +74,11 @@
     flex: 1;
     text-align: center;
     font-weight: 600;
+    color: #000;
     word-wrap: break-word;
     overflow: hidden;
     text-overflow: ellipsis;
     position: relative;
-}
-
-.pointer {
-    cursor: pointer;
 }
 
 .pin:after {
@@ -87,3 +100,162 @@
     border-width: 0 7px 7px 0;
     border-color: transparent #9900ff transparent transparent;
 }
+
+/* MontlyView.razor */
+.monthly-calendar {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(7, minmax(120px, 1fr));
+    grid-template-rows: 50px;
+    grid-auto-rows: 120px;
+    overflow: auto;
+}
+
+.monthly-day {
+    border-bottom: 1px solid rgba(166, 168, 179, 0.12);
+    border-right: 1px solid rgba(166, 168, 179, 0.12);
+    text-align: right;
+    padding: 14px 20px;
+    letter-spacing: 1px;
+    font-size: 12px;
+    box-sizing: border-box;
+    color: #6d7377;
+    position: relative;
+    pointer-events: none;
+    z-index: 1;
+}
+    .monthly-day:nth-of-type(n + 1):nth-of-type(-n + 7) {
+        grid-row: 2;
+    }
+
+    .monthly-day:nth-of-type(n + 8):nth-of-type(-n + 14) {
+        grid-row: 3;
+    }
+
+    .monthly-day:nth-of-type(n + 15):nth-of-type(-n + 21) {
+        grid-row: 4;
+    }
+
+    .monthly-day:nth-of-type(n + 22):nth-of-type(-n + 28) {
+        grid-row: 5;
+    }
+
+    .monthly-day:nth-of-type(n + 29):nth-of-type(-n + 35) {
+        grid-row: 6;
+    }
+
+    .monthly-day:nth-of-type(7n + 1) {
+        grid-column: 1/1;
+    }
+
+    .monthly-day:nth-of-type(7n + 2) {
+        grid-column: 2/2;
+    }
+
+    .monthly-day:nth-of-type(7n + 3) {
+        grid-column: 3/3;
+    }
+
+    .monthly-day:nth-of-type(7n + 4) {
+        grid-column: 4/4;
+    }
+
+    .monthly-day:nth-of-type(7n + 5) {
+        grid-column: 5/5;
+    }
+
+    .monthly-day:nth-of-type(7n + 6) {
+        grid-column: 6/6;
+    }
+
+    .monthly-day:nth-of-type(7n + 7) {
+        grid-column: 7/7;
+    }
+
+
+
+.monthly-day--disabled {
+    color: rgba(#98a0a6, 0.6);
+    background-color: #ffffff;
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23f4f6f7' fill-opacity='1' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
+    cursor: not-allowed;
+}
+
+
+.monthly-task {
+    border-left-width: 3px;
+    padding: 8px 12px;
+    margin: 10px;
+    border-left-style: solid;
+    font-size: 14px;
+    position: relative;
+}
+
+.monthly-task--warning {
+    border-left-color: #fdb44d;
+    grid-column: 4 / span 3;
+    grid-row: 3;
+    background: #fef0db;
+    align-self: center;
+    color: #fdb44d;
+    margin-top: -5px;
+}
+
+.monthly-task--danger {
+    border-left-color: #fa607e;
+    grid-column: 2 / span 3;
+    grid-row: 3;
+    margin-top: 15px;
+    background: rgba(253,197,208, 0.7);
+    align-self: end;
+    color: #fa607e;
+}
+
+.monthly-task--info {
+    border-left-color: #4786ff;
+    grid-column: 6 / span 2;
+    grid-row: 5;
+    margin-top: 15px;
+    background: #dae7ff;
+    align-self: end;
+    color: #4786ff;
+}
+
+.monthly-task--primary {
+    background: #4786ff;
+    border: 0;
+    border-radius: 4px;
+    grid-column: 3 / span 3;
+    grid-row: 4;
+    align-self: end;
+    color: #fff;
+    box-shadow: 0 10px 14px #4786ff;
+}
+
+.monthly-task__detail {
+    position: absolute;
+    left: 0;
+    top: calc(100% + 10px);
+    background: #fff;
+    border: 1px solid rgba(166, 168, 179, 0.2);
+    color: #000;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    z-index: 2;
+}
+.monthly-task:after, .monthly-task:before {
+    bottom: 100%;
+    left: 30%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+
+
+

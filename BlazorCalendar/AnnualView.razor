@@ -13,9 +13,10 @@
     int tasksNumber;
     bool draggable = false;
     string? ondragover = null;
+    string? disabled = null;
 }
 
-<div class=@($"calendar-contener {Class}") style="@Style">
+<div class=@($"calendar-container {Class}") style="@Style">
 
 @for (var month = 0; month <= Months; month++)
 {
@@ -23,7 +24,7 @@
     labelMonth = new DateTime(m.Year, m.Month, 1).ToString("MMMM");
 
     <div class="month-column">
-	    <div class="cellule month centertext noselect">
+	    <div class="header-name noselect">
             @labelMonth
         </div>
         
@@ -48,21 +49,24 @@
                 draggable = false;
                 ondragover = null;
                 taskID = -1;
+                disabled = "cellule-disabled";
+                CSSbackground = null;
             }
             else
             {
+                disabled = null;
                 int d = (int)j.DayOfWeek;
                 if (d == 6)
                 {
-                    CSSbackground = SaturdayColor;
+                    CSSbackground = $"background:{SaturdayColor}";
                 }
                 else if (d == 0)
                 {
-                    CSSbackground = SundayColor;
+                    CSSbackground = $"background:{SundayColor}";
                 }
                 else
                 {
-                    CSSbackground = WeekDaysColor;
+                    CSSbackground = $"background:{WeekDaysColor}";
                 }
 
                 string jour = j.ToString("ddd").Substring(0, 1).ToUpper();
@@ -114,8 +118,8 @@
                     draggable = Draggable != true ? false : true; 
                 }
             }  
-            <div class="cellule day-cellule noselect" style="@($"background:{WeekDaysColor}")" ondragover="@ondragover" @ondrop="() => HandleDayOnDrop(j)">
-                <div class="day" style="@($"background:{CSSbackground}")">
+            <div class=@($"cellule day-cellule noselect {disabled}") ondragover="@ondragover" @ondrop="() => HandleDayOnDrop(j)">
+                <div class="day" style="@CSSbackground">
                     @labelDay
                 </div>
                 <div class="@($"task{classPin}{classPointer}")" style="@taskColor" title="@taskComment" 

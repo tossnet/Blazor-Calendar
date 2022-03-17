@@ -1,0 +1,67 @@
+﻿@using System.Globalization
+@using BlazorCalendar.Models
+@inherits CalendarBase
+
+@{
+    FirstDate = new DateTime(FirstDate.Year, FirstDate.Month, 1);
+    int firstDayWeek = (int)FirstDate.DayOfWeek;
+    int State = 0; // 0 Before , 1 'in' Month, 2 After
+    DateTime LastDay = new DateTime(FirstDate.Year, FirstDate.Month, 1).AddMonths(1);
+    DateTime DayCounter = FirstDate;
+    string[] dayNames = CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedDayNames;
+    int OffsetCell = 0;
+    var m = 0;
+}
+<div class="calendar-container">
+    <div class="monthly-calendar">
+        
+        @for (var i = 0; i < 7; i++)
+        {
+            var d = Dates.GetNumOfDay(i);
+
+            <span class="header-name noselect">@dayNames[d]</span> 
+        }
+
+        @for ( var i = 0; i < 40; i++ )
+        {        
+            if ( State == 0 ) // First empty cells part
+            {
+                if ( firstDayWeek == Dates.GetNumOfDay(i) )  // Cell is first day?
+                {
+                    State = 1; // Start filling days    
+                    <div class="monthly-day">@(DayCounter.Day.ToString())</div>
+                    DayCounter = DayCounter.AddDays(1);
+                    OffsetCell = i;
+                } 
+                else
+                {
+                    // Still empty cells
+                    <div class="monthly-day monthly-day--disabled"></div>
+                }
+            }
+            if ( State == 1 )
+            {
+                if ( DayCounter >= LastDay ) // Stop at last day
+                {
+                    State = 2;
+                    // Again empty cells from here on
+                    <div class="monthly-day monthly-day--disabled"></div>
+                }
+                else
+                {
+                    <div class="monthly-day noselect">@(DayCounter.Day.ToString())</div>
+                    DayCounter = DayCounter.AddDays(1);
+                }
+            }
+            if ( State == 2 )
+            {
+                <div class="monthly-day monthly-day--disabled"></div>
+            }
+        }
+        
+    <section class="monthly-task monthly-task--warning" draggable="true">Projects</section>
+    <section class="monthly-task monthly-task--danger">Blazor dev</section>
+    <section class="monthly-task monthly-task--primary">Vacances</section>
+    <section class="monthly-task monthly-task--info">Repos</section>
+  </div>
+</div>
