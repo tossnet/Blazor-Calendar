@@ -1,21 +1,24 @@
-﻿
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 
-namespace BlazorCalendar
+namespace BlazorCalendar;
+
+public abstract class CalendarBase : ComponentBase
 {
-    public abstract class CalendarBase : ComponentBase
-    {
-        /// <summary>
-        /// User class names, separated by space.
-        /// </summary>
-        [Parameter]
-        public string Class { get; set; }
+    /// <summary>
+    /// User class names, separated by space. Applied on top of the component's own classes
+    /// </summary>
+    [Parameter]
+    public string Class { get; set; }
 
-        /// <summary>
-        /// User styles, applied on top of the component's own classes and styles.
-        /// </summary>
-        [Parameter]
-        public string Style { get; set; }
+    /// <summary>
+    /// User styles, applied on top of the component's own styles.
+    /// </summary>
+    [Parameter]
+    public string Style { get; set; }
 
-    }
+    /// <summary>
+    /// User styles of column headers, applied on top of the component's own  styles.
+    /// </summary>
+    [Parameter]
+    public string HeaderStyle { get; set; }
 }

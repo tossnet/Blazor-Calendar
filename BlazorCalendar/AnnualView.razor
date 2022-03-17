@@ -24,7 +24,7 @@
     labelMonth = new DateTime(m.Year, m.Month, 1).ToString("MMMM");
 
     <div class="month-column">
-	    <div class="header-name noselect">
+	    <div class="header-name noselect" style="@HeaderStyle">
             @labelMonth
         </div>
         
@@ -118,7 +118,7 @@
                     draggable = Draggable != true ? false : true; 
                 }
             }  
-            <div class=@($"cellule day-cellule noselect {disabled}") ondragover="@ondragover" @ondrop="() => HandleDayOnDrop(j)">
+            <div class=@($"cellule day-cellule noselect {disabled}") style="@CSSbackground" ondragover="@ondragover" @ondrop="() => HandleDayOnDrop(j)">
                 <div class="day" style="@CSSbackground">
                     @labelDay
                 </div>

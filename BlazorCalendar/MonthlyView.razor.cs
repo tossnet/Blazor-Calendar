@@ -19,5 +19,20 @@ partial class MonthlyView : CalendarBase
         {
             _firstdate = value;
         }
+
+
+    }
+
+
+    [CascadingParameter(Name = "TasksList")]
+    public Tasks[]? TasksList { get; set; }
+
+    [Parameter]
+    public EventCallback<int> OutsideCurrentMonthClick { get; set; }
+
+
+    private async Task HandleClickOutsideCurrentMonthClick(int AddMonth)
+    {
+        await OutsideCurrentMonthClick.InvokeAsync(AddMonth);
     }
 }

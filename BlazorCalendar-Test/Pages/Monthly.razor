@@ -21,7 +21,7 @@
 </div>
 
 <CalendarContainer FirstDate="today" TasksList="TasksList.ToArray()" >
-	<MonthlyView  />
+	<MonthlyView OutsideCurrentMonthClick="OutsideCurrentMonthClick" />
 </CalendarContainer>
 
 <br />
@@ -38,15 +38,16 @@
 	protected override void OnInitialized()
 	{
 		//CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("dz-DZ");
+		//CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
 
 		TasksList = new()
 		{
 			new Tasks { ID = 1, DateStart = today.AddDays(8), DateEnd = today.AddDays(8), Code = "CP", Color = "#19C319", Caption = "Lorem ipsum dolor sit amet" },
 			new Tasks { ID = 2, DateStart = today.AddDays(50), DateEnd = today.AddDays(52), Code = "DEV", Color = "#FFD800", Comment="on Teams template", Caption = "Fusce quis purus eu ante" },
 			new Tasks { ID = 3, DateStart = today.AddDays(40), DateEnd = today.AddDays(41), Code = "FORM", Color = "#FFC3FF", ForeColor = "#FF0000", Caption = "Lorem ipsum dolor sit amet" },
-			new Tasks { ID = 4, DateStart = today.AddDays(62), DateEnd = today.AddDays(62), Code = "DEV", Color = "#FFD800" },
-			new Tasks { ID = 5, DateStart = today.AddDays(62), DateEnd = today.AddDays(62), Code = "FORM", Color = "#FFC3FF", Caption = "Ut sit amet turpis eget" } ,
-			new Tasks { ID = 6, DateStart = today.AddDays(73).AddHours(8), DateEnd = today.AddDays(73).AddHours(9), Code = "MEETING", Color = "#2DD7D7", Comment="Julien's test" }
+			new Tasks { ID = 4, DateStart = today.AddDays(62), DateEnd = today.AddDays(62), Code = "NET", Color = "#FFD800" },
+			new Tasks { ID = 5, DateStart = today.AddDays(62), DateEnd = today.AddDays(62), Code = "BLAZ", Color = "#FFC3FF", Caption = "Ut sit amet turpis eget" } ,
+			new Tasks { ID = 6, DateStart = today.AddDays(72).AddHours(8), DateEnd = today.AddDays(72).AddHours(9), Code = "MEETING", Color = "#2DD7D7", Comment="Julien's test" }
 		};
 	}
 
@@ -60,6 +61,11 @@
     {
         today = today.AddMonths(monthToAdd);
     }
+
+	private void OutsideCurrentMonthClick(int MonthAdded)
+	{
+		today = today.AddMonths(MonthAdded);
+	}
 
 	private void TaskClick(ClickTaskParameter clickTaskParameter)
 	{

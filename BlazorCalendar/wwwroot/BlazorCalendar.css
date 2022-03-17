@@ -101,12 +101,14 @@
     border-color: transparent #9900ff transparent transparent;
 }
 
+
+
 /* MontlyView.razor */
 .monthly-calendar {
     display: grid;
     width: 100%;
     grid-template-columns: repeat(7, minmax(120px, 1fr));
-    grid-template-rows: 50px;
+    grid-template-rows: 40px;
     grid-auto-rows: 120px;
     overflow: auto;
 }
@@ -121,8 +123,6 @@
     box-sizing: border-box;
     color: #6d7377;
     position: relative;
-    pointer-events: none;
-    z-index: 1;
 }
     .monthly-day:nth-of-type(n + 1):nth-of-type(-n + 7) {
         grid-row: 2;
@@ -178,58 +178,23 @@
     color: rgba(#98a0a6, 0.6);
     background-color: #ffffff;
     background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23f4f6f7' fill-opacity='1' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
-    cursor: not-allowed;
 }
 
 
 .monthly-task {
-    border-left-width: 3px;
+    /*border-left-width: 3px;
+    border-left-style: solid;
+    border-left-color: #fdb44d;*/
     padding: 8px 12px;
     margin: 10px;
-    border-left-style: solid;
     font-size: 14px;
     position: relative;
-}
-
-.monthly-task--warning {
-    border-left-color: #fdb44d;
-    grid-column: 4 / span 3;
-    grid-row: 3;
+    z-index: 1;
     background: #fef0db;
     align-self: center;
-    color: #fdb44d;
+    color: #000;
+
     margin-top: -5px;
-}
-
-.monthly-task--danger {
-    border-left-color: #fa607e;
-    grid-column: 2 / span 3;
-    grid-row: 3;
-    margin-top: 15px;
-    background: rgba(253,197,208, 0.7);
-    align-self: end;
-    color: #fa607e;
-}
-
-.monthly-task--info {
-    border-left-color: #4786ff;
-    grid-column: 6 / span 2;
-    grid-row: 5;
-    margin-top: 15px;
-    background: #dae7ff;
-    align-self: end;
-    color: #4786ff;
-}
-
-.monthly-task--primary {
-    background: #4786ff;
-    border: 0;
-    border-radius: 4px;
-    grid-column: 3 / span 3;
-    grid-row: 4;
-    align-self: end;
-    color: #fff;
-    box-shadow: 0 10px 14px #4786ff;
 }
 
 .monthly-task__detail {
@@ -256,6 +221,12 @@
     pointer-events: none;
 }
 
+.cursor-top {
+    cursor: n-resize;
+}
 
+.cursor-bottom {
+    cursor: s-resize;
+}
 
 
