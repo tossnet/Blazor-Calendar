@@ -2,7 +2,7 @@
 [![NuGet](https://img.shields.io/nuget/v/BlazorCalendar.svg)](https://www.nuget.org/packages/BlazorCalendar/)  ![BlazorCalendar Nuget Package](https://img.shields.io/nuget/dt/BlazorCalendar)
 
 
-![calendar1 1](https://user-images.githubusercontent.com/3845786/158025251-302fbbb7-694b-4d9c-8355-9bafe1f24486.gif)
+![blazorcalendar201](https://user-images.githubusercontent.com/3845786/158783479-35e614fe-fcca-4162-8e64-b5b33338251d.gif)
 
 
 
@@ -29,6 +29,12 @@ https://github.com/tossnet/Blazor-Calendar/wiki
 
 
 ## <a name="ReleaseNotes"></a>Release Notes
+
+### Version 2.0.1
+
+- css style improvement
+- Addition of hatching in the cells at the end of the month
+- Development in progress for a new monthly view
 
 ### Version 2.0.0
 ⚠️Breaking
