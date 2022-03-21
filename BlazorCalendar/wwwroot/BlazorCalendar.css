@@ -22,6 +22,20 @@
     background-size: 8px 8px;
 }
 
+.fade-in {
+    animation: fadeIn 0.4s;
+    opacity: 1;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
 
 /* AnnualView.razor */
 .calendar-container {
@@ -144,6 +158,10 @@
         grid-row: 6;
     }
 
+    .monthly-day:nth-of-type(n + 36):nth-of-type(-n + 43) {
+        grid-row: 7;
+    }
+
     .monthly-day:nth-of-type(7n + 1) {
         grid-column: 1/1;
     }
@@ -180,20 +198,20 @@
     background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23f4f6f7' fill-opacity='1' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
 }
 
-
 .monthly-task {
-    /*border-left-width: 3px;
+    border-left-width: 3px;
     border-left-style: solid;
-    border-left-color: #fdb44d;*/
+    border-left-color: #4d4d4d4c;
+
     padding: 8px 12px;
     margin: 10px;
     font-size: 14px;
+    font-weight: 600;
     position: relative;
     z-index: 1;
     background: #fef0db;
     align-self: center;
     color: #000;
-
     margin-top: -5px;
 }
 
@@ -210,7 +228,12 @@
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
     z-index: 2;
 }
-.monthly-task:after, .monthly-task:before {
+
+.monthly-task-second {
+    align-self:end;
+    margin-top: -5px;
+}
+/*.monthly-task:after, .monthly-task:before {
     bottom: 100%;
     left: 30%;
     border: solid transparent;
@@ -219,7 +242,17 @@
     width: 0;
     position: absolute;
     pointer-events: none;
-}
+}*/
+
+/*.arrow-right:after {
+    content: "";
+    position: absolute;
+    height: 60%;
+    right: 12px;
+    border-style: solid;
+    border-width: 7px 0 7px 13px;
+    border-color: transparent transparent transparent #c2c2c2;
+}*/
 
 .cursor-top {
     cursor: n-resize;
@@ -228,5 +261,6 @@
 .cursor-bottom {
     cursor: s-resize;
 }
+
 
 

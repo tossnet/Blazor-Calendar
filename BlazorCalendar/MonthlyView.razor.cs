@@ -19,8 +19,6 @@ partial class MonthlyView : CalendarBase
         {
             _firstdate = value;
         }
-
-
     }
 
 

@@ -10,77 +10,90 @@
     DateTime DayCounter = FirstDate;
     string[] dayNames = CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedDayNames;
     int OffsetCell = 0;
-    var m = 0;
 }
-<div class="calendar-container">
-    <div class="monthly-calendar">
+<div class="monthly-calendar">
         
-        @for (var i = 0; i < 7; i++)
+    @for (var i = 0; i < 7; i++)
+    {
+        var d = Dates.GetNumOfDay(i);
+
+        <span class="header-name noselect" style="@HeaderStyle">
+            @dayNames[d]
+        </span> 
+    }
+
+    @for ( var i = 0; i < 40; i++ )
+    {        
+        if ( State == 0 ) // First empty cells part
         {
-            var d = Dates.GetNumOfDay(i);
-
-            <span class="header-name noselect" style="@HeaderStyle">
-                @dayNames[d]
-            </span> 
+            if ( firstDayWeek == Dates.GetNumOfDay(i) )  // Cell is first day?
+            {
+                State = 1; // Start filling days    
+                <div class="fade-in monthly-day">@(DayCounter.Day.ToString())</div>
+                DayCounter = DayCounter.AddDays(1);
+                OffsetCell = i;
+            } 
+            else
+            {
+                // Still empty cells
+                <div class="monthly-day monthly-day--disabled cursor-top" @onclick="() => HandleClickOutsideCurrentMonthClick(-1)"></div>
+            }
         }
-
-        @for ( var i = 0; i < 40; i++ )
-        {        
-            if ( State == 0 ) // First empty cells part
+        if ( State == 1 )
+        {
+            if ( DayCounter >= LastDay ) // Stop at last day
             {
-                if ( firstDayWeek == Dates.GetNumOfDay(i) )  // Cell is first day?
-                {
-                    State = 1; // Start filling days    
-                    <div class="monthly-day">@(DayCounter.Day.ToString())</div>
-                    DayCounter = DayCounter.AddDays(1);
-                    OffsetCell = i;
-                } 
-                else
-                {
-                    // Still empty cells
-                    <div class="monthly-day monthly-day--disabled cursor-top" @onclick="() => HandleClickOutsideCurrentMonthClick(-1)"></div>
-                }
-            }
-            if ( State == 1 )
-            {
-                if ( DayCounter >= LastDay ) // Stop at last day
-                {
-                    State = 2;
-                    // Again empty cells from here on
-                    <div class="monthly-day monthly-day--disabled cursor-bottom" @onclick="() => HandleClickOutsideCurrentMonthClick(1)"></div>
-                }
-                else
-                {
-                    <div class="monthly-day noselect">@(DayCounter.Day.ToString())</div>
-                    DayCounter = DayCounter.AddDays(1);
-                }
-            }
-            if ( State == 2 )
-            {
+                State = 2;
+                // Again empty cells from here on
                 <div class="monthly-day monthly-day--disabled cursor-bottom" @onclick="() => HandleClickOutsideCurrentMonthClick(1)"></div>
             }
-        }
-        
-        @if ( TasksList != null )
-        {
-            for (var k = 0; k < TasksList.Length; k++)
+            else
             {
-                Tasks t = TasksList[k];
-
-                if ( ( t.DateStart.Date <= FirstDate && LastDay <= t.DateEnd.Date ) || 
-                        ( t.DateStart.Date > FirstDate && LastDay > t.DateEnd.Date )
-                    )
-                {
-                    int c = ((t.DateStart.Date.Day + (OffsetCell - 1) ) % 7) + 1; 
-                    int r = ((t.DateStart.Date.Day + 3 + (OffsetCell - 1) ) / 6) + 1;
-                    int s = (int)(t.DateEnd.Date - t.DateStart.Date).TotalDays + 1;
-                    string row = $"grid-column: {c} / span {s}; grid-row: {r};";
-                    string taskColor = $"background:{t.Color};color:{t.ForeColor}"; 
-
-                    <section class="monthly-task" style="@row @taskColor" draggable="true">@t.DateStart.Date.Day @t.Code</section>
-                }
-
+                <div class="fade-in monthly-day noselect">@(DayCounter.Day.ToString())</div>
+                DayCounter = DayCounter.AddDays(1);
             }
         }
-  </div>
+        if ( State == 2 )
+        {
+            <div class="monthly-day monthly-day--disabled cursor-bottom" @onclick="() => HandleClickOutsideCurrentMonthClick(1)"></div>
+        }
+    }
+        
+    @if ( TasksList != null )
+    {
+        int[] arrCell = new int[31];
+        string posY = "";
+        for (var k = 0; k < TasksList.Length; k++)
+        {
+            Tasks t = TasksList[k];
+
+            if ( ( t.DateStart.Date <= FirstDate && FirstDate <= t.DateEnd.Date ) || 
+                    ( t.DateStart.Date > FirstDate && LastDay > t.DateEnd.Date ) || 
+                    ( t.DateStart.Date < LastDay && LastDay < t.DateEnd.Date )
+                )
+            {
+                DateTime Start = t.DateStart.Date < FirstDate ? FirstDate : t.DateStart.Date; 
+                DateTime End = t.DateEnd.Date >= LastDay ? LastDay.AddDays(-1) : t.DateEnd.Date;
+
+
+                // 7 => num of colum (a week..)
+                // + 2 => the 1st row is the week name
+                int x = (Start.Day + OffsetCell - 1) % 7 + 1; 
+                int y = (Start.Day + OffsetCell - 1) / 7 + 2;
+
+                int s = (int)(End.Date - Start.Date).TotalDays + 1;
+                string row = $"grid-column:{x} / span {s}; grid-row:{y};";
+                string taskColor = $"background:{t.Color};color:{t.ForeColor}";
+
+                if (arrCell[Start.Day] > 0)
+                {
+                    posY = "monthly-task-second";//$"margin-top:{arrCell[Start.Day]*5}px";
+                }
+
+                <section class="fade-in monthly-task @posY" style="@row @taskColor " draggable="true">@t.DateStart.Date.Day @t.Code</section>
+                    
+                arrCell[Start.Day]++;
+            }
+        }
+    }
 </div>
