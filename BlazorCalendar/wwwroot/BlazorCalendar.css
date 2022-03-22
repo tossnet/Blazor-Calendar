@@ -1,4 +1,7 @@
-﻿.noselect {
+﻿.hidden-element {
+    display: none !important;
+}
+.noselect {
     -webkit-user-select: none; /* Safari */
     user-select: none;
 }
@@ -197,7 +200,6 @@
     .monthly-day:nth-of-type(7n + 7) {
         grid-column: 7/7;
     }
-
 
 
 .monthly-day--disabled {

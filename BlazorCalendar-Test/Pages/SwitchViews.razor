@@ -1,0 +1,20 @@
+﻿@page "/switchview"
+@using BlazorCalendar
+
+<div class="d-flex flex-row mb-2">
+
+	<select @bind="@SelectedView" class="me-2">
+		<option value="@DisplayedView.Annual" selected>Annual view</option>
+		<option value="@DisplayedView.Monthly">Monthly view</option>
+	</select>
+	 
+</div>
+
+<CalendarContainer  DisplayedView="SelectedView"  >
+	<AnnualView />
+	<MonthlyView />
+</CalendarContainer>
+
+@code{
+	private BlazorCalendar.DisplayedView SelectedView = DisplayedView.Annual;
+}

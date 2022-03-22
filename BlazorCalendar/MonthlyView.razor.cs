@@ -6,6 +6,9 @@ namespace BlazorCalendar;
 
 partial class MonthlyView : CalendarBase
 {
+    [CascadingParameter(Name = "SelectedView")]
+    public DisplayedView DisplayedView { get; set; }
+
     private DateTime _firstdate;
     [CascadingParameter(Name = "FirstDate")]
     public DateTime FirstDate
