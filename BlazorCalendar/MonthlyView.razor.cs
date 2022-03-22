@@ -152,4 +152,22 @@ partial class MonthlyView : CalendarBase
 
         await DropTask.InvokeAsync(dragDropParameter);
     }
+
+    private string GetBackground(DateTime day)
+    {
+        int d = (int)day.DayOfWeek;
+
+        if (d == 6)
+        {
+            return $"background:{SaturdayColor}";
+        }
+        else if (d == 0)
+        {
+            return $"background:{SundayColor}";
+        }
+        else
+        {
+            return $"background:{WeekDaysColor}";
+        }
+    }
 }

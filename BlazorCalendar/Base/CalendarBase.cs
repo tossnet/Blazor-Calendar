@@ -27,4 +27,14 @@ public abstract class CalendarBase : ComponentBase
     /// </summary>
     [Parameter]
     public bool Draggable { get; set; } = false;
+
+
+    [Parameter]
+    public string WeekDaysColor { get; set; } = "#FFF";
+
+    [Parameter]
+    public string SaturdayColor { get; set; } = "#ECF4FD";
+
+    [Parameter]
+    public string SundayColor { get; set; } = "#DBE7F8";
 }

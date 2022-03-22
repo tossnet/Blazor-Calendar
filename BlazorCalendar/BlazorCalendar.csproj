@@ -13,7 +13,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>blazor, calendar, schedule, component</PackageTags>
     <PackageReleaseNotes>https://github.com/tossnet/Blazor-Calendar#release-notes</PackageReleaseNotes>
-    <Version>2.1.0</Version>
+    <Version>2.1.2</Version>
     <Authors>Christophe Peugnet</Authors>
   </PropertyGroup>
 

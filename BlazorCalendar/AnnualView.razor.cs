@@ -42,14 +42,6 @@ partial class AnnualView : CalendarBase
     [CascadingParameter(Name = "TasksList")]
     public Tasks[]? TasksList { get; set; }
 
-    [Parameter]
-    public string WeekDaysColor { get; set; } = "#FFF";
-
-    [Parameter]
-    public string SaturdayColor { get; set; } = "#DBE4F2";
-
-    [Parameter]
-    public string SundayColor { get; set; } = "#CBD9ED";
 
     [Parameter]
     public PriorityLabel PriorityDisplay { get; set; } = PriorityLabel.Code;

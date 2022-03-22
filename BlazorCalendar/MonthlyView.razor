@@ -10,7 +10,8 @@
     DateTime DayCounter = FirstDate;
     string[] dayNames = CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedDayNames;
     int OffsetCell = 0;
-    string? isHidden = DisplayedView == DisplayedView.Monthly ? null : "hidden-element";
+    string? isHidden = DisplayedView == DisplayedView.Monthly ? null : "hidden-element"; 
+    string? CSSbackground = null;
 }
 <div class="@isHidden monthly-calendar" style="@Style">
         
@@ -24,13 +25,21 @@
     }
 
     @for ( var i = 0; i < 40; i++ )
-    {        
+    {   
         if ( State == 0 ) // First empty cells part
         {
             if ( firstDayWeek == Dates.GetNumOfDay(i) )  // Cell is first day?
             {
-                State = 1; // Start filling days    
-                <div class="fade-in monthly-day">@(DayCounter.Day.ToString())</div>
+                State = 1; // Start filling days   
+                var dayClick = DayCounter;
+                CSSbackground = GetBackground(dayClick);
+                <div class="fade-in monthly-day noselect" 
+                    style="@CSSbackground"
+                    ondragover="event.preventDefault();"
+                    @onclick="e => ClickDayInternal(e, dayClick)" 
+                    @ondrop="() => HandleDayOnDrop(dayClick)">
+                    @(DayCounter.Day.ToString())
+                </div>
                 DayCounter = DayCounter.AddDays(1);
                 OffsetCell = i;
             } 
@@ -50,10 +59,13 @@
             }
             else
             {
-                DateTime dayClick = DayCounter;
-                <div class="fade-in monthly-day noselect" ondragover="event.preventDefault();"
-                    @onclick="e => ClickDayInternal(e, dayClick)" 
-                    @ondrop="() => HandleDayOnDrop(dayClick)">
+                var _dayClick = DayCounter;
+                CSSbackground = GetBackground(_dayClick);
+                <div class="fade-in monthly-day noselect" 
+                    style="@CSSbackground"
+                    ondragover="event.preventDefault();"
+                    @onclick="e => ClickDayInternal(e, _dayClick)" 
+                    @ondrop="() => HandleDayOnDrop(_dayClick)">
                     @(DayCounter.Day.ToString())
                 </div>
                 DayCounter = DayCounter.AddDays(1);
