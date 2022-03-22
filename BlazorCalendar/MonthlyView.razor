@@ -10,7 +10,7 @@
     DateTime DayCounter = FirstDate;
     string[] dayNames = CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedDayNames;
     int OffsetCell = 0;
-    string? isHidden = DisplayedView == DisplayedView.Monthly ? "hidden-element" : null;
+    string? isHidden = DisplayedView == DisplayedView.Monthly ? null : "hidden-element";
 }
 <div class="@isHidden monthly-calendar" style="@Style">
         

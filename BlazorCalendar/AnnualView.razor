@@ -14,7 +14,7 @@
     bool draggable = false;
     string? ondragover = null;
     string? disabled = null;   
-    string? isHidden = DisplayedView == DisplayedView.Annual ? "hidden-element" : null;
+    string? isHidden = DisplayedView == DisplayedView.Annual ? null : "hidden-element";
 }
 
 <div class=@($"{isHidden} calendar-container {Class}") style="@Style">

@@ -3,9 +3,9 @@
 
 <div class="@Class" Style="@Style">
 <CascadingValue Value="DisplayedView" Name="SelectedView">	
-	<CascadingValue Value="TasksList" Name="TasksList">	  
+	<CascadingValue Value="FirstDate" Name="FirstDate">	  
 		<CascadingValue Value="TasksList" Name="TasksList">
-			@ChildContent	
+			@ChildContent
 		</CascadingValue>	 
 	</CascadingValue>	 
 </CascadingValue>	   
@@ -13,16 +13,16 @@
 
 @code {
 	[Parameter] 
-	public 
-	RenderFragment ChildContent { get; set; } 
-	
+	public RenderFragment ChildContent { get; set; } 
+
 	[Parameter] 
 	public DateTime FirstDate { get; set; }
-	
+
 	[Parameter] 
 	public DisplayedView DisplayedView { get; set; }
 
 	[Parameter] 
 	public Tasks[]? TasksList { get; set; }
+
 }
 
