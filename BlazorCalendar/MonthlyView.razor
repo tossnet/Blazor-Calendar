@@ -49,7 +49,12 @@
             }
             else
             {
-                <div class="fade-in monthly-day noselect">@(DayCounter.Day.ToString())</div>
+                DateTime dayClick = DayCounter;
+                <div class="fade-in monthly-day noselect" ondragover="event.preventDefault();"
+                    @onclick="e => ClickDayInternal(e, dayClick)" 
+                    @ondrop="() => HandleDayOnDrop(dayClick)">
+                    @(DayCounter.Day.ToString())
+                </div>
                 DayCounter = DayCounter.AddDays(1);
             }
         }
@@ -62,37 +67,64 @@
     @if ( TasksList != null )
     {
         int[] arrCell = new int[31];
-        string posY = "";
+        string classPosition = "";
+        string taskContent = "";
         for (var k = 0; k < TasksList.Length; k++)
         {
             Tasks t = TasksList[k];
 
-            if ( ( t.DateStart.Date <= FirstDate && FirstDate <= t.DateEnd.Date ) || 
-                    ( t.DateStart.Date > FirstDate && LastDay > t.DateEnd.Date ) || 
-                    ( t.DateStart.Date < LastDay && LastDay < t.DateEnd.Date )
-                )
+            if (( t.DateStart.Date <= FirstDate && FirstDate <= t.DateEnd.Date ) || 
+                ( t.DateStart.Date > FirstDate && LastDay > t.DateEnd.Date ) || 
+                ( t.DateStart.Date < LastDay && LastDay < t.DateEnd.Date ))
             {
+                // Reframes dates in the month
                 DateTime Start = t.DateStart.Date < FirstDate ? FirstDate : t.DateStart.Date; 
                 DateTime End = t.DateEnd.Date >= LastDay ? LastDay.AddDays(-1) : t.DateEnd.Date;
-
 
                 // 7 => num of colum (a week..)
                 // + 2 => the 1st row is the week name
                 int x = (Start.Day + OffsetCell - 1) % 7 + 1; 
                 int y = (Start.Day + OffsetCell - 1) / 7 + 2;
-
                 int s = (int)(End.Date - Start.Date).TotalDays + 1;
                 string row = $"grid-column:{x} / span {s}; grid-row:{y};";
-                string taskColor = $"background:{t.Color};color:{t.ForeColor}";
 
-                if (arrCell[Start.Day] > 0)
+                if ( arrCell[Start.Day] == 0 )
                 {
-                    posY = "monthly-task-second";//$"margin-top:{arrCell[Start.Day]*5}px";
+                    classPosition = "monthly-task-first";    
+                } 
+                else if ( arrCell[Start.Day] == 1 )
+                {
+                    classPosition = "monthly-task-second";
                 }
 
-                <section class="fade-in monthly-task @posY" style="@row @taskColor " draggable="true">@t.DateStart.Date.Day @t.Code</section>
-                    
-                arrCell[Start.Day]++;
+                if ( arrCell[Start.Day] < 2 )
+                {   
+                    if ( PriorityDisplay == PriorityLabel.Code )
+                    {   
+                        taskContent = string.IsNullOrWhiteSpace(t.Code) ? t.Caption : t.Code;
+                    }
+                    else
+                    {   
+                        taskContent = string.IsNullOrWhiteSpace(t.Caption) ? t.Code : t.Caption;
+                    }
+
+                    string taskColor = $"background:{t.Color};color:{t.ForeColor}";
+                    <section class="fade-in monthly-task @classPosition" 
+                             style="@row @taskColor" draggable="@Draggable.ToString()"
+                             @onclick="e => ClickTaskInternal(e, t.ID)"
+                             @ondragstart="() => HandleDragStart(t.ID)">
+                             @taskContent
+                    </section>
+                }
+                else
+                {
+                    <section class="fade-in monthly-more-tasks noselect" style="@row" @onclick="e => ClickAllDayInternal(e, Start)">@($"+ {arrCell[Start.Day]-1} ...")</section> 
+                }
+
+                for (var d = Start.Day; d <= End.Day; d++)
+                {     
+                    arrCell[d]++;
+                }
             }
         }
     }

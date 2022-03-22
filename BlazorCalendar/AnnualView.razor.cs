@@ -58,9 +58,6 @@ partial class AnnualView : CalendarBase
     public EventCallback<ClickEmptyDayParameter> EmptyDayClick { get; set; }
 
     [Parameter]
-    public bool Draggable { get; set; } = false;
-
-    [Parameter]
     public EventCallback<DragDropParameter> DragStart { get; set; }
 
     [Parameter]

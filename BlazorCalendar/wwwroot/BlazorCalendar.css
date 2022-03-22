@@ -3,12 +3,20 @@
     user-select: none;
 }
 
-.pointer {
+.cursor-pointer {
     cursor: pointer;
 }
- 
+
+.cursor-top {
+    cursor: n-resize;
+}
+
+.cursor-bottom {
+    cursor: s-resize;
+}
+
 .header-name {
-    font-size: 12px;
+    font-size: 0.8em;
     text-transform: uppercase;
     color: #72777b;
     text-align: center;
@@ -131,9 +139,9 @@
     border-bottom: 1px solid rgba(166, 168, 179, 0.12);
     border-right: 1px solid rgba(166, 168, 179, 0.12);
     text-align: right;
-    padding: 14px 20px;
+    padding: 10px 12px;
     letter-spacing: 1px;
-    font-size: 12px;
+    font-size: 0.8em;
     box-sizing: border-box;
     color: #6d7377;
     position: relative;
@@ -202,20 +210,41 @@
     border-left-width: 3px;
     border-left-style: solid;
     border-left-color: #4d4d4d4c;
-
-    padding: 8px 12px;
-    margin: 10px;
-    font-size: 14px;
+    border-radius: 3px;
+    padding: 4px 8px 4px 12px;
+    margin: 5px 10px 0 10px;
+    font-size: 0.8em;
     font-weight: 600;
     position: relative;
     z-index: 1;
-    background: #fef0db;
-    align-self: center;
     color: #000;
-    margin-top: -5px;
+    align-self: center;
 }
 
-.monthly-task__detail {
+.monthly-task-first {
+    align-self: start;
+    margin-top: 30px;
+}
+
+.monthly-task-second {
+    align-self: center;
+    margin-top: 40px;
+}
+
+.monthly-more-tasks {
+    position: relative;
+    cursor: zoom-in;
+    align-self: end;
+    margin-top: 40px;
+    font-size: 0.9em;
+    font-weight: 600;
+    color: darkblue;
+    align-self: end;
+    padding: 4px 8px 4px 12px;
+    margin: 5px 10px 0 10px;
+}
+
+/*.monthly-task__detail {
     position: absolute;
     left: 0;
     top: calc(100% + 10px);
@@ -227,12 +256,9 @@
     border-radius: 4px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
     z-index: 2;
-}
+}*/
 
-.monthly-task-second {
-    align-self:end;
-    margin-top: -5px;
-}
+
 /*.monthly-task:after, .monthly-task:before {
     bottom: 100%;
     left: 30%;
@@ -254,13 +280,6 @@
     border-color: transparent transparent transparent #c2c2c2;
 }*/
 
-.cursor-top {
-    cursor: n-resize;
-}
-
-.cursor-bottom {
-    cursor: s-resize;
-}
 
 
 

@@ -21,4 +21,10 @@ public abstract class CalendarBase : ComponentBase
     /// </summary>
     [Parameter]
     public string HeaderStyle { get; set; }
+
+    /// <summary>
+    /// Allows the user to move the tasks
+    /// </summary>
+    [Parameter]
+    public bool Draggable { get; set; } = false;
 }

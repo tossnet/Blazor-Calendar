@@ -21,16 +21,132 @@ partial class MonthlyView : CalendarBase
         }
     }
 
-
+    private Tasks[]? _tasksList;
     [CascadingParameter(Name = "TasksList")]
-    public Tasks[]? TasksList { get; set; }
+    public Tasks[]? TasksList 
+    {
+        get
+        {
+            if (_tasksList != null)
+            {
+                _tasksList = _tasksList.OrderBy(x => x.DateStart)
+                                       .ThenByDescending(x => x.DateEnd).ToArray(); 
+            }
+            return _tasksList;
+        }
+        set
+        {
+            _tasksList = value;
+        }
+    }
+
+    [Parameter]
+    public PriorityLabel PriorityDisplay { get; set; } = PriorityLabel.Code;
 
     [Parameter]
     public EventCallback<int> OutsideCurrentMonthClick { get; set; }
 
+    [Parameter]
+    public EventCallback<ClickEmptyDayParameter> DayClick { get; set; }
+
+    [Parameter]
+    public EventCallback<ClickTaskParameter> TaskClick { get; set; }
+
+    [Parameter]
+    public EventCallback<DragDropParameter> DragStart { get; set; }
+
+    [Parameter]
+    public EventCallback<DragDropParameter> DropTask { get; set; }
+
+    private Tasks? TaskDragged;
 
     private async Task HandleClickOutsideCurrentMonthClick(int AddMonth)
     {
         await OutsideCurrentMonthClick.InvokeAsync(AddMonth);
+    }
+
+
+    private async Task ClickTaskInternal(MouseEventArgs e, int taskID)
+    {
+        List<int> listID = new();
+        listID.Add(taskID);
+
+        ClickTaskParameter clickTaskParameter = new()
+        {
+            IDList = listID,
+            X = e.ClientX,
+            Y = e.ClientY
+        };
+
+        await TaskClick.InvokeAsync(clickTaskParameter);
+    }
+
+    private async Task ClickAllDayInternal(MouseEventArgs e, DateTime day)
+    {
+        if (day == default) return;
+
+        // There can be several tasks in one day :
+        List<int> listID = new();
+        if (TasksList != null)
+        {
+            for (var k = 0; k < TasksList.Length; k++)
+            {
+                Tasks t = TasksList[k];
+
+                if (t.DateStart.Date <= day.Date && day.Date <= t.DateEnd.Date)
+                {
+                    listID.Add(t.ID);
+                }
+            }
+
+            ClickTaskParameter clickTaskParameter = new()
+            {
+                IDList = listID,
+                X = e.ClientX,
+                Y = e.ClientY
+            };
+
+            await TaskClick.InvokeAsync(clickTaskParameter);
+        }
+    }
+
+    private async Task ClickDayInternal(MouseEventArgs e, DateTime day)
+    {
+        ClickEmptyDayParameter clickEmptyDayParameter = new()
+        {
+            Day = day,
+            X = e.ClientX,
+            Y = e.ClientY
+        };
+
+        await DayClick.InvokeAsync(clickEmptyDayParameter);
+    }
+
+    private async Task HandleDragStart(int taskID)
+    {
+        TaskDragged = new Tasks()
+        {
+            ID = taskID
+        };
+
+        DragDropParameter dragDropParameter = new()
+        {
+            taskID = TaskDragged.ID
+        };
+
+        await DragStart.InvokeAsync(dragDropParameter);
+    }
+
+    private async Task HandleDayOnDrop(DateTime day)
+    {
+        if (TaskDragged == null) return;
+
+        DragDropParameter dragDropParameter = new()
+        {
+            Day = day,
+            taskID = TaskDragged.ID
+        };
+
+        await DropTask.InvokeAsync(dragDropParameter);
     }
 }
