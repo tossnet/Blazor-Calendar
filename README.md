@@ -4,6 +4,7 @@
 
 ![blazorcalendar201](https://user-images.githubusercontent.com/3845786/158783479-35e614fe-fcca-4162-8e64-b5b33338251d.gif)
 
+![monthlyView](https://user-images.githubusercontent.com/3845786/159467420-8140bf09-b24b-4880-91a2-036c9824336a.gif)
 
 
 ## Installation
@@ -30,11 +31,11 @@ https://github.com/tossnet/Blazor-Calendar/wiki
 
 ## <a name="ReleaseNotes"></a>Release Notes
 
-### Version 2.0.1
+### Version 2.1.0
 
 - css style improvement
 - Addition of hatching in the cells at the end of the month
-- Development in progress for a new monthly view
+- Add a new view called MonthlyView
 
 ### Version 2.0.0
 ⚠️Breaking
