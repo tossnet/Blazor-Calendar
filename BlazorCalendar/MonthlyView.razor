@@ -79,9 +79,10 @@
         
     @if ( TasksList != null )
     {
-        int[] arrCell = new int[31];
+        int[] arrCell = new int[32];
         string classPosition = "";
-        string taskContent = "";
+        string taskContent = "";  
+        string? taskComment = null;
         for (var k = 0; k < TasksList.Length; k++)
         {
             Tasks t = TasksList[k];
@@ -121,9 +122,13 @@
                         taskContent = string.IsNullOrWhiteSpace(t.Caption) ? t.Code : t.Caption;
                     }
 
+                    taskComment = string.IsNullOrWhiteSpace(t.Comment) ? null : t.Comment;
+
                     string taskColor = $"background:{t.Color};color:{t.ForeColor}";
                     <section class="fade-in monthly-task @classPosition" 
-                             style="@row @taskColor" draggable="@Draggable.ToString()"
+                             style="@row @taskColor" 
+                             title="@taskComment"
+                             draggable="@Draggable.ToString()"
                              @onclick="e => ClickTaskInternal(e, t.ID)"
                              @ondragstart="() => HandleDragStart(t.ID)">
                              @taskContent

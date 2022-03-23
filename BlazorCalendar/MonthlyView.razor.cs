@@ -24,24 +24,8 @@ partial class MonthlyView : CalendarBase
         }
     }
 
-    private Tasks[]? _tasksList;
     [CascadingParameter(Name = "TasksList")]
-    public Tasks[]? TasksList 
-    {
-        get
-        {
-            if (_tasksList != null)
-            {
-                _tasksList = _tasksList.OrderBy(x => x.DateStart)
-                                       .ThenByDescending(x => x.DateEnd).ToArray(); 
-            }
-            return _tasksList;
-        }
-        set
-        {
-            _tasksList = value;
-        }
-    }
+    public Tasks[]? TasksList { get; set; }
 
     [Parameter]
     public PriorityLabel PriorityDisplay { get; set; } = PriorityLabel.Code;
@@ -62,6 +46,15 @@ partial class MonthlyView : CalendarBase
     public EventCallback<DragDropParameter> DropTask { get; set; }
 
     private Tasks? TaskDragged;
+
+    protected override void OnInitialized()
+    {
+        if (TasksList != null)
+        {
+            TasksList = TasksList.OrderBy(x => x.DateStart)
+                                   .ThenByDescending(x => x.DateEnd).ToArray();
+        }
+    }
 
     private async Task HandleClickOutsideCurrentMonthClick(int AddMonth)
     {
