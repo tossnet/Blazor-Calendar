@@ -223,6 +223,18 @@
     align-self: center;
 }
 
+   /* .monthly-task:after {
+        content: '';
+        position: absolute;
+        width: 0px;
+        height: 0px;
+        right: 2px;
+        top: 28%;
+        border-style: solid;
+        border-width: 6px 0 6px 8px;
+        border-color: transparent transparent transparent #4d4d4d7a;
+    }*/
+
 .monthly-task-first {
     align-self: start;
     margin-top: 30px;
@@ -245,43 +257,5 @@
     padding: 4px 8px 4px 12px;
     margin: 5px 10px 0 10px;
 }
-
-/*.monthly-task__detail {
-    position: absolute;
-    left: 0;
-    top: calc(100% + 10px);
-    background: #fff;
-    border: 1px solid rgba(166, 168, 179, 0.2);
-    color: #000;
-    padding: 20px;
-    box-sizing: border-box;
-    border-radius: 4px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-    z-index: 2;
-}*/
-
-
-/*.monthly-task:after, .monthly-task:before {
-    bottom: 100%;
-    left: 30%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-}*/
-
-/*.arrow-right:after {
-    content: "";
-    position: absolute;
-    height: 60%;
-    right: 12px;
-    border-style: solid;
-    border-width: 7px 0 7px 13px;
-    border-color: transparent transparent transparent #c2c2c2;
-}*/
-
-
 
 

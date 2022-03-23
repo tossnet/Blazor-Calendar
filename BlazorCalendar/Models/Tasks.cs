@@ -13,4 +13,5 @@ public class Tasks
     public string? Comment { get; set; } = null;
     public DateTime DateStart { get; set; }
     public DateTime DateEnd { get; set; }
+    public bool NotBeDraggable { get; set; }
 }

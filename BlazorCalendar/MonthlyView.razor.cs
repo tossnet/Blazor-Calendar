@@ -49,11 +49,7 @@ partial class MonthlyView : CalendarBase
 
     protected override void OnInitialized()
     {
-        if (TasksList != null)
-        {
-            TasksList = TasksList.OrderBy(x => x.DateStart)
-                                   .ThenByDescending(x => x.DateEnd).ToArray();
-        }
+        
     }
 
     private async Task HandleClickOutsideCurrentMonthClick(int AddMonth)
