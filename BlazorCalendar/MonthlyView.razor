@@ -100,44 +100,74 @@
                 int x = (Start.Day + OffsetCell - 1) % 7 + 1; 
                 int y = (Start.Day + OffsetCell - 1) / 7 + 2;
                 int s = (int)(End.Date - Start.Date).TotalDays + 1;
-                string row = $"grid-column:{x} / span {s}; grid-row:{y};";
 
-                if ( arrCell[Start.Day] == 0 )
-                {
-                    classPosition = "monthly-task-first";    
-                } 
-                else if ( arrCell[Start.Day] == 1 )
-                {
-                    classPosition = "monthly-task-second";
-                }
+                bool onmMultiLine = false;
 
-                if ( arrCell[Start.Day] < 2 )
-                {   
-                    if ( PriorityDisplay == PriorityLabel.Code )
+                do
+                {
+                    
+                    string row = $"grid-column:{x} / span {s}; grid-row:{y};";
+
+                    if ( arrCell[Start.Day] == 0 )
+                    {
+                        classPosition = "monthly-task-first";    
+                    } 
+                    else if ( arrCell[Start.Day] == 1 )
+                    {
+                        classPosition = "monthly-task-second";
+                    }
+                    
+                    
+                    if ( arrCell[Start.Day] < 2 )
                     {   
-                        taskContent = string.IsNullOrWhiteSpace(t.Code) ? t.Caption : t.Code;
+                        if ( PriorityDisplay == PriorityLabel.Code )
+                        {   
+                            taskContent = string.IsNullOrWhiteSpace(t.Code) ? t.Caption : t.Code;
+                        }
+                        else
+                        {   
+                            taskContent = string.IsNullOrWhiteSpace(t.Caption) ? t.Code : t.Caption;
+                        }
+
+                        taskComment = string.IsNullOrWhiteSpace(t.Comment) ? null : t.Comment;
+
+                        string taskColor = $"background:{t.Color};color:{t.ForeColor}";
+                        <section class="fade-in monthly-task @classPosition" 
+                                 style="@row @taskColor" 
+                                 title="@taskComment"
+                                 draggable="@Draggable.ToString()"
+                                 @onclick="e => ClickTaskInternal(e, t.ID)"
+                                 @ondragstart="() => HandleDragStart(t.ID)">
+                            @taskContent
+                        </section>
                     }
                     else
-                    {   
-                        taskContent = string.IsNullOrWhiteSpace(t.Caption) ? t.Code : t.Caption;
+                    {
+                        // Mode 2 tasks in cell => we display "more..."
+                        <section class="fade-in monthly-more-tasks noselect"
+                                 style="@row" 
+                                 @onclick="e => ClickAllDayInternal(e, Start)">
+                            @($"+ {arrCell[Start.Day]-1} ...")
+                        </section>
                     }
 
-                    taskComment = string.IsNullOrWhiteSpace(t.Comment) ? null : t.Comment;
+                    onmMultiLine = false;
+                    if (x + s > 8) 
+                    {
+                        //s = 8 - x;
+                        onmMultiLine = true;
 
-                    string taskColor = $"background:{t.Color};color:{t.ForeColor}";
-                    <section class="fade-in monthly-task @classPosition" 
-                             style="@row @taskColor" 
-                             title="@taskComment"
-                             draggable="@Draggable.ToString()"
-                             @onclick="e => ClickTaskInternal(e, t.ID)"
-                             @ondragstart="() => HandleDragStart(t.ID)">
-                             @taskContent
-                    </section>
-                }
-                else
-                {
-                    <section class="fade-in monthly-more-tasks noselect" style="@row" @onclick="e => ClickAllDayInternal(e, Start)">@($"+ {arrCell[Start.Day]-1} ...")</section> 
-                }
+                        Start = Start.AddDays(8 - x); 
+                        End = t.DateEnd.Date >= LastDay ? LastDay.AddDays(-1) : t.DateEnd.Date;
+
+                        x = (Start.Day + OffsetCell - 1) % 7 + 1; 
+                        y = (Start.Day + OffsetCell - 1) / 7 + 2;
+                        s = (int)(End.Date - Start.Date).TotalDays + 1;  
+                    }
+
+                } while ( onmMultiLine );
+
+               
 
                 for (var d = Start.Day; d <= End.Day; d++)
                 {     

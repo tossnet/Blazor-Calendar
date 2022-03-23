@@ -28,12 +28,21 @@ public abstract class CalendarBase : ComponentBase
     [Parameter]
     public bool Draggable { get; set; } = false;
 
+    /// <summary>
+    /// Allows the user to change the background color of empty days
+    /// </summary>
     [Parameter]
     public string WeekDaysColor { get; set; } = "#FFF";
 
+    /// <summary>
+    /// Allows the user to change the saturday background color
+    /// </summary>
     [Parameter]
     public string SaturdayColor { get; set; } = "#ECF4FD";
 
+    /// <summary>
+    /// Allows the user to change the sunday background color
+    /// </summary>
     [Parameter]
     public string SundayColor { get; set; } = "#DBE7F8";
 }

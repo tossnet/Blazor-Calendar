@@ -1,15 +1,13 @@
 ﻿@using BlazorCalendar.Models
 @inherits CalendarBase	  
 
-<div class="@Class" Style="@Style">
 <CascadingValue Value="DisplayedView" Name="SelectedView">	
 	<CascadingValue Value="FirstDate" Name="FirstDate">	  
 		<CascadingValue Value="TasksList" Name="TasksList">
 			@ChildContent
 		</CascadingValue>	 
 	</CascadingValue>	 
-</CascadingValue>	   
-</div>
+</CascadingValue>
 
 @code {
 	[Parameter] 
@@ -23,6 +21,5 @@
 
 	[Parameter] 
 	public Tasks[]? TasksList { get; set; }
-
 }
 
