@@ -31,6 +31,11 @@ https://github.com/tossnet/Blazor-Calendar/wiki
 
 ## <a name="ReleaseNotes"></a>Release Notes
 
+### Version 2.2.0
+
+- fix bug
+- added the NotBeDraggable property
+
 ### Version 2.1.0
 
 - css style improvement
