@@ -1,6 +1,10 @@
 # Blazor-Calendar
 [![NuGet](https://img.shields.io/nuget/v/BlazorCalendar.svg)](https://www.nuget.org/packages/BlazorCalendar/)  ![BlazorCalendar Nuget Package](https://img.shields.io/nuget/dt/BlazorCalendar)
 
+For Blazor Server or Blasor WebAssembly
+
+## Live demo
+Blazor webassembly : https://tossnet.github.io/Blazor-Calendar/monthlyview
 
 ![blazorcalendar201](https://user-images.githubusercontent.com/3845786/158783479-35e614fe-fcca-4162-8e64-b5b33338251d.gif)
 
