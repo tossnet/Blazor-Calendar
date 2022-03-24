@@ -26,6 +26,8 @@
     border-bottom: 1px solid rgba(166, 168, 179, 0.12);
     line-height: 40px;
     font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .cellule-disabled {
