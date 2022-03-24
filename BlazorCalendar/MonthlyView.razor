@@ -17,7 +17,7 @@
     if (TasksList != null)
     {
         TasksList = TasksList.OrderBy(x => x.DateStart)
-                                .ThenByDescending(x => x.DateEnd).ToArray();
+                             .ThenByDescending(x => x.DateEnd).ToArray();
     }
 }
 <div class="@isHidden monthly-calendar" style="@Style">
