@@ -46,6 +46,7 @@ partial class MonthlyView : CalendarBase
     public EventCallback<DragDropParameter> DropTask { get; set; }
 
     private Tasks? TaskDragged;
+    private TaskPosition[] occupiedPosition = new TaskPosition[32];
 
     protected override void OnInitialized()
     {

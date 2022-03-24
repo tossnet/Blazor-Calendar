@@ -58,6 +58,9 @@ partial class AnnualView : CalendarBase
     [Parameter]
     public EventCallback<DragDropParameter> DropTask { get; set; }
 
+    [Parameter]
+    public EventCallback<DateTime> HeaderClick { get; set; }
+
     private DateTime m = DateTime.Today;
     private DateTime day = default;
     private Tasks? TaskDragged;
@@ -132,5 +135,10 @@ partial class AnnualView : CalendarBase
         };
 
         await DropTask.InvokeAsync(dragDropParameter);
+    }
+
+    private async Task HandleHeaderClick(DateTime month)
+    {
+        await HeaderClick.InvokeAsync(month);
     }
 }

@@ -3,7 +3,7 @@
 namespace BlazorCalendar.Models;
 
 [DebuggerDisplay("{ID} {Code} {DateStart}")]
-public class Tasks
+public sealed class Tasks
 {
     public int ID { get; set; }
     public string Caption { get; set; }

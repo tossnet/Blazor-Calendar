@@ -86,9 +86,14 @@
         
     @if ( TasksList != null )
     {
-        // arrCell accumulates the number of tasks in a cell
-        int[] arrCell = new int[32]; // If one day, there are 32 days in a month, it will crash :D
-        string classPosition = "";
+        // occupiedPosition accumulates the number of tasks in a cell
+        TaskPosition[] occupiedPosition = new TaskPosition[32]; // If one day, there are 32 days in a month, it will crash :P
+        for (int i = 0; i < 32; ++i)
+        {
+            occupiedPosition[i] = new TaskPosition();
+        }
+
+        string? classPosition;
         string taskContent = "";  
         string? taskComment = null;   
         bool onmMultiLine = false;  
@@ -114,22 +119,32 @@
                 int y = (Start.Day + OffsetCell - 1) / 7 + 2;
                 int s = (int)(End.Date - Start.Date).TotalDays + 1;
 
+                classPosition = null;
+
+                var position = occupiedPosition[Start.Day];
+
+                if ( position.Top == false )
+                {
+                    for (int i = Start.Day; i < Start.Day + s; ++i)
+                    {
+                        occupiedPosition[i].Top = true;
+                    }
+                    classPosition = "monthly-task-first";    
+                } 
+                else if ( position.Center == false )
+                {                                     
+                    for (int i = Start.Day; i < Start.Day + s; ++i)
+                    {
+                        occupiedPosition[i].Center = true;
+                    }
+                    classPosition = "monthly-task-second";
+                }
+
                 do
                 {
-                    
                     string row = $"grid-column:{x} / span {s}; grid-row:{y};";
 
-                    if ( arrCell[Start.Day] == 0 )
-                    {
-                        classPosition = "monthly-task-first";    
-                    } 
-                    else if ( arrCell[Start.Day] == 1 )
-                    {
-                        classPosition = "monthly-task-second";
-                    }
-                    
-                    
-                    if ( arrCell[Start.Day] < 2 )
+                    if ( classPosition != null )
                     {   
                         if ( PriorityDisplay == PriorityLabel.Code )
                         {   
@@ -158,7 +173,7 @@
                         <div class="fade-in monthly-more-tasks noselect"
                                  style="@row" 
                                  @onclick="e => ClickAllDayInternal(e, Start)">
-                            @($"+ {arrCell[Start.Day]-1} ...")
+                            @($"+ {occupiedPosition[Start.Day].Counter-1} ...")
                         </div>
                     }
 
@@ -184,7 +199,7 @@
 
                 for (var d = Start.Day; d <= End.Day; d++)
                 {     
-                    arrCell[d]++;
+                    occupiedPosition[d].Counter++;
                 }
 
             }

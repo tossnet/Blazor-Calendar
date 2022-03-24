@@ -24,6 +24,7 @@
 <CalendarContainer FirstDate="today" TasksList="TasksList.ToArray()"  DisplayedView="DisplayedView.Annual" >
 	<AnnualView Months="months" Style="height:80vh"  
 				PriorityDisplay="@PriorityDisplay"
+				HeaderClick="HeaderClick"
 				TaskClick="TaskClick" EmptyDayClick="EmptyDayClick"
 				Draggable="@draggable" DragStart="DragStart" DropTask="DropTask" />
 </CalendarContainer>
@@ -57,6 +58,11 @@
 	{
 		if (string.IsNullOrEmpty(value)) return;
 		today = DateTime.Parse(value.ToString());
+	}	 
+
+	private void HeaderClick(DateTime month)
+	{
+		fakeConsole = "HeaderClick :" + month.ToString("MMM yyyy");
 	}
 
 	private void ClicMonthNavigate(int monthToAdd)
