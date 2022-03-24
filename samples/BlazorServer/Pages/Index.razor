@@ -2,6 +2,9 @@
 @using BlazorCalendar
 @using BlazorCalendar.Models
 
+
+<PageTitle>Blazor Calendar Samples</PageTitle>
+
 <div class="d-flex flex-row mb-2">
 	<button type="button" @onclick="@(m => ClicMonthNavigate(-1))">◀️</button>  
 	<button type="button" @onclick="@(m => ClicMonthNavigate(1))" class="me-2">▶️</button>
@@ -17,12 +20,14 @@
 	</div>		 
 </div>
 
+
 <CalendarContainer FirstDate="today" TasksList="TasksList.ToArray()"  DisplayedView="DisplayedView.Annual" >
 	<AnnualView Months="months" Style="height:80vh"  
 				PriorityDisplay="@PriorityDisplay"
 				TaskClick="TaskClick" EmptyDayClick="EmptyDayClick"
 				Draggable="@draggable" DragStart="DragStart" DropTask="DropTask" />
 </CalendarContainer>
+
 
 <br />
 <div class="console">@fakeConsole</div>

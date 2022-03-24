@@ -5,11 +5,11 @@
 	<LangVersion>10.0</LangVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>BlazorCalendarTest</RootNamespace>
+    <RootNamespace>BlazorServer</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BlazorCalendar\BlazorCalendar.csproj" />
+    <ProjectReference Include="..\..\BlazorCalendar\BlazorCalendar.csproj" />
   </ItemGroup>
 
 </Project>
