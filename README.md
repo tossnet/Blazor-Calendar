@@ -35,6 +35,12 @@ https://github.com/tossnet/Blazor-Calendar/wiki
 
 ## <a name="ReleaseNotes"></a>Release Notes
 
+### Version 2.3.0
+
+- improved positioning of tasks in the monthly view
+- AnnualView : add new event HeaderClick that returns a DateTime (the month clicked)
+- Improvement of the css responsive 
+
 ### Version 2.2.0
 
 - fix bug
