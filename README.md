@@ -10,7 +10,6 @@ Blazor webassembly : https://tossnet.github.io/Blazor-Calendar/monthlyview
 
 ![monthlyView](https://user-images.githubusercontent.com/3845786/159467420-8140bf09-b24b-4880-91a2-036c9824336a.gif)
 
-
 ## Installation
 Latest version in here: [![NuGet](https://img.shields.io/nuget/v/BlazorCalendar.svg)](https://www.nuget.org/packages/BlazorCalendar/) 
 
