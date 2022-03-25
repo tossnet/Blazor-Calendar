@@ -28,6 +28,7 @@
     font-weight: 500;
     overflow: hidden;
     text-overflow: ellipsis;
+    background:#FFF;
 }
 
 .cellule-disabled {
