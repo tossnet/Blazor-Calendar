@@ -33,28 +33,33 @@ For client-side and server-side Blazor - add script section to _Layout.cshtml (h
 https://github.com/tossnet/Blazor-Calendar/wiki
 
 
+
+
 ## <a name="ReleaseNotes"></a>Release Notes
 
-### Version 2.3.0
+<details open="open"><summary>Version 2.3.0</summary>
+    
+>- improved positioning of tasks in the monthly view.
+>- AnnualView : add new event HeaderClick that returns a DateTime (the month clicked).
+>- Improvement of the css responsive .
+</details>
 
-- improved positioning of tasks in the monthly view
-- AnnualView : add new event HeaderClick that returns a DateTime (the month clicked)
-- Improvement of the css responsive 
+<details><summary>Version 2.2.0</summary>
+    
+>- fix bug.
+>- added the NotBeDraggable property.
+</details>
 
-### Version 2.2.0
+<details><summary>Version 2.1.0</summary>
+    
+>- css style improvement.
+>- Addition of hatching in the cells at the end of the month.
+>- Add a new view called MonthlyView.
+</details>
 
-- fix bug
-- added the NotBeDraggable property
+## ⚠️ Breaking changes ⚠️
 
-### Version 2.1.0
-
-- css style improvement
-- Addition of hatching in the cells at the end of the month
-- Add a new view called MonthlyView
-
-### Version 2.0.0
-⚠️Breaking
-
+<details open="open"><summary>Upgrading from 1.0 to 2.0</summary>
 
 * before version 2 :
 ```html
@@ -75,10 +80,12 @@ https://github.com/tossnet/Blazor-Calendar/wiki
    <AnnualView  Months="months" />
 </CalendarContainer>
 ```
-
-  **Reason**
+   **Reason**
   
   I anticipate creating another monthly view 
+</details>
+
+
 
 ### [RoadMap]
 
