@@ -155,10 +155,16 @@
                             taskContent = string.IsNullOrWhiteSpace(t.Caption) ? t.Code : t.Caption;
                         }
 
+                        // If there is time, add start time at begening
+                        if ( t.DateStart.Hour + t.DateStart.Minute > 0 )
+                        {
+                            taskContent =  $"{t.DateStart.ToString("t")} {taskContent}" ;
+                        }
+
                         taskComment = string.IsNullOrWhiteSpace(t.Comment) ? null : t.Comment;
 
                         string taskColor = $"background:{t.Color};color:{t.ForeColor}";
-                        <div class="fade-in monthly-task @classPosition" 
+                        <div class="fade-in monthly-task cursor-pointer @classPosition" 
                                  style="@row @taskColor" 
                                  title="@taskComment"
                                  draggable="@draggable.ToString()"

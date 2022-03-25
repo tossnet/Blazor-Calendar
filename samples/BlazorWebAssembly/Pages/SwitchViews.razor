@@ -11,10 +11,16 @@
 </div>
 
 <CalendarContainer  DisplayedView="SelectedView"  >
-	<AnnualView />
+	<AnnualView HeaderClick="HeaderClick" HeaderStyle="@HeaderStyle" />
 	<MonthlyView />
 </CalendarContainer>
 
 @code{
-	private BlazorCalendar.DisplayedView SelectedView = DisplayedView.Monthly;
+	private BlazorCalendar.DisplayedView SelectedView = DisplayedView.Annual;
+	private string HeaderStyle = "cursor:pointer";
+
+	private void HeaderClick(DateTime monthclicked)
+	{
+		SelectedView = DisplayedView.Monthly;
+	}
 }

@@ -24,18 +24,14 @@
     @for (var month = 0; month <= Months; month++)
     {
         m = FirstDate.AddMonths(month);
-        var h = new DateTime(m.Year, m.Month, 1);
-        labelMonth = h.ToString("MMMM");
+        var day = new DateTime(m.Year, m.Month, 1);
+        labelMonth = day.ToString("MMMM");
 
         <div class="month-column">
-	        <div class="header-name noselect" style="@HeaderStyle" @onclick="() => HandleHeaderClick(h)">
+	        <div class="header-name noselect" style="@HeaderStyle" @onclick="() => HandleHeaderClick(day)">
                 @labelMonth
             </div>
         
-            @{
-                day = new DateTime(m.Year, m.Month, 1);
-            }
-
             @for (var i = 0; i < 31; i++)
             {
                 CSSbackground = null;

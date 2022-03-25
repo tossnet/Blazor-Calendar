@@ -62,7 +62,6 @@ partial class AnnualView : CalendarBase
     public EventCallback<DateTime> HeaderClick { get; set; }
 
     private DateTime m = DateTime.Today;
-    private DateTime day = default;
     private Tasks? TaskDragged;
 
     private async Task ClickInternal(MouseEventArgs e, DateTime day)

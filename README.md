@@ -36,7 +36,13 @@ https://github.com/tossnet/Blazor-Calendar/wiki
 
 ## <a name="ReleaseNotes"></a>Release Notes
 
-<details open="open"><summary>Version 2.3.0</summary>
+<details open="open"><summary>Version 2.4.0</summary>
+    
+>- add white background of headers.
+>- In the monthlyview, display the start time if it exists.
+</details>
+
+<details><summary>Version 2.3.0</summary>
     
 >- improved positioning of tasks in the monthly view.
 >- AnnualView : add new event HeaderClick that returns a DateTime (the month clicked).
