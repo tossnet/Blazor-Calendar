@@ -86,7 +86,6 @@ https://github.com/tossnet/Blazor-Calendar/wiki
 </details>
 
 
-
 ### [RoadMap]
 
 * set a customizable background color for the current day
