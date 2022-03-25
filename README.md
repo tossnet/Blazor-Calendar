@@ -34,7 +34,6 @@ https://github.com/tossnet/Blazor-Calendar/wiki
 
 
 
-
 ## <a name="ReleaseNotes"></a>Release Notes
 
 <details open="open"><summary>Version 2.3.0</summary>
@@ -84,7 +83,6 @@ https://github.com/tossnet/Blazor-Calendar/wiki
   
   I anticipate creating another monthly view 
 </details>
-
 
 
 ### [RoadMap]
