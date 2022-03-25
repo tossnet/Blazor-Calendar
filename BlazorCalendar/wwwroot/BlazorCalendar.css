@@ -24,7 +24,7 @@
     color: #72777b;
     text-align: center;
     border-bottom: 1px solid rgba(166, 168, 179, 0.12);
-    line-height: 40px;
+    line-height: 6vh;
     font-weight: 500;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -139,7 +139,7 @@
 .monthly-calendar {
     display: grid;
     width: 100%;
-    grid-template-rows: 40px;
+    grid-template-rows: 6vh;
     /*grid-template-columns: repeat(7, minmax(120px, 1fr));
     grid-auto-rows: 120px;*/
     grid-template-columns: repeat(7, minmax(8vw, 1fr));
@@ -151,7 +151,7 @@
     border-bottom: 1px solid rgba(166, 168, 179, 0.12);
     border-right: 1px solid rgba(166, 168, 179, 0.12);
     text-align: right;
-    padding: 10px 12px;
+    padding: 1vh 1vw;
     letter-spacing: 1px;
     font-size: 0.8em;
     box-sizing: border-box;
@@ -229,10 +229,18 @@
     position: relative;
     z-index: 1;
     color: #000;
-    align-self: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-   /* .monthly-task:after {
+@media (max-width: 767.98px) {
+    .monthly-task {
+        padding: 4px 8px 4px 4px;
+        margin: 5px 5px 0 5px;
+    }
+}
+
+    /* .monthly-task:after {
         content: '';
         position: absolute;
         width: 0px;
@@ -244,27 +252,27 @@
         border-color: transparent transparent transparent #4d4d4d7a;
     }*/
 
-.monthly-task-first {
-    align-self: start;
-    margin-top: 30px;
-}
+    .monthly-task-first {
+        align-self: start;
+        margin-top: 30px;
+    }
 
-.monthly-task-second {
-    align-self: center;
-    margin-top: 40px;
-}
+    .monthly-task-second {
+        align-self: center;
+        margin-top: 40px;
+    }
 
-.monthly-more-tasks {
-    position: relative;
-    cursor: zoom-in;
-    align-self: end;
-    margin-top: 40px;
-    font-size: 0.9em;
-    font-weight: 600;
-    color: darkblue;
-    align-self: end;
-    padding: 4px 8px 4px 12px;
-    margin: 5px 10px 0 10px;
-}
+    .monthly-more-tasks {
+        position: relative;
+        cursor: zoom-in;
+        align-self: end;
+        margin-top: 40px;
+        font-size: 0.9em;
+        font-weight: 600;
+        color: darkblue;
+        align-self: end;
+        padding: 4px 8px 4px 12px;
+        margin: 5px 10px 0 10px;
+    }
 
 
