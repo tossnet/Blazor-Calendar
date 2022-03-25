@@ -84,7 +84,6 @@ https://github.com/tossnet/Blazor-Calendar/wiki
   I anticipate creating another monthly view 
 </details>
 
-
 ### [RoadMap]
 
 * set a customizable background color for the current day
