@@ -36,7 +36,14 @@ https://github.com/tossnet/Blazor-Calendar/wiki
 
 ## <a name="ReleaseNotes"></a>Release Notes
 
-<details open="open"><summary>Version 2.4.0</summary>
+<details open="open"><summary>Version 2.4.1</summary>
+    
+>- add white background of headers.
+>- AnnualView : lightly rounded edge.
+>- In the monthlyview, If a task has a line break (next week) the left edge is not displayed anymore.
+</details>
+
+<details><summary>Version 2.4.0</summary>
     
 >- add white background of headers.
 >- In the monthlyview, display the start time if it exists.

@@ -114,6 +114,16 @@
     position: relative;
 }
 
+.border-top {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.border-bottom {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
 .pin:after {
     /*http://apps.eky.hk/css-triangle-generator */
     content: "";
@@ -218,9 +228,7 @@
 }
 
 .monthly-task {
-    border-left-width: 3px;
-    border-left-style: solid;
-    border-left-color: #4d4d4d4c;
+    
     border-radius: 3px;
     padding: 4px 8px 4px 12px;
     margin: 5px 10px 0 10px;
@@ -231,6 +239,12 @@
     color: #000;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.border-start {
+    border-left-width: 3px !important;
+    border-left-style: solid !important;
+    border-left-color: #4d4d4d4c !important;
 }
 
 @media (max-width: 767.98px) {

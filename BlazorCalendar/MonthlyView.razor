@@ -140,6 +140,7 @@
                     classPosition = "monthly-task-second";
                 }
 
+                string borderClass = "border-start";
                 do
                 {
                     string row = $"grid-column:{x} / span {s}; grid-row:{y};";
@@ -164,7 +165,7 @@
                         taskComment = string.IsNullOrWhiteSpace(t.Comment) ? null : t.Comment;
 
                         string taskColor = $"background:{t.Color};color:{t.ForeColor}";
-                        <div class="fade-in monthly-task cursor-pointer @classPosition" 
+                        <div class="fade-in monthly-task @borderClass cursor-pointer @classPosition" 
                                  style="@row @taskColor" 
                                  title="@taskComment"
                                  draggable="@draggable.ToString()"
@@ -194,7 +195,9 @@
 
                         x = (Start.Day + OffsetCell - 1) % 7 + 1; 
                         y = (Start.Day + OffsetCell - 1) / 7 + 2;
-                        s = (int)(End.Date - Start.Date).TotalDays + 1;  
+                        s = (int)(End.Date - Start.Date).TotalDays + 1;
+
+                        borderClass = "";
                     }
 
                 } while ( onmMultiLine );

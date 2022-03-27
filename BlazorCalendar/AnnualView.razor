@@ -15,7 +15,8 @@
     string? ondragover = null;
     string? disabled = null;   
     string? isHidden = DisplayedView == DisplayedView.Annual ? null : "hidden-element";
-    bool NotbeDraggeble = false;
+    bool NotbeDraggeble = false; 
+    string borderStyle = "";
 }
 <div class="frame">
 
@@ -79,6 +80,7 @@
                     classPointer = null;
                     tasksCounter = 0;    
                     ondragover = "event.preventDefault();";
+                    borderStyle = "";
                     if ( TasksList != null )
                     {
                         for (var k = 0; k < TasksList.Length; k++)
@@ -102,6 +104,13 @@
                                 classPin = string.IsNullOrWhiteSpace(t.Comment) ? null : " pin";
                                 classPointer = " cursor-pointer";
                                 NotbeDraggeble = t.NotBeDraggable;
+
+                                if (t.DateStart.Date == j.Date && t.DateEnd.Date != j.Date)
+                                    borderStyle = "border-top";
+                                else if (t.DateEnd.Date == j.Date && t.DateStart.Date != j.Date)  
+                                    borderStyle = "border-bottom";
+                                else if (t.DateEnd.Date == j.Date && t.DateStart.Date == j.Date)     
+                                    borderStyle = "border-top border-bottom";
                             }
                         }   
                     }
@@ -125,7 +134,7 @@
                     <div class="day" style="@CSSbackground">
                         @labelDay
                     </div>
-                    <div class="@($"task{classPin}{classPointer}")" style="@taskColor" title="@taskComment" 
+                    <div class="@($"task{classPin}{classPointer} {borderStyle}")" style="@taskColor" title="@taskComment" 
                         @onclick="e => ClickInternal(e, j)" 
                         @ondragstart="() => HandleDragStart(j, taskID)"
                         draggable="@draggable.ToString()" >
