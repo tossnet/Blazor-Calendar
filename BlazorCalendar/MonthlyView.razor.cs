@@ -132,7 +132,8 @@ partial class MonthlyView : CalendarBase
 
     private async Task HandleDayOnDrop(DateTime day)
     {
-        if (TaskDragged == null) return;
+        if ( !Draggable ) return;
+        if ( TaskDragged == null ) return;
 
         DragDropParameter dragDropParameter = new()
         {
@@ -141,6 +142,8 @@ partial class MonthlyView : CalendarBase
         };
 
         await DropTask.InvokeAsync(dragDropParameter);
+
+        TaskDragged = null;
     }
 
     private string GetBackground(DateTime day)
