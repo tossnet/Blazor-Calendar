@@ -69,9 +69,9 @@ https://github.com/tossnet/Blazor-Calendar/wiki
 >- Add a new view called MonthlyView.
 </details>
 
-## ⚠️ Breaking changes ⚠️
+#### ⚠️ Breaking changes ⚠️
 
-<details open="open"><summary>Upgrading from 1.0 to 2.0</summary>
+<details><summary>Upgrading from 1.0 to 2.0</summary>
 
 * before version 2 :
 ```html
@@ -101,4 +101,3 @@ https://github.com/tossnet/Blazor-Calendar/wiki
 
 * set a customizable background color for the current day
 * Add a list of remarkable days (specific background). The user could send the holidays for example
-* Choice of displaying task times (if they have them)

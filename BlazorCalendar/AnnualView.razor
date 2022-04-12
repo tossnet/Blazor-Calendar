@@ -130,7 +130,7 @@
                     }
                 }  
 
-                <div class=@($"cellule day-cellule noselect {disabled}") style="@CSSbackground" ondragover="@ondragover" @ondrop="() => HandleDayOnDrop(j)">
+                <div class=@($"cellule day-cellule noselect {disabled}") style="@CSSbackground" ondragover="@ondragover" @ondrop="() => HandleDayOnDrop(j)" @ondrop:preventDefault="true">
                     <div class="day" style="@CSSbackground">
                         @labelDay
                     </div>

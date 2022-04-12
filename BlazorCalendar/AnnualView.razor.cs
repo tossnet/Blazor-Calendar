@@ -109,6 +109,8 @@ partial class AnnualView : CalendarBase
 
     private async Task HandleDragStart(DateTime day, int taskID) 
     {
+        if (taskID < 0) return;
+
         TaskDragged = new Tasks()
         {
             ID = taskID
@@ -134,6 +136,8 @@ partial class AnnualView : CalendarBase
         };
 
         await DropTask.InvokeAsync(dragDropParameter);
+
+        TaskDragged = null;
     }
 
     private async Task HandleHeaderClick(DateTime month)
