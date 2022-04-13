@@ -178,7 +178,7 @@
                     {
                         // Mode 2 tasks in cell => we display "more..."
                         <div class="fade-in monthly-more-tasks noselect"
-                                 style="@row" 
+                                 style=@($"grid-column:{x} / span 1; grid-row:{y}; @row @GetBackground(Start)") 
                                  @onclick="e => ClickAllDayInternal(e, Start)">
                             @($"+ {occupiedPosition[Start.Day].Counter-1} ...")
                         </div>
@@ -187,7 +187,6 @@
                     onmMultiLine = false;
                     if (x + s > 8) 
                     {
-                        //s = 8 - x;
                         onmMultiLine = true;
 
                         Start = Start.AddDays(8 - x); 
