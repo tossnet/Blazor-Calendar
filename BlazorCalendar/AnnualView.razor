@@ -1,4 +1,6 @@
 ﻿@using BlazorCalendar.Models
+@using BlazorCalendar.Styles
+
 @inherits CalendarBase
 
 @{
@@ -99,7 +101,10 @@
                                 {   
                                     taskContent = string.IsNullOrWhiteSpace(t.Caption) ? t.Code : t.Caption;
                                 }
-                                taskColor = $"background:{t.Color};color:{t.ForeColor}";
+
+                                taskColor = Colors.GetHatching(t.FillStyle, t.Color);
+                                taskColor = $"{taskColor};color:{t.ForeColor}";
+
                                 taskComment = t.Comment;
                                 classPin = string.IsNullOrWhiteSpace(t.Comment) ? null : " pin";
                                 classPointer = " cursor-pointer";

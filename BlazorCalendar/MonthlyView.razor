@@ -1,5 +1,7 @@
 ﻿@using System.Globalization
 @using BlazorCalendar.Models
+@using BlazorCalendar.Styles
+
 @inherits CalendarBase
 
 @{
@@ -164,7 +166,9 @@
 
                         taskComment = string.IsNullOrWhiteSpace(t.Comment) ? null : t.Comment;
 
-                        string taskColor = $"background:{t.Color};color:{t.ForeColor}";
+                        string taskColor = Colors.GetHatching(t.FillStyle, t.Color);
+                        taskColor = taskColor + $"color:{t.ForeColor}";
+
                         <div class="fade-in monthly-task @borderClass cursor-pointer @classPosition" 
                                  style="@row @taskColor" 
                                  title="@taskComment"

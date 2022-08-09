@@ -1,4 +1,5 @@
-﻿namespace BlazorCalendar;
+﻿using System.ComponentModel;
+namespace BlazorCalendar;
 
 public enum PriorityLabel
 {
@@ -10,4 +11,18 @@ public enum DisplayedView
 {
     Annual = 0,
     Monthly = 1
+}
+
+public enum FillStyleEnum
+{
+    [Description("fill")]
+    Fill = 0,
+    [Description("backwardDiagonal")]
+    BackwardDiagonal = 1,
+    [Description("zigZag")]
+    ZigZag = 2,
+    [Description("triangles")]
+    Triangles = 3,
+    [Description("crossDots")]
+    CrossDots = 4
 }

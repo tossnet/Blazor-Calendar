@@ -36,16 +36,23 @@ https://github.com/tossnet/Blazor-Calendar/wiki
 
 ## <a name="ReleaseNotes"></a>Release Notes
 
+<details open="open"><summary>Version 2.5.0</summary>
+ 
+>- new property "FillStyle" (Fill, BackwardDiagonal, ZigZag, Triangles, CrossDots)
+</details>
 
-<details open="open"><summary>Version 2.4.4</summary>
+<details><summary>Version 2.4.4</summary>
+
 >- Issue #3
 </details>
 
 <details><summary>Version 2.4.3</summary> 
+
 >- Monthly View : we could move a task even if we didn't allow the move
 </details>
 
 <details><summary>Version 2.4.2</summary>
+
 >- Issue #2
 </details>
 
@@ -57,22 +64,26 @@ https://github.com/tossnet/Blazor-Calendar/wiki
 </details>
 
 <details><summary>Version 2.4.0</summary>
+
 >- add white background of headers.
 >- In the monthlyview, display the start time if it exists.
 </details>
 
 <details><summary>Version 2.3.0</summary>
+
 >- improved positioning of tasks in the monthly view.
 >- AnnualView : add new event HeaderClick that returns a DateTime (the month clicked).
 >- Improvement of the css responsive .
 </details>
 
 <details><summary>Version 2.2.0</summary>
+
 >- fix bug.
 >- added the NotBeDraggable property.
 </details>
 
 <details><summary>Version 2.1.0</summary>   
+
 >- css style improvement.
 >- Addition of hatching in the cells at the end of the month.
 >- Add a new view called MonthlyView.

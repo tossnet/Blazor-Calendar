@@ -10,6 +10,7 @@ public sealed class Tasks
     public string Code { get; set; }
     public string Color { get; set; }
     public string? ForeColor { get; set; } = null;
+    public FillStyleEnum FillStyle { get; set; }
     public string? Comment { get; set; } = null;
     public DateTime DateStart { get; set; }
     public DateTime DateEnd { get; set; }
