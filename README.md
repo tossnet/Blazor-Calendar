@@ -36,7 +36,14 @@ https://github.com/tossnet/Blazor-Calendar/wiki
 
 ## <a name="ReleaseNotes"></a>Release Notes
 
-<details open="open"><summary>Version 2.5.0</summary>
+
+<details open="open"><summary>Version 2.5.1</summary>
+ 
+>- add new prop named (int) Type  
+>- annualView : return the day on the event ClickEmptyDayParameter
+</details>
+
+<details><summary>Version 2.5.0</summary>
  
 >- new property "FillStyle" (Fill, BackwardDiagonal, ZigZag, Triangles, CrossDots)
 </details>
