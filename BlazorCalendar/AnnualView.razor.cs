@@ -89,8 +89,9 @@ partial class AnnualView : CalendarBase
             {
                 IDList = listID,
                 X = e.ClientX,
-                Y = e.ClientY
-            };
+                Y = e.ClientY,
+				Day = day
+			};
 
             await TaskClick.InvokeAsync(clickTaskParameter);
         }

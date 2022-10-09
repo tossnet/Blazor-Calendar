@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
+﻿namespace BlazorCalendar.Models;
 
-namespace BlazorCalendar.Models;
+using System.Diagnostics;
 
 [DebuggerDisplay("{ID} {Code} {DateStart}")]
 public sealed class Tasks
@@ -15,4 +15,5 @@ public sealed class Tasks
     public DateTime DateStart { get; set; }
     public DateTime DateEnd { get; set; }
     public bool NotBeDraggable { get; set; }
+	public int Type { get; set; }
 }
