@@ -59,7 +59,7 @@ partial class MonthlyView : CalendarBase
     }
 
 
-    private async Task ClickTaskInternal(MouseEventArgs e, int taskID)
+    private async Task ClickTaskInternal(MouseEventArgs e, int taskID, DateTime day)
     {
         List<int> listID = new();
         listID.Add(taskID);
@@ -68,7 +68,8 @@ partial class MonthlyView : CalendarBase
         {
             IDList = listID,
             X = e.ClientX,
-            Y = e.ClientY
+            Y = e.ClientY,
+            Day = day
         };
 
         await TaskClick.InvokeAsync(clickTaskParameter);
@@ -96,7 +97,8 @@ partial class MonthlyView : CalendarBase
             {
                 IDList = listID,
                 X = e.ClientX,
-                Y = e.ClientY
+                Y = e.ClientY,
+                Day = day
             };
 
             await TaskClick.InvokeAsync(clickTaskParameter);
