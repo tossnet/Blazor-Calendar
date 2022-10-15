@@ -38,8 +38,7 @@ https://github.com/tossnet/Blazor-Calendar/wiki
 
 
 <details open="open"><summary>Version 2.5.2</summary>
- 
->- add new prop named (int) Type  
+
 >- MonthlyView : return the day on the event ClickEmptyDayParameter. [Merge #5](https://github.com/tossnet/Blazor-Calendar/pull/5)
 </details>
 
