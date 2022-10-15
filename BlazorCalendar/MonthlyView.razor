@@ -173,7 +173,7 @@
                                  style="@row @taskColor" 
                                  title="@taskComment"
                                  draggable="@draggable.ToString()"
-                                 @onclick="e => ClickTaskInternal(e, t.ID)"
+                                 @onclick="e => ClickTaskInternal(e, t.ID, Start)"
                                  @ondragstart="() => HandleDragStart(t.ID)">
                             @taskContent
                         </div>
