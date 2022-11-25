@@ -13,7 +13,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>blazor, calendar, schedule, component</PackageTags>
     <PackageReleaseNotes>https://github.com/tossnet/Blazor-Calendar#release-notes</PackageReleaseNotes>
-    <Version>2.5.1</Version>
+    <Version>2.5.3</Version>
     <Authors>Christophe Peugnet</Authors>
   </PropertyGroup>
 
@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.11" />
   </ItemGroup>
 
   <ItemGroup>
