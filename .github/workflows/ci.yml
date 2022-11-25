@@ -1,0 +1,46 @@
+name: 'Publish application'
+on: push
+
+jobs:
+  build:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    runs-on: ubuntu-latest
+    
+    env:
+     PUBLISH_FOLDER: Blazor-Calendar/bin/Release/net6.0/publish/wwwroot
+
+    name: Build and Deploy Job
+    steps:
+      - name: Set the name of the repo in env variable 
+        run: 
+            echo "REPO_NAME=${{ github.event.repository.name }}" >> $GITHUB_ENV
+        
+      - uses: actions/checkout@v2
+      
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
+   
+      - name: Dotnet Publish
+        run: 
+            dotnet publish  --configuration Release
+
+      - name: Change base-tag in index.html to repo name
+        run: sed -i 's/<base href="\/" \/>/<base href="\/${{ env.REPO_NAME }}\/" \/>/g' $GITHUB_WORKSPACE/$PUBLISH_FOLDER/index.html
+  
+      - name: copy index.html to 404.html
+        run: cp $GITHUB_WORKSPACE/$PUBLISH_FOLDER/index.html $GITHUB_WORKSPACE/$PUBLISH_FOLDER/404.html
+      
+      - name: Add .nojekyll file
+        run: touch $PUBLISH_FOLDER/.nojekyll
+        
+      - name: Deploy GitHub Pages action
+        if: ${{ github.ref == 'refs/heads/master' }}
+        uses: peaceiris/actions-gh-pages@v3.6.1
+        with:
+            github_token: ${{ secrets.PUBLISH_TOKEN }}
+            publish_branch: gh-pages
+            publish_dir: /${{ env.PUBLISH_FOLDER }}
+            allow_empty_commit: false
+            keep_files: false
+            force_orphan: true
