@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-     PUBLISH_FOLDER: Blazor-Calendar/bin/Release/net6.0/publish/wwwroot
+     PUBLISH_FOLDER: Blazor-Calendar/samples/BlazorWebAssembly/bin/Release/net6.0/publish/wwwroot
 
     name: Build and Deploy Job
     steps:
