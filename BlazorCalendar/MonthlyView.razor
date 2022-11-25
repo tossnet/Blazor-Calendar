@@ -182,7 +182,7 @@
                     {
                         // Mode 2 tasks in cell => we display "more..."
                         <div class="fade-in monthly-more-tasks noselect"
-                                 style=@($"grid-column:{x} / span 1; grid-row:{y}; @row @GetBackground(Start)") 
+                                 style=@($"grid-column:{x} / span 1; grid-row:{y}; {@GetBackground(Start)}") 
                                  @onclick="e => ClickAllDayInternal(e, Start)">
                             @($"+ {occupiedPosition[Start.Day].Counter-1} ...")
                         </div>
