@@ -35,7 +35,7 @@ jobs:
         run: touch $PUBLISH_FOLDER/.nojekyll
         
       - name: Deploy GitHub Pages action
-        if: ${{ github.ref == 'refs/heads/master' }}
+        if: ${{ github.ref == 'refs/heads/main' }}
         uses: peaceiris/actions-gh-pages@v3.6.1
         with:
             github_token: ${{ secrets.PUBLISH_TOKEN }}
