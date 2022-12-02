@@ -36,8 +36,18 @@ https://github.com/tossnet/Blazor-Calendar/wiki
 
 ## <a name="ReleaseNotes"></a>Release Notes
 
+<details open="open"><summary>Version 2.5.3</summary>
 
-<details open="open"><summary>Version 2.5.1</summary>
+>- MonthlyView : fix: duplication of the number of additional tasks [Merge #7](https://github.com/tossnet/Blazor-Calendar/pull/7)
+</details>
+
+
+<details><summary>Version 2.5.2</summary>
+
+>- MonthlyView : return the day on the event ClickEmptyDayParameter. [Merge #5](https://github.com/tossnet/Blazor-Calendar/pull/5)
+</details>
+
+<details><summary>Version 2.5.1</summary>
  
 >- add new prop named (int) Type  
 >- annualView : return the day on the event ClickEmptyDayParameter
