@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-     PUBLISH_FOLDER: samples/BlazorWebAssembly/bin/Release/net6.0/publish/wwwroot
+     PUBLISH_FOLDER: samples/BlazorWebAssembly/bin/Release/net7.0/publish/wwwroot
 
     name: Build and Deploy Job
     steps:
@@ -19,7 +19,7 @@ jobs:
       
       - uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: '7.x'
    
       - name: Dotnet Publish
         run: 
