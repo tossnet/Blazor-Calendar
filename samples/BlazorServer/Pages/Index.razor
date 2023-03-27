@@ -6,8 +6,8 @@
 <PageTitle>Blazor Calendar Samples</PageTitle>
 
 <div class="d-flex flex-row mb-2">
-	<button type="button" @onclick="@(m => ClicMonthNavigate(-1))">◀️</button>  
-	<button type="button" @onclick="@(m => ClicMonthNavigate(1))" class="me-2">▶️</button>
+	<button type="button" @onclick="@(m => ClicMonthNavigate(-1))" class="btn">◀️</button>
+	<button type="button" @onclick="@(m => ClicMonthNavigate(1))" class="btn me-2">▶️</button>
 	<input type="date" class="me-2" value="@(today.ToString("yyyy-MM-dd"))" @onchange="@(e => ChangeFirstDate(e.Value.ToString()))" />
 	<input type="number" class="me-2" min="1" @bind-value="months">
 	<select @bind="@PriorityDisplay" class="me-2">

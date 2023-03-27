@@ -7,13 +7,15 @@
 @{
     FirstDate = new DateTime(FirstDate.Year, FirstDate.Month, 1);
     int firstDayWeek = (int)FirstDate.DayOfWeek;
-    int State = 0; // 0 Before , 1 'in' Month, 2 After
+    StateCase State = StateCase.Before; 
     DateTime LastDay = new DateTime(FirstDate.Year, FirstDate.Month, 1).AddMonths(1);
     DateTime DayCounter = FirstDate;
+    DateTime Today = DateTime.Today;
     string[] dayNames = CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedDayNames;
     int OffsetCell = 0;
     string? isHidden = DisplayedView == DisplayedView.Monthly ? null : "hidden-element"; 
     string? CSSbackground = null;
+    string? CSSToday = null;
 
     // The sorting must be done each time we redraw in case the user moves the spots
     if (TasksList != null)
@@ -22,6 +24,7 @@
                              .ThenByDescending(x => x.DateEnd).ToArray();
     }
 }
+
 <div class="@isHidden monthly-calendar" style="@Style">
         
     @for (var i = 0; i < 7; i++)
@@ -35,19 +38,19 @@
 
     @for ( var i = 0; i < 40; i++ )
     {   
-        if ( State == 0 ) // First empty cells part
+        if ( State == StateCase.Before ) 
         {
             if ( firstDayWeek == Dates.GetNumOfDay(i) )  // Cell is first day?
             {
-                State = 1; // Start filling days   
+                State = StateCase.InMonth; // Start filling days
                 var dayClick = DayCounter;
                 CSSbackground = GetBackground(dayClick);
                 <div class="fade-in monthly-day noselect" 
-                    style="@CSSbackground"
-                    ondragover="event.preventDefault();"
-                    @onclick="e => ClickDayInternal(e, dayClick)" 
-                    @ondrop="() => HandleDayOnDrop(dayClick)">
-                    @(DayCounter.Day.ToString())
+                     style="@CSSbackground"
+                     ondragover="event.preventDefault();"
+                     @onclick="e => ClickDayInternal(e, dayClick)" 
+                     @ondrop="() => HandleDayOnDrop(dayClick)">
+                     @(DayCounter.Day.ToString())
                 </div>
                 DayCounter = DayCounter.AddDays(1);
                 OffsetCell = i;
@@ -55,41 +58,51 @@
             else
             {
                 // Still empty cells
-                <div class="monthly-day monthly-day--disabled cursor-top" @onclick="() => HandleClickOutsideCurrentMonthClick(-1)"></div>
+                <div class="monthly-day monthly-day--disabled cursor-top" 
+                     @onclick="() => HandleClickOutsideCurrentMonthClick(-1)">
+                </div>
             }
         }
-        if ( State == 1 )
+        if ( State == StateCase.InMonth )
         {
             if ( DayCounter >= LastDay ) // Stop at last day
             {
-                State = 2;
+                State = StateCase.After;
                 // Again empty cells from here on
-                <div class="monthly-day monthly-day--disabled cursor-bottom" @onclick="() => HandleClickOutsideCurrentMonthClick(1)"></div>
+                <div class="monthly-day monthly-day--disabled cursor-bottom" 
+                     @onclick="() => HandleClickOutsideCurrentMonthClick(1)">
+                </div>
             }
             else
             {
-                var _dayClick = DayCounter;
+                DateTime _dayClick = DayCounter;
                 CSSbackground = GetBackground(_dayClick);
-                <div class="fade-in monthly-day noselect" 
-                    style="@CSSbackground"
-                    ondragover="event.preventDefault();"
-                    @onclick="e => ClickDayInternal(e, _dayClick)" 
-                    @ondrop="() => HandleDayOnDrop(_dayClick)">
-                    @(DayCounter.Day.ToString())
+                if (HighlightToday)
+                {
+                    CSSToday = DayCounter == Today ? "monthly-today" : null;
+                }
+
+                <div class="fade-in monthly-day noselect @CSSToday"
+                     style="@CSSbackground"
+                     ondragover="event.preventDefault();"
+                     @onclick="e => ClickDayInternal(e, _dayClick)" 
+                     @ondrop="() => HandleDayOnDrop(_dayClick)">
+                     @(DayCounter.Day.ToString())
                 </div>
                 DayCounter = DayCounter.AddDays(1);
             }
         }
-        if ( State == 2 )
+        if ( State == StateCase.After )
         {
-            <div class="monthly-day monthly-day--disabled cursor-bottom" @onclick="() => HandleClickOutsideCurrentMonthClick(1)"></div>
+            <div class="monthly-day monthly-day--disabled cursor-bottom" 
+                 @onclick="() => HandleClickOutsideCurrentMonthClick(1)"></div>
         }
     }
         
     @if ( TasksList != null )
     {
         // occupiedPosition accumulates the number of tasks in a cell
-        TaskPosition[] occupiedPosition = new TaskPosition[32]; // If one day, there are 32 days in a month, it will crash :P
+        var occupiedPosition = new TaskPosition[32]; // If one day, there are 32 days in a month, it will crash :P
         for (int i = 0; i < 32; ++i)
         {
             occupiedPosition[i] = new TaskPosition();
@@ -170,11 +183,11 @@
                         taskColor = taskColor + $"color:{t.ForeColor}";
 
                         <div class="fade-in monthly-task @borderClass cursor-pointer @classPosition" 
-                                 style="@row @taskColor" 
-                                 title="@taskComment"
-                                 draggable="@draggable.ToString()"
-                                 @onclick="e => ClickTaskInternal(e, t.ID, Start)"
-                                 @ondragstart="() => HandleDragStart(t.ID)">
+                             style="@row @taskColor" 
+                             title="@taskComment"
+                             draggable="@draggable.ToString()"
+                             @onclick="e => ClickTaskInternal(e, t.ID, Start)"
+                             @ondragstart="() => HandleDragStart(t.ID)">
                             @taskContent
                         </div>
                     }
@@ -182,8 +195,8 @@
                     {
                         // Mode 2 tasks in cell => we display "more..."
                         <div class="fade-in monthly-more-tasks noselect"
-                                 style=@($"grid-column:{x} / span 1; grid-row:{y}; {@GetBackground(Start)}") 
-                                 @onclick="e => ClickAllDayInternal(e, Start)">
+                             style=@($"grid-column:{x} / span 1; grid-row:{y}; {@GetBackground(Start)}") 
+                             @onclick="e => ClickAllDayInternal(e, Start)">
                             @($"+ {occupiedPosition[Start.Day].Counter-1} ...")
                         </div>
                     }

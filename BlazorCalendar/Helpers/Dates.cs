@@ -1,8 +1,8 @@
-﻿using System.Globalization;
+﻿namespace BlazorCalendar;
 
-namespace BlazorCalendar;
+using System.Globalization;
 
-public class Dates
+public sealed class Dates
 {
     public static int GetNumOfDay(int numOfDay)
     {

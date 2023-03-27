@@ -1,8 +1,9 @@
-﻿using BlazorCalendar.Models;
+﻿namespace BlazorCalendar;
+
+using BlazorCalendar.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
-namespace BlazorCalendar;
 
 partial class AnnualView : CalendarBase
 {
@@ -85,26 +86,33 @@ partial class AnnualView : CalendarBase
 
         if (listID.Count > 0)
         {
-            ClickTaskParameter clickTaskParameter = new()
-            {
-                IDList = listID,
-                X = e.ClientX,
-                Y = e.ClientY,
-				Day = day
-			};
+            if (TaskClick.HasDelegate)
+			{
+				ClickTaskParameter clickTaskParameter = new()
+				{
+					IDList = listID,
+					X = e.ClientX,
+					Y = e.ClientY,
+					Day = day
+				};
 
-            await TaskClick.InvokeAsync(clickTaskParameter);
+				await TaskClick.InvokeAsync(clickTaskParameter);
+			}
         }
         else
         {
-            ClickEmptyDayParameter clickEmptyDayParameter = new()
+            if (EmptyDayClick.HasDelegate)
             {
-                Day = day,
-                X = e.ClientX,
-                Y = e.ClientY
-            };
 
-            await EmptyDayClick.InvokeAsync(clickEmptyDayParameter);
+				ClickEmptyDayParameter clickEmptyDayParameter = new()
+				{
+					Day = day,
+					X = e.ClientX,
+					Y = e.ClientY
+				};
+
+				await EmptyDayClick.InvokeAsync(clickEmptyDayParameter);
+			}
         }
     }
 
@@ -143,6 +151,8 @@ partial class AnnualView : CalendarBase
 
     private async Task HandleHeaderClick(DateTime month)
     {
+        if (!HeaderClick.HasDelegate) return;
+
         await HeaderClick.InvokeAsync(month);
     }
 }

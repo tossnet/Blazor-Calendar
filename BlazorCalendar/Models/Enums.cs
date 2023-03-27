@@ -1,5 +1,6 @@
-﻿using System.ComponentModel;
-namespace BlazorCalendar;
+﻿namespace BlazorCalendar;
+
+using System.ComponentModel;
 
 public enum PriorityLabel
 {

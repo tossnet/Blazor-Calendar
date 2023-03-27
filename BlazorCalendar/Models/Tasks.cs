@@ -6,6 +6,7 @@ using System.Diagnostics;
 public sealed class Tasks
 {
     public int ID { get; set; }
+    public string? Key { get; set; }
     public string Caption { get; set; }
     public string Code { get; set; }
     public string Color { get; set; }

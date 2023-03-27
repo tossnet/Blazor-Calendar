@@ -1,8 +1,8 @@
-﻿using BlazorCalendar.Models;
+﻿namespace BlazorCalendar;
+
+using BlazorCalendar.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-
-namespace BlazorCalendar;
 
 partial class MonthlyView : CalendarBase
 {
@@ -31,6 +31,9 @@ partial class MonthlyView : CalendarBase
     public PriorityLabel PriorityDisplay { get; set; } = PriorityLabel.Code;
 
     [Parameter]
+    public bool HighlightToday { get; set; } = false;
+
+    [Parameter]
     public EventCallback<int> OutsideCurrentMonthClick { get; set; }
 
     [Parameter]
@@ -46,25 +49,33 @@ partial class MonthlyView : CalendarBase
     public EventCallback<DragDropParameter> DropTask { get; set; }
 
     private Tasks? TaskDragged;
-    private TaskPosition[] occupiedPosition = new TaskPosition[32];
 
-    protected override void OnInitialized()
+    private enum StateCase
     {
-        
+        Before = 0, // First empty cells part
+        InMonth = 1,
+        After = 2,
     }
 
     private async Task HandleClickOutsideCurrentMonthClick(int AddMonth)
     {
-        await OutsideCurrentMonthClick.InvokeAsync(AddMonth);
+        if (OutsideCurrentMonthClick.HasDelegate)
+		{
+			await OutsideCurrentMonthClick.InvokeAsync(AddMonth);
+		}
     }
 
 
     private async Task ClickTaskInternal(MouseEventArgs e, int taskID, DateTime day)
     {
-        List<int> listID = new();
-        listID.Add(taskID);
+        if (!TaskClick.HasDelegate) return;
+ 
+		List<int> listID = new()
+		{
+			taskID
+		};
 
-        ClickTaskParameter clickTaskParameter = new()
+		ClickTaskParameter clickTaskParameter = new()
         {
             IDList = listID,
             X = e.ClientX,
@@ -79,8 +90,10 @@ partial class MonthlyView : CalendarBase
     {
         if (day == default) return;
 
-        // There can be several tasks in one day :
-        List<int> listID = new();
+		if (!TaskClick.HasDelegate) return;
+
+		// There can be several tasks in one day :
+		List<int> listID = new();
         if (TasksList != null)
         {
             for (var k = 0; k < TasksList.Length; k++)
@@ -107,7 +120,9 @@ partial class MonthlyView : CalendarBase
 
     private async Task ClickDayInternal(MouseEventArgs e, DateTime day)
     {
-        ClickEmptyDayParameter clickEmptyDayParameter = new()
+		if (!DayClick.HasDelegate) return;
+
+		ClickEmptyDayParameter clickEmptyDayParameter = new()
         {
             Day = day,
             X = e.ClientX,
@@ -160,9 +175,7 @@ partial class MonthlyView : CalendarBase
         {
             return $"background:{SundayColor}";
         }
-        else
-        {
-            return $"background:{WeekDaysColor}";
-        }
+        
+        return $"background:{WeekDaysColor}";
     }
 }

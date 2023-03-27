@@ -3,9 +3,10 @@
 @using BlazorCalendar.Models
 @using System.Globalization
 
-<div class="d-flex flex-row mb-2"> 
-	<button type="button" @onclick="@(m => ClicMonthNavigate(-1))">🔼</button>  
-	<button type="button" @onclick="@(m => ClicMonthNavigate(1))" class="me-2">🔽</button>
+<div class="d-flex flex-row mb-2">
+	<button type="button" @onclick="GoToday" class="btn">📅 Go Today</button>
+	<button type="button" @onclick="@(m => ClicMonthNavigate(-1))" class="btn">🔼</button>
+	<button type="button" @onclick="@(m => ClicMonthNavigate(1))" class="btn me-2">🔽</button>
 	<input type="date" class="me-2" value="@(today.ToString("yyyy-MM-dd"))" @onchange="@(e => ChangeFirstDate(e.Value.ToString()))" />
 	<select @bind="@PriorityDisplay" class="me-2">
 		<option value="@PriorityLabel.Code" selected>priority Code</option>
@@ -17,11 +18,17 @@
 	</div>	
 </div>
 
-<CalendarContainer FirstDate="today" TasksList="TasksList.ToArray()" DisplayedView="DisplayedView.Monthly">
+<CalendarContainer FirstDate="today" 
+	               TasksList="TasksList.ToArray()" 
+				   DisplayedView="DisplayedView.Monthly">
 	<MonthlyView PriorityDisplay="@PriorityDisplay"
-				OutsideCurrentMonthClick="OutsideCurrentMonthClick"
-				TaskClick="TaskClick" DayClick="DayClick" 
-				Draggable="@draggable" DragStart="DragStart" DropTask="DropTask" />
+				 OutsideCurrentMonthClick="OutsideCurrentMonthClick"
+				 TaskClick="TaskClick" 
+				 DayClick="DayClick" 
+			     Draggable="@draggable" 
+				 DragStart="DragStart" 
+				 DropTask="DropTask"
+				 HighlightToday="true" />
 </CalendarContainer>
 
 <br />
@@ -39,7 +46,7 @@
 	{
 		//CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("dz-DZ");
 		//CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
-   
+
 		TasksList = new()
 		{			 																																				
 			new Tasks { ID = 0, DateStart = today.AddDays(0), DateEnd = today.AddDays(1), Code = "HELLO", Color = "#FFD800", Caption = "Lorem ipsum dolor sit amet", FillStyle = FillStyleEnum.BackwardDiagonal },		  
@@ -53,15 +60,18 @@
 			new Tasks { ID = 8, DateStart = today.AddDays(45).AddHours(8), DateEnd = today.AddDays(45).AddHours(9), Code = "MEETING", Color = "#2DD7D7", Comment="Julien's test" },
 			new Tasks { ID = 9, DateStart = today.AddDays(-8), DateEnd = today.AddDays(-7), Code = "MEET⭐", Color = "#0d6efd",Caption = "MTG:France" }
 		};
-		
-		
 	}
 
 	private void ChangeFirstDate(string value)
 	{
 		if (string.IsNullOrEmpty(value)) return;
 		today = DateTime.Parse(value.ToString());
-	}	  
+	}	
+
+	private void GoToday()
+	{
+		today = DateTime.Today;
+	}
 
 	private void ClicMonthNavigate(int monthToAdd)
     {

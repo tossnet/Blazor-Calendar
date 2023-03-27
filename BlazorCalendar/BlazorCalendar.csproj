@@ -6,17 +6,16 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Description>annual calendar for Blazor application</Description>
-    <Copyright>Copyright 2022</Copyright>
+    <Copyright>Copyright 2023</Copyright>
     <PackageProjectUrl>https://github.com/tossnet/Blazor-Calendar</PackageProjectUrl>
     <PackageIcon>icon.png</PackageIcon>
     <RepositoryUrl>https://github.com/tossnet/Blazor-Calendar</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>blazor, calendar, schedule, component</PackageTags>
     <PackageReleaseNotes>https://github.com/tossnet/Blazor-Calendar#release-notes</PackageReleaseNotes>
-    <Version>2.6.0</Version>
+    <Version>2.6.1</Version>
     <Authors>Christophe Peugnet</Authors>
-
-	  <DebugType>embedded</DebugType>
+	<DebugType>embedded</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.4" />
   </ItemGroup>
 
   <ItemGroup>
