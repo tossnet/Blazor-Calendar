@@ -36,7 +36,12 @@ https://github.com/tossnet/Blazor-Calendar/wiki
 
 ## <a name="ReleaseNotes"></a>Release Notes
 
-<details open="open"><summary>Version 2.5.3</summary>
+<details open="open"><summary>Version 2.6.1</summary>
+
+>- MonthlyView : new property HighlightToday (boolean)  [Merge #9](https://github.com/tossnet/Blazor-Calendar/pull/9)
+</details>
+
+<details><summary>Version 2.5.3</summary>
 
 >- MonthlyView : fix: duplication of the number of additional tasks [Merge #7](https://github.com/tossnet/Blazor-Calendar/pull/7)
 </details>
