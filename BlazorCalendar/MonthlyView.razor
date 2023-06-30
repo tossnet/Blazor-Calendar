@@ -136,7 +136,7 @@
 
                 classPosition = null;
 
-                var position = occupiedPosition[Start.Day];
+                TaskPosition position = occupiedPosition[Start.Day];
 
                 if ( position.Top == false )
                 {
@@ -153,6 +153,14 @@
                         occupiedPosition[i].Center = true;
                     }
                     classPosition = "monthly-task-second";
+                }
+                else if (position.Bottom == false)
+                {
+                    for (int i = Start.Day; i < Start.Day + s; ++i)
+                    {
+                        occupiedPosition[i].Bottom = true;
+                    }
+                    classPosition = "monthly-task-bottom";
                 }
 
                 string borderClass = "border-start";
@@ -180,7 +188,10 @@
                         taskComment = string.IsNullOrWhiteSpace(t.Comment) ? null : t.Comment;
 
                         string taskColor = Colors.GetHatching(t.FillStyle, t.Color);
-                        taskColor = taskColor + $"color:{t.ForeColor}";
+                        if (!String.IsNullOrEmpty(t.ForeColor))
+                        {
+                            taskColor = taskColor + $"color:{t.ForeColor}";
+                        }
 
                         <div class="fade-in monthly-task @borderClass cursor-pointer @classPosition" 
                              style="@row @taskColor" 
@@ -197,7 +208,7 @@
                         <div class="fade-in monthly-more-tasks noselect"
                              style=@($"grid-column:{x} / span 1; grid-row:{y}; {@GetBackground(Start)}") 
                              @onclick="e => ClickAllDayInternal(e, Start)">
-                            @($"+ {occupiedPosition[Start.Day].Counter-1} ...")
+                            @($"+ {occupiedPosition[Start.Day].Counter - 2} ...")
                         </div>
                     }
 

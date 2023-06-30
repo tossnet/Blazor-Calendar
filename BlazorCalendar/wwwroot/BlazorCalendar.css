@@ -162,7 +162,7 @@
     border-bottom: 1px solid rgba(166, 168, 179, 0.12);
     border-right: 1px solid rgba(166, 168, 179, 0.12);
     text-align: right;
-    padding: 1vh 1vw;
+    padding: 0.4vh 0.4vw;
     letter-spacing: 1px;
     font-size: 0.8em;
     box-sizing: border-box;
@@ -233,10 +233,9 @@
 }
 
 .monthly-task {
-    
     border-radius: 3px;
-    padding: 4px 8px 4px 12px;
-    margin: 5px 10px 0 10px;
+    padding: 2px 8px 2px 6px;
+    margin: 3px 11px 0 9px;
     font-size: 0.8em;
     font-weight: 600;
     position: relative;
@@ -254,8 +253,8 @@
 
 @media (max-width: 767.98px) {
     .monthly-task {
-        padding: 4px 8px 4px 4px;
-        margin: 5px 5px 0 5px;
+        padding: 0px 8px 0px 4px;
+        margin: 3px 2px 0 4px;
     }
 }
 
@@ -273,25 +272,29 @@
 
     .monthly-task-first {
         align-self: start;
-        margin-top: 30px;
+        margin-top: 22px;
     }
 
     .monthly-task-second {
         align-self: center;
-        margin-top: 40px;
+        margin-top: 8px;
     }
 
-    .monthly-more-tasks {
-        position: relative;
-        cursor: zoom-in;
+    .monthly-task-bottom {
         align-self: end;
-        margin-top: 40px;
-        font-size: 0.9em;
-        font-weight: 600;
-        color: darkblue;
-        align-self: end;
-        padding: 4px 8px 4px 12px;
-        margin: 5px 10px 0 10px;
+        margin-bottom: 14px;
     }
+
+.monthly-more-tasks {
+    position: relative;
+    cursor: zoom-in;
+    align-self: end;
+    margin-top: 40px;
+    font-size: 0.6em;
+    font-weight: 600;
+    color: darkblue;
+    align-self: end;
+    margin-left: 10px;
+}
 
 
