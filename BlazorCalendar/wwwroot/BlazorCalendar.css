@@ -243,6 +243,7 @@
     color: #000;
     overflow: hidden;
     text-overflow: ellipsis;
+    height:2vh;
 }
 
 .border-start {
