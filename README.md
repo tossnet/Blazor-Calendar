@@ -36,7 +36,12 @@ https://github.com/tossnet/Blazor-Calendar/wiki
 
 ## <a name="ReleaseNotes"></a>Release Notes
 
-<details open="open"><summary>Version 2.6.1</summary>
+<details open="open"><summary>Version 2.6.2</summary>
+
+>- In the monthly view, the calendar displays 3 items  [Issue #8](https://github.com/tossnet/Blazor-Calendar/issues/8)
+</details>
+
+<details><summary>Version 2.6.1</summary>
 
 >- MonthlyView : new property HighlightToday (boolean)  [Merge #9](https://github.com/tossnet/Blazor-Calendar/pull/9)
 </details>
