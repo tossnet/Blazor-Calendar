@@ -139,7 +139,7 @@
                     <div class="day" style="@CSSbackground">
                         @labelDay
                     </div>
-                    <div class="@($"task{classPin}{classPointer} {borderStyle}")" style="@taskColor" title="@taskComment" 
+                    <div id="task-@taskID" class="@($"task{classPin}{classPointer} {borderStyle}")" style="@taskColor" title="@taskComment" 
                         @onclick="e => ClickInternal(e, j)" 
                         @ondragstart="() => HandleDragStart(j, taskID)"
                         draggable="@draggable.ToString()" >

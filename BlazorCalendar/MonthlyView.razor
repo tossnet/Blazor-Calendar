@@ -144,10 +144,10 @@
                     {
                         occupiedPosition[i].Top = true;
                     }
-                    classPosition = "monthly-task-first";    
+                    classPosition = "monthly-task-first";
                 } 
                 else if ( position.Center == false )
-                {                                     
+                {
                     for (int i = Start.Day; i < Start.Day + s; ++i)
                     {
                         occupiedPosition[i].Center = true;
@@ -194,6 +194,7 @@
                         }
 
                         <div class="fade-in monthly-task @borderClass cursor-pointer @classPosition" 
+                             id="task-@t.ID"
                              style="@row @taskColor" 
                              title="@taskComment"
                              draggable="@draggable.ToString()"
