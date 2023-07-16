@@ -36,12 +36,12 @@ https://github.com/tossnet/Blazor-Calendar/wiki
 
 ## <a name="ReleaseNotes"></a>Release Notes
 
-<details open="open"><summary>Version 2.6.3</summary>
+<details open="open"><summary>Version 2.6.4</summary>
 
 >- Use task IDs to identify containing div (for JS extensibility)  [Pull #11](https://github.com/tossnet/Blazor-Calendar/pull/11)
 </details>
 
-<details><summary>Version 2.6.2</summary>
+<details><summary>Version 2.6.3</summary>
 
 >- In the monthly view, the calendar displays 3 items  [Issue #8](https://github.com/tossnet/Blazor-Calendar/issues/8)
 </details>
