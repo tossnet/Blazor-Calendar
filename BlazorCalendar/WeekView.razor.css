@@ -1,0 +1,15 @@
+﻿.weekly-calendar {
+    width: 100%;
+    overflow: auto;
+}
+
+.day-column {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.day-header {
+    display: felx;
+}

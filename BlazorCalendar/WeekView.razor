@@ -1,0 +1,56 @@
+﻿@using System.Globalization
+@using BlazorCalendar.Models
+@using BlazorCalendar.Styles
+
+@inherits CalendarBase
+
+@{
+    FirstDate = new DateTime(FirstDate.Year, FirstDate.Month, 1);
+    int firstDayWeek = (int)FirstDate.DayOfWeek;
+    StateCase State = StateCase.Before;
+    DateTime LastDay = new DateTime(FirstDate.Year, FirstDate.Month, 1).AddMonths(1);
+    DateTime DayCounter = FirstDate;
+    DateTime Today = DateTime.Today;
+    string[] dayNames = CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedDayNames;
+    int OffsetCell = 0;
+    string? isHidden = DisplayedView == DisplayedView.Monthly ? null : "hidden-element";
+    string? CSSbackground = null;
+    string? CSSToday = null;
+
+    // The sorting must be done each time we redraw in case the user moves the spots
+    if (TasksList != null)
+    {
+        TasksList = TasksList.OrderBy(x => x.DateStart)
+                             .ThenByDescending(x => x.DateEnd).ToArray();
+    }
+}
+
+<div class="@isHidden weekly-calendar" style="@Style">
+
+    <div class=@($"{isHidden} calendar-container {Class}") style="@Style">
+
+        @for (var i = 0; i < 7; i++)
+        {
+            var d = Dates.GetNumOfDay(i);
+
+            <div class="day-column">
+                @{
+                    DateTime day = FirstDate.AddDays(i);
+                    CSSbackground = GetBackground(day);
+
+                    }
+                <div class="header-name noselect" style="@HeaderStyle @CSSbackground">
+                    @dayNames[d]
+                </div
+
+                 <div>
+                    test
+                </div>
+
+            </div>
+
+        }
+
+    </div>
+  
+</div>
