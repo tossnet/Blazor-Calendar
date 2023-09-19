@@ -5,8 +5,8 @@
 
 <div class="d-flex flex-row mb-2">
 	<button type="button" @onclick="GoToday" class="btn">📅 Go Today</button>
-	<button type="button" @onclick="@(m => ClicMonthNavigate(-1))" class="btn">🔼</button>
-	<button type="button" @onclick="@(m => ClicMonthNavigate(1))" class="btn me-2">🔽</button>
+	<button type="button" @onclick="@(m => ClicMonthNavigate(-7))" class="btn">🔼</button>
+	<button type="button" @onclick="@(m => ClicMonthNavigate(7))" class="btn me-2">🔽</button>
 	<input type="date" class="me-2" value="@(today.ToString("yyyy-MM-dd"))" @onchange="@(e => ChangeFirstDate(e.Value.ToString()))" />
 	<select @bind="@PriorityDisplay" class="me-2">
 		<option value="@PriorityLabel.Code" selected>priority Code</option>
@@ -20,7 +20,7 @@
 
 <CalendarContainer FirstDate="today"
 				   TasksList="TasksList.ToArray()"
-				   DisplayedView="DisplayedView.Monthly">
+				   DisplayedView="DisplayedView.Weekly">
 	<WeekView PriorityDisplay="@PriorityDisplay"
 				 OutsideCurrentMonthClick="OutsideCurrentMonthClick"
 				 TaskClick="TaskClick"
@@ -73,9 +73,9 @@
 		today = DateTime.Today;
 	}
 
-	private void ClicMonthNavigate(int monthToAdd)
+	private void ClicMonthNavigate(int daysToAdd)
 	{
-		today = today.AddMonths(monthToAdd);
+		today = today.AddDays(daysToAdd);
 	}
 
 	private void OutsideCurrentMonthClick(int MonthAdded)

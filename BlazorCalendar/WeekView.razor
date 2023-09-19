@@ -5,15 +5,9 @@
 @inherits CalendarBase
 
 @{
-    FirstDate = new DateTime(FirstDate.Year, FirstDate.Month, 1);
-    int firstDayWeek = (int)FirstDate.DayOfWeek;
-    StateCase State = StateCase.Before;
-    DateTime LastDay = new DateTime(FirstDate.Year, FirstDate.Month, 1).AddMonths(1);
-    DateTime DayCounter = FirstDate;
-    DateTime Today = DateTime.Today;
-    string[] dayNames = CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedDayNames;
-    int OffsetCell = 0;
-    string? isHidden = DisplayedView == DisplayedView.Monthly ? null : "hidden-element";
+    DateTime FirstDateWeek = new DateTime(FirstDate.Year, FirstDate.Month, FirstDate.Day).AddDays(-(Dates.GetNumOfDay((int)FirstDate.Date.DayOfWeek) - 2));
+
+    string? isHidden = DisplayedView == DisplayedView.Weekly ? null : "hidden-element";
     string? CSSbackground = null;
     string? CSSToday = null;
 
@@ -31,26 +25,33 @@
 
         @for (var i = 0; i < 7; i++)
         {
-            var d = Dates.GetNumOfDay(i);
+            DateTime day = FirstDateWeek.AddDays(i);
 
             <div class="day-column">
-                @{
-                    DateTime day = FirstDate.AddDays(i);
-                    CSSbackground = GetBackground(day);
-
-                    }
+                @{CSSbackground = GetBackground(day);}
                 <div class="header-name noselect" style="@HeaderStyle @CSSbackground">
-                    @dayNames[d]
-                </div
-
-                 <div>
-                    test
+                    @day.ToString("dddd dd.MM")
                 </div>
+
+                <div class="hour cellule">
+                   
+                </div>
+
+                @for (var hour = 0; hour < 24; hour++)
+                {
+                    DateTime hours = day.AddHours(hour);
+
+                    <div class="hour day-cellule">
+                        @hours.ToString("HH:mm")
+                    </div>
+                }
 
             </div>
 
         }
 
     </div>
+
+
   
 </div>
