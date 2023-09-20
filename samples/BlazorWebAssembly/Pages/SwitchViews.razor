@@ -6,6 +6,7 @@
 	<select @bind="@SelectedView" class="me-2">
 		<option value="@DisplayedView.Annual" selected>Annual view</option>
 		<option value="@DisplayedView.Monthly">Monthly view</option>
+		<option value="@DisplayedView.Weekly">Weeky view</option>
 	</select>
 	 
 </div>
@@ -13,6 +14,7 @@
 <CalendarContainer  DisplayedView="SelectedView"  >
 	<AnnualView HeaderClick="HeaderClick" HeaderStyle="@HeaderStyle" />
 	<MonthlyView />
+	<WeekView />
 </CalendarContainer>
 
 @code{
