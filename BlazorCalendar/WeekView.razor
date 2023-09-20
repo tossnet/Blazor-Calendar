@@ -1,0 +1,82 @@
+﻿@using System.Globalization
+@using BlazorCalendar.Models
+@using BlazorCalendar.Styles
+
+@inherits CalendarBase
+
+@{
+    DateTime FirstDateWeek = new DateTime(FirstDate.Year, FirstDate.Month, FirstDate.Day).AddDays(-(Dates.GetNumOfDay((int)FirstDate.Date.DayOfWeek) - 2));
+
+    string? isHidden = DisplayedView == DisplayedView.Weekly ? null : "hidden-element";
+    string? CSSbackground = null;
+    string? taskColor = null;
+    string? classPin = null;
+    string? classPointer = null;
+
+    // The sorting must be done each time we redraw in case the user moves the spots
+    if (TasksList != null)
+    {
+        TasksList = TasksList.OrderBy(x => x.DateStart)
+                             .ThenByDescending(x => x.DateEnd).ToArray();
+    }
+}
+
+<div class=@($"{isHidden} weekly-calendar") style="@Style">
+
+    @for (var i = 0; i < 7; i++)
+    {
+        DateTime day = FirstDateWeek.AddDays(i);
+
+        <div class="day-column" style="grid-column-start: @(i+1)">
+            @{
+                CSSbackground = GetBackground(day);
+            }
+            <div class="day-header header-name noselect" style="@HeaderStyle @CSSbackground">
+                @day.ToString("dddd dd.MM")
+            </div>
+
+            <div class="hours">
+
+                @for (var hour = 0; hour < 24; hour++)
+                {
+                    DateTime hours = day.AddHours(hour);
+
+                    <div class="hour day-cellule" ondragover="event.preventDefault();" @ondrop:preventDefault="true" @ondrop="() => HandleDayOnDrop(hours)">
+                        @hours.ToString("HH:mm")
+                    </div>
+
+                    @if (TasksList != null)
+                    {
+                        int column = 1;
+
+                        for (var k = 0; k < TasksList.Length; k++)
+                        {
+                            Tasks t = TasksList[k];
+
+                            if (t.DateEnd > hours && t.DateStart <= hours)
+                            {
+                                column++;
+
+                                taskColor = Colors.GetHatching(t.FillStyle, t.Color);
+                                taskColor = $"{taskColor};color:{t.ForeColor}";
+
+                                classPin = string.IsNullOrWhiteSpace(t.Comment) ? null : " pin";
+                                classPointer = " cursor-pointer";
+
+                                <div class="@($"hour-task {classPin}{classPointer}")" style="grid-column-start: @column; @taskColor"
+                                     draggable="@Draggable.ToString()" @ondragstart="() => HandleDragStart(t.ID)">
+                                    @t.Code
+                                </div>
+
+                            }
+                        }
+                    }
+
+                }
+            </div>
+
+        </div>
+
+    }
+
+</div>

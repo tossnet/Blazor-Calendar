@@ -1,0 +1,31 @@
+﻿.weekly-calendar {
+    display: grid;
+    width: 100%;
+    overflow: auto;
+}
+
+.day-column {
+    display: flex;
+    flex-flow: column;
+}
+
+.day-header {
+    grid-area: 1 / 1 / span 1 / span 2;
+}
+
+.hours {
+    border: 1px solid #c6c6c6;
+    flex: 1;
+    display: grid;
+    justify-content: stretch;
+}
+
+.hour {
+    grid-column-start: 1;
+    font-size: 1em;
+    padding-left: 0.5em;
+}
+
+.hour-task {
+    text-align: center;
+}

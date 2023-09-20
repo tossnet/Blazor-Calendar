@@ -1,0 +1,98 @@
+﻿@page "/annualyview"
+@using BlazorCalendar
+@using BlazorCalendar.Models
+
+
+<PageTitle>Blazor Calendar Samples</PageTitle>
+
+<div class="d-flex flex-row mb-2">
+	<button type="button" @onclick="@(m => ClicMonthNavigate(-1))" class="btn">◀️</button>
+	<button type="button" @onclick="@(m => ClicMonthNavigate(1))" class="btn me-2">▶️</button>
+	<input type="date" class="me-2" value="@(today.ToString("yyyy-MM-dd"))" @onchange="@(e => ChangeFirstDate(e.Value.ToString()))" />
+	<input type="number" class="me-2" min="1" @bind-value="months">
+	<select @bind="@PriorityDisplay" class="me-2">
+		<option value="@PriorityLabel.Code" selected>priority Code</option>
+		<option value="@PriorityLabel.Caption">priority Caption</option>
+	</select>
+	<div>
+		<input type="checkbox" @bind="draggable" id="is-draggable" />
+		<label for="is-draggable">Draggable</label>
+	</div>
+</div>
+
+
+<CalendarContainer FirstDate="today" TasksList="TasksList.ToArray()" DisplayedView="DisplayedView.Annual">
+	<AnnualView Months="months" Style="height:80vh"
+				PriorityDisplay="@PriorityDisplay"
+				HeaderClick="HeaderClick"
+				TaskClick="TaskClick" EmptyDayClick="EmptyDayClick"
+				Draggable="@draggable" DragStart="DragStart" DropTask="DropTask" />
+</CalendarContainer>
+
+
+<br />
+<div class="console">@fakeConsole</div>
+
+@code {
+	private DateTime today = DateTime.Today;
+	private int months = 12;
+	private List<Tasks> TasksList;
+	private string fakeConsole = "";
+	private BlazorCalendar.PriorityLabel PriorityDisplay = PriorityLabel.Code;
+	private bool draggable = true;
+
+	protected override void OnInitialized()
+	{
+		TasksList = new()
+		{
+			new Tasks { ID = 1, DateStart = today.AddDays(8), DateEnd = today.AddDays(8), Code = "CP", Color = "#19C319", Caption = "Lorem ipsum dolor sit amet", FillStyle=BlazorCalendar.FillStyleEnum.CrossDots },
+			new Tasks { ID = 2, DateStart = today.AddDays(50), DateEnd = today.AddDays(52), Code = "DEV", Color = "#FFD800", Comment="on Teams template", Caption = "Fusce quis purus eu ante", FillStyle=BlazorCalendar.FillStyleEnum.ZigZag },
+			new Tasks { ID = 3, DateStart = today.AddDays(40), DateEnd = today.AddDays(41), Code = "FORM", Color = "#FFC3FF", ForeColor = "#FF0000", Caption = "Lorem ipsum dolor sit amet" },
+			new Tasks { ID = 4, DateStart = today.AddDays(62), DateEnd = today.AddDays(62), Code = "DEV", Color = "#FFD800" },
+			new Tasks { ID = 5, DateStart = today.AddDays(62), DateEnd = today.AddDays(62), Code = "FORM", Color = "#FFC3FF", Caption = "Ut sit amet turpis eget" } ,
+			new Tasks { ID = 6, DateStart = today.AddDays(73).AddHours(8), DateEnd = today.AddDays(73).AddHours(9), Code = "MEETING", Color = "#2DD7D7", Comment="Julien's test" }
+		};
+	}
+
+	private void ChangeFirstDate(string value)
+	{
+		if (string.IsNullOrEmpty(value)) return;
+		today = DateTime.Parse(value.ToString());
+	}
+
+	private void ClicMonthNavigate(int monthToAdd)
+	{
+		today = today.AddMonths(monthToAdd);
+	}
+
+	private void HeaderClick(DateTime month)
+	{
+		fakeConsole = "HeaderClick :" + month.ToString("MMM yyyy");
+	}
+
+	private void TaskClick(ClickTaskParameter clickTaskParameter)
+	{
+		fakeConsole = "ID task(s) :" + string.Join(", ", clickTaskParameter.IDList);
+	}
+
+	private void EmptyDayClick(ClickEmptyDayParameter clickEmptyDayParameter)
+	{
+		fakeConsole = "Empty day :" + clickEmptyDayParameter.Day.ToShortDateString();
+	}
+
+	private void DragStart(DragDropParameter dragDropParameter)
+	{
+		fakeConsole = $"DragStart event :{dragDropParameter.Day.ToShortDateString()} {dragDropParameter.taskID}";
+	}
+
+	private void DropTask(DragDropParameter dragDropParameter)
+	{
+		fakeConsole = $"DropTask event :{dragDropParameter.Day.ToShortDateString()} {dragDropParameter.taskID}";
+
+		Tasks taskDropped = TasksList.FirstOrDefault(t => t.ID == dragDropParameter.taskID);
+
+		var TotalDay = (taskDropped.DateEnd - taskDropped.DateStart).TotalDays;
+		taskDropped.DateEnd = dragDropParameter.Day.AddDays(TotalDay);
+		taskDropped.DateStart = dragDropParameter.Day;
+	}
+}
