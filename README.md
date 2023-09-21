@@ -2,7 +2,7 @@
 [![NuGet](https://img.shields.io/nuget/v/BlazorCalendar.svg)](https://www.nuget.org/packages/BlazorCalendar/)  ![BlazorCalendar Nuget Package](https://img.shields.io/nuget/dt/BlazorCalendar)
 
 
-For Blazor Server or Blasor WebAssembly
+For Blazor Server or Blazor WebAssembly
 
 ## Live demo
 Blazor webassembly : https://tossnet.github.io/Blazor-Calendar/monthlyview
