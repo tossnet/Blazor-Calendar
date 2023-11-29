@@ -259,18 +259,6 @@
     }
 }
 
-    /* .monthly-task:after {
-        content: '';
-        position: absolute;
-        width: 0px;
-        height: 0px;
-        right: 2px;
-        top: 28%;
-        border-style: solid;
-        border-width: 6px 0 6px 8px;
-        border-color: transparent transparent transparent #4d4d4d7a;
-    }*/
-
     .monthly-task-first {
         align-self: start;
         margin-top: 22px;

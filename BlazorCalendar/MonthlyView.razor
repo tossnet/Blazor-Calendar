@@ -18,7 +18,7 @@
     string? CSSToday = null;
 
     // The sorting must be done each time we redraw in case the user moves the spots
-    if (TasksList != null)
+    if (TasksList is not null)
     {
         TasksList = TasksList.OrderBy(x => x.DateStart)
                              .ThenByDescending(x => x.DateEnd).ToArray();
@@ -99,7 +99,7 @@
         }
     }
         
-    @if ( TasksList != null )
+    @if ( TasksList is not null )
     {
         // occupiedPosition accumulates the number of tasks in a cell
         var occupiedPosition = new TaskPosition[32]; // If one day, there are 32 days in a month, it will crash :P
@@ -168,7 +168,7 @@
                 {
                     string row = $"grid-column:{x} / span {s}; grid-row:{y};";
 
-                    if ( classPosition != null )
+                    if ( classPosition is not null )
                     {   
                         if ( PriorityDisplay == PriorityLabel.Code )
                         {   
@@ -234,7 +234,7 @@
                 Start = t.DateStart.Date < FirstDate ? FirstDate : t.DateStart.Date; 
                 End = t.DateEnd.Date >= LastDay ? LastDay.AddDays(-1) : t.DateEnd.Date;
 
-                for (var d = Start.Day; d <= End.Day; d++)
+                for (int d = Start.Day; d <= End.Day; d++)
                 {     
                     occupiedPosition[d].Counter++;
                 }

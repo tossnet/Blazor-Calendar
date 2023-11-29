@@ -68,7 +68,8 @@ partial class MonthlyView : CalendarBase
 
     private async Task ClickTaskInternal(MouseEventArgs e, int taskID, DateTime day)
     {
-        if (!TaskClick.HasDelegate) return;
+        if (!TaskClick.HasDelegate) 
+            return;
  
 		List<int> listID = new()
 		{
@@ -88,13 +89,16 @@ partial class MonthlyView : CalendarBase
 
     private async Task ClickAllDayInternal(MouseEventArgs e, DateTime day)
     {
-        if (day == default) return;
+        if (day == default) 
+            return;
 
-		if (!TaskClick.HasDelegate) return;
+		if (!TaskClick.HasDelegate) 
+            return;
 
 		// There can be several tasks in one day :
 		List<int> listID = new();
-        if (TasksList != null)
+
+        if (TasksList is not null)
         {
             for (var k = 0; k < TasksList.Length; k++)
             {
@@ -120,7 +124,8 @@ partial class MonthlyView : CalendarBase
 
     private async Task ClickDayInternal(MouseEventArgs e, DateTime day)
     {
-		if (!DayClick.HasDelegate) return;
+		if (!DayClick.HasDelegate) 
+            return;
 
 		ClickEmptyDayParameter clickEmptyDayParameter = new()
         {
@@ -149,8 +154,11 @@ partial class MonthlyView : CalendarBase
 
     private async Task HandleDayOnDrop(DateTime day)
     {
-        if ( !Draggable ) return;
-        if ( TaskDragged == null ) return;
+        if ( !Draggable ) 
+            return;
+
+        if ( TaskDragged is null ) 
+            return;
 
         DragDropParameter dragDropParameter = new()
         {

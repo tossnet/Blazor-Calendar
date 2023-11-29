@@ -40,6 +40,9 @@ partial class WeekView : CalendarBase
     public EventCallback<ClickEmptyDayParameter> DayClick { get; set; }
 
     [Parameter]
+    public EventCallback<ClickEmptyDayParameter> EmptyDayClick { get; set; }
+
+    [Parameter]
     public EventCallback<ClickTaskParameter> TaskClick { get; set; }
 
     [Parameter]
@@ -66,8 +69,11 @@ partial class WeekView : CalendarBase
 
     private async Task HandleDayOnDrop(DateTime day)
     {
-        if (!Draggable) return;
-        if (TaskDragged == null) return;
+        if (!Draggable) 
+            return;
+
+        if (TaskDragged is null) 
+            return;
 
         DragDropParameter dragDropParameter = new()
         {
@@ -95,4 +101,41 @@ partial class WeekView : CalendarBase
 
         return $"background:{WeekDaysColor}";
     }
+
+    private async Task ClickDayInternal(MouseEventArgs e, DateTime day)
+    {
+        if (!DayClick.HasDelegate)
+            return;
+        
+        ClickEmptyDayParameter clickEmptyDayParameter = new()
+        {
+            Day = day,
+            X = e.ClientX,
+            Y = e.ClientY
+        };
+
+        await DayClick.InvokeAsync(clickEmptyDayParameter);
+    }
+
+    private async Task ClickTaskInternal(MouseEventArgs e, int taskID, DateTime day)
+    {
+        if (!TaskClick.HasDelegate) 
+            return;
+
+        List<int> listID = new()
+        {
+            taskID
+        };
+
+        ClickTaskParameter clickTaskParameter = new()
+        {
+            IDList = listID,
+            X = e.ClientX,
+            Y = e.ClientY,
+            Day = day
+        };
+
+        await TaskClick.InvokeAsync(clickTaskParameter);
+    }
+
 }

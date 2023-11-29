@@ -67,11 +67,13 @@ partial class AnnualView : CalendarBase
 
     private async Task ClickInternal(MouseEventArgs e, DateTime day)
     {
-        if (day == default) return;
+        if (day == default) 
+            return;
 
         // There can be several tasks in one day :
         List<int> listID = new();
-        if (TasksList != null )
+
+        if (TasksList is not null )
         {
             for (var k = 0; k < TasksList.Length; k++)
             {
@@ -84,7 +86,7 @@ partial class AnnualView : CalendarBase
             }
         }
 
-        if (listID.Count > 0)
+        if (listID.Any())
         {
             if (TaskClick.HasDelegate)
 			{
@@ -118,7 +120,8 @@ partial class AnnualView : CalendarBase
 
     private async Task HandleDragStart(DateTime day, int taskID) 
     {
-        if (taskID < 0) return;
+        if (taskID < 0) 
+            return;
 
         TaskDragged = new Tasks()
         {
@@ -136,7 +139,8 @@ partial class AnnualView : CalendarBase
 
     private async Task HandleDayOnDrop(DateTime day)
     {
-        if (TaskDragged == null) return;
+        if (TaskDragged is null) 
+            return;
 
         DragDropParameter dragDropParameter = new()
         {
@@ -151,7 +155,8 @@ partial class AnnualView : CalendarBase
 
     private async Task HandleHeaderClick(DateTime month)
     {
-        if (!HeaderClick.HasDelegate) return;
+        if (!HeaderClick.HasDelegate) 
+            return;
 
         await HeaderClick.InvokeAsync(month);
     }

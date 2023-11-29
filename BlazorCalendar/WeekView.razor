@@ -6,18 +6,20 @@
 
 @{
     DateTime FirstDateWeek = new DateTime(FirstDate.Year, FirstDate.Month, FirstDate.Day).AddDays(-(Dates.GetNumOfDay((int)FirstDate.Date.DayOfWeek) - 2));
-
+    string[] dayNames = CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedDayNames;
     string? isHidden = DisplayedView == DisplayedView.Weekly ? null : "hidden-element";
     string? CSSbackground = null;
     string? taskColor = null;
     string? classPin = null;
     string? classPointer = null;
+    string borderStyle = "";
 
     // The sorting must be done each time we redraw in case the user moves the spots
-    if (TasksList != null)
+    if (TasksList is not null)
     {
         TasksList = TasksList.OrderBy(x => x.DateStart)
-                             .ThenByDescending(x => x.DateEnd).ToArray();
+                             .ThenByDescending(x => x.DateEnd)
+                             .ToArray();
     }
 }
 
@@ -32,20 +34,25 @@
                 CSSbackground = GetBackground(day);
             }
             <div class="day-header header-name noselect" style="@HeaderStyle @CSSbackground">
-                @day.ToString("dddd dd.MM")
+                @dayNames[i]  @day.ToString("dd.MM")
             </div>
 
             <div class="hours">
 
-                @for (var hour = 0; hour < 24; hour++)
+                @for (int hour = 0; hour < 24; hour++)
                 {
                     DateTime hours = day.AddHours(hour);
 
-                    <div class="hour day-cellule" ondragover="event.preventDefault();" @ondrop:preventDefault="true" @ondrop="() => HandleDayOnDrop(hours)">
+                    <div class="hour day-cellule noselect"
+                         ondragover="event.preventDefault();this.style.fontWeight='600';"
+                         ondragleave="this.style.fontWeight='100';"
+                         @ondrop:preventDefault="true" 
+                         @ondrop="() => HandleDayOnDrop(hours)"
+                         @onclick="e => ClickDayInternal(e, hours)">
                         @hours.ToString("HH:mm")
                     </div>
 
-                    @if (TasksList != null)
+                    @if (TasksList is not null)
                     {
                         int column = 1;
 
@@ -53,6 +60,7 @@
                         {
                             Tasks t = TasksList[k];
 
+             
                             if (t.DateEnd > hours && t.DateStart <= hours)
                             {
                                 column++;
@@ -63,8 +71,11 @@
                                 classPin = string.IsNullOrWhiteSpace(t.Comment) ? null : " pin";
                                 classPointer = " cursor-pointer";
 
-                                <div class="@($"hour-task {classPin}{classPointer}")" style="grid-column-start: @column; @taskColor"
-                                     draggable="@Draggable.ToString()" @ondragstart="() => HandleDragStart(t.ID)">
+                                <div class="@($"hour-task {classPin}{classPointer} border-top border-bottom")"
+                                     style="grid-column-start: @column; @taskColor"
+                                     draggable="@Draggable.ToString()" 
+                                     @ondragstart="() => HandleDragStart(t.ID)"
+                                     @onclick="e => ClickTaskInternal(e, t.ID, day)">
                                     @t.Code
                                 </div>
 

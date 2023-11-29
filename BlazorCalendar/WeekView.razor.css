@@ -22,10 +22,13 @@
 
 .hour {
     grid-column-start: 1;
-    font-size: 1em;
+    font-size: 0.8em;
     padding-left: 0.5em;
 }
 
+
 .hour-task {
     text-align: center;
+    font-size: 0.8em;
+    font-weight: 600;
 }

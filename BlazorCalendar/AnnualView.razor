@@ -83,7 +83,7 @@
                     tasksCounter = 0;    
                     ondragover = "event.preventDefault();";
                     borderStyle = "";
-                    if ( TasksList != null )
+                    if ( TasksList is not null )
                     {
                         for (var k = 0; k < TasksList.Length; k++)
                         {
@@ -135,15 +135,22 @@
                     }
                 }  
 
-                <div class=@($"cellule day-cellule noselect {disabled}") style="@CSSbackground" ondragover="@ondragover" @ondrop="() => HandleDayOnDrop(j)" @ondrop:preventDefault="true">
+                <div class=@($"cellule day-cellule noselect {disabled}") 
+                     style="@CSSbackground" 
+                     ondragover="@ondragover" 
+                     @ondrop="() => HandleDayOnDrop(j)" 
+                     @ondrop:preventDefault="true">
                     <div class="day" style="@CSSbackground">
                         @labelDay
                     </div>
-                    <div id="task-@taskID" class="@($"task{classPin}{classPointer} {borderStyle}")" style="@taskColor" title="@taskComment" 
-                        @onclick="e => ClickInternal(e, j)" 
-                        @ondragstart="() => HandleDragStart(j, taskID)"
-                        draggable="@draggable.ToString()" >
-                            @taskContent
+                    <div id="task-@taskID" 
+                         class="@($"task{classPin}{classPointer} {borderStyle}")" 
+                         style="@taskColor" 
+                         title="@taskComment" 
+                         @onclick="e => ClickInternal(e, j)" 
+                         @ondragstart="() => HandleDragStart(j, taskID)"
+                         draggable="@draggable.ToString()" >
+                        @taskContent
                     </div>
                 </div>  
             }

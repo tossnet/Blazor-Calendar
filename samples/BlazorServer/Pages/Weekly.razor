@@ -90,7 +90,7 @@
 
 	private void DayClick(ClickEmptyDayParameter clickEmptyDayParameter)
 	{
-		fakeConsole = "Empty day :" + clickEmptyDayParameter.Day.ToShortDateString();
+		fakeConsole = $"Empty day :{clickEmptyDayParameter.Day.ToShortDateString()}  {clickEmptyDayParameter.Day.ToShortTimeString()}";
 	}
 
 	private void DragStart(DragDropParameter dragDropParameter)
