@@ -31,4 +31,18 @@
     text-align: center;
     font-size: 0.8em;
     font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media only screen and (max-width: 587px) {
+
+    .day-cellule {
+        font-size: 0.6em;
+        padding-left: 0.3em;
+    }
+
+    .header-name {
+        line-height:3vh;
+    }
 }
