@@ -27,28 +27,30 @@
 
     @for (var i = 0; i < 7; i++)
     {
+        int d = Dates.GetNumOfDay(i);
         DateTime day = FirstDateWeek.AddDays(i);
 
         <div class="day-column" style="grid-column-start: @(i+1)">
-            @{
-                CSSbackground = GetBackground(day);
-            }
-            <div class="day-header header-name noselect" style="@HeaderStyle @CSSbackground">
-                @dayNames[i]  @day.ToString("dd.MM")
+            
+            <div class="day-header header-name noselect" style="@HeaderStyle">
+                @dayNames[d] @day.ToString("dd.MM")
+
             </div>
 
             <div class="hours">
-
+                @{
+                    CSSbackground = GetBackground(day);
+                }
                 @for (int hour = 0; hour < 24; hour++)
                 {
                     DateTime hours = day.AddHours(hour);
-
                     <div class="hour day-cellule noselect"
-                         ondragover="event.preventDefault();this.style.fontWeight='600';"
+                         ondragover="event.preventDefault();this.style.fontWeight = '600';"
                          ondragleave="this.style.fontWeight='100';"
                          @ondrop:preventDefault="true" 
                          @ondrop="() => HandleDayOnDrop(hours)"
-                         @onclick="e => ClickDayInternal(e, hours)">
+                         @onclick="e => ClickDayInternal(e, hours)"
+                         style="@CSSbackground">
                         @hours.ToString("HH:mm")
                     </div>
 
@@ -71,7 +73,7 @@
                                 classPin = string.IsNullOrWhiteSpace(t.Comment) ? null : " pin";
                                 classPointer = " cursor-pointer";
 
-                                <div class="@($"hour-task {classPin}{classPointer} border-top border-bottom")"
+                                <div class="@($"hour-task {classPin}{classPointer} border-start border-top border-bottom")"
                                      style="grid-column-start: @column; @taskColor"
                                      draggable="@Draggable.ToString()" 
                                      @ondragstart="() => HandleDragStart(t.ID)"
