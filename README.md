@@ -36,10 +36,14 @@ https://github.com/tossnet/Blazor-Calendar/wiki
 
 ## <a name="ReleaseNotes"></a>Release Notes
 
-Blazor-Calendar/pull/13
-<details open="open"><summary>Version 2.6.5</summary>
+<details open="open"><summary>Version 2.7.0</summary>
 
->- Add WeekView (thanks [BruderJohn](https://github.com/BruderJohn) )  [Pull #11](https://github.com/tossnet/Blazor-Calendar/pull/13)
+>- Add .NET9 and remove .NET6.0 
+</details>
+
+<details><summary>Version 2.6.5</summary>
+
+>- Add WeekView (thanks [BruderJohn](https://github.com/BruderJohn) )  [Pull #13](https://github.com/tossnet/Blazor-Calendar/pull/13)
 </details>
 
 <details><summary>Version 2.6.4</summary>

@@ -1,4 +1,4 @@
-﻿@page "/annualyview"
+﻿@page "/"
 @using BlazorCalendar
 @using BlazorCalendar.Models
 
@@ -37,7 +37,7 @@
 	private DateTime today = DateTime.Today;  
 	private int months = 8;
 	private List<Tasks> TasksList;
-	private string fakeConsole = "";
+	private string fakeConsole = string.Empty;
 	private BlazorCalendar.PriorityLabel PriorityDisplay = PriorityLabel.Code;
 	private bool draggable = true;
 

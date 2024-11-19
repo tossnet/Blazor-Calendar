@@ -10,6 +10,7 @@ partial class MonthlyView : CalendarBase
     public DisplayedView DisplayedView { get; set; } = DisplayedView.Monthly;
 
     private DateTime _firstdate;
+
     [CascadingParameter(Name = "FirstDate")]
     public DateTime FirstDate
     {

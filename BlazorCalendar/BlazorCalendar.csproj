@@ -1,19 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
-		<TargetFrameworks>net6.0; net7.0; net8.0</TargetFrameworks>
+		<TargetFrameworks>net7.0; net8.0;net9.0</TargetFrameworks>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<Description>Yearly, monthly and weekly calendar Blazor Component. For use with .NET 6.0 or higher Blazor applications</Description>
-		<Copyright>Copyright 2023</Copyright>
+		<Description>Yearly, monthly and weekly calendar Blazor Component. For use with .NET 7.0 or higher Blazor applications</Description>
+		<Copyright>Copyright 2024</Copyright>
 		<PackageProjectUrl>https://github.com/tossnet/Blazor-Calendar</PackageProjectUrl>
 		<PackageIcon>icon.png</PackageIcon>
 		<RepositoryUrl>https://github.com/tossnet/Blazor-Calendar</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<PackageTags>blazor, calendar, schedule, component</PackageTags>
 		<PackageReleaseNotes>https://github.com/tossnet/Blazor-Calendar#release-notes</PackageReleaseNotes>
-		<Version>2.6.7</Version>
+		<Version>2.7.0</Version>
 		<Authors>Christophe Peugnet</Authors>
 		<DebugType>embedded</DebugType>
 	</PropertyGroup>
@@ -26,16 +26,16 @@
 		<SupportedPlatform Include="browser" />
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.25" />
-	</ItemGroup>
-
 	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
-		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.14" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.20" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
-		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.11" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
