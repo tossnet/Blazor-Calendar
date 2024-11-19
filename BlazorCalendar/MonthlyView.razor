@@ -21,7 +21,8 @@
     if (TasksList is not null)
     {
         TasksList = TasksList.OrderBy(x => x.DateStart)
-                             .ThenByDescending(x => x.DateEnd).ToArray();
+                             .ThenByDescending(x => x.DateEnd)
+                             .ToArray();
     }
 }
 

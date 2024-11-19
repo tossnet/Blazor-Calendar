@@ -1,6 +1,6 @@
 # Blazor-Calendar
 [![NuGet](https://img.shields.io/nuget/v/BlazorCalendar.svg)](https://www.nuget.org/packages/BlazorCalendar/)  ![BlazorCalendar Nuget Package](https://img.shields.io/nuget/dt/BlazorCalendar)
-
+[![GitHub](https://img.shields.io/github/license/tossnet/Blazor-Calendar?color=594ae2&logo=github&style=flat-square)](https://github.com/tossnet/Blazor-Calendar/blob/main/LICENSE)
 
 For Blazor Server or Blazor WebAssembly
 
