@@ -1,0 +1,152 @@
+﻿.hidden-element {
+    display: none !important;
+}
+.noselect {
+    -webkit-user-select: none; /* Safari */
+    user-select: none;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.cursor-top {
+    cursor: n-resize;
+}
+
+.cursor-bottom {
+    cursor: s-resize;
+}
+
+.header-name {
+    font-size: 0.8em;
+    text-transform: uppercase;
+    color: #72777b;
+    text-align: center;
+    border-bottom: 1px solid rgba(166, 168, 179, 0.12);
+    line-height: 6vh;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background:#FFF;
+}
+
+.cellule-disabled {
+    background: linear-gradient(-45deg, #F4F6F7 25%, #FF000000 25%, #FF000000 50%, #F4F6F7 50%, #F4F6F7 75%, #FF000000 75%, #FF000000);
+    background-size: 8px 8px;
+}
+
+.fade-in {
+    animation: fadeIn 0.4s;
+    opacity: 1;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.frame {
+    width: 100%;
+    overflow-x: overlay;
+}
+/* AnnualView.razor */
+.calendar-container {
+    width: 98.5%;
+    height: 80vh;
+    border-top-color: #d6d8db;
+    border-top-style: solid;
+    border-top-width: 0.05vw;
+    display: flex;
+    min-width: fit-content;
+}
+
+.month-column {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.cellule {
+    border: solid #d6d8db;
+    border-width: 0.00vw 0.05vw 0.05vw 0.05vw;
+}
+
+.month {
+    background: #e6eaee;
+    font-size: 0.8em;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.day-cellule {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    font-size: 0.8em;
+    color: #72777b;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.day {
+    width: 30%;
+    max-width: 2.5vw;
+}
+
+.task {
+    flex: 1;
+    text-align: center;
+    font-weight: 600;
+    color: #000;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+}
+
+.border-top {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.border-bottom {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.pin:after {
+    /*http://apps.eky.hk/css-triangle-generator */
+    content: "";
+    position: absolute;
+    height: 100%;
+    right: 0px;
+    border-style: solid;
+    border-width: 0 0 7px 7px;
+    border-color: transparent transparent #007bff transparent;
+}
+
+.pin-top:after {
+    content: "";
+    position: absolute;
+    right: 0px;
+    border-style: solid;
+    border-width: 0 7px 7px 0;
+    border-color: transparent #9900ff transparent transparent;
+}
+
+.border-start {
+    border-left-width: 3px !important;
+    border-left-style: solid !important;
+    border-left-color: #4d4d4d4c !important;
+}
+

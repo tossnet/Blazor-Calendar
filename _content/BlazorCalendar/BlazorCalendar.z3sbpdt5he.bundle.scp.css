@@ -1,0 +1,187 @@
+/* _content/BlazorCalendar/MonthlyView.razor.rz.scp.css */
+.monthly-calendar[b-x8lk6nc1fm] {
+    display: grid;
+    width: 100%;
+    grid-template-rows: 6vh;
+    /*grid-template-columns: repeat(7, minmax(120px, 1fr));
+    grid-auto-rows: 120px;*/
+    grid-template-columns: repeat(7, minmax(8vw, 1fr));
+    grid-auto-rows: 12vh;
+    overflow: auto;
+}
+
+.monthly-day[b-x8lk6nc1fm] {
+    border-bottom: 1px solid rgba(166, 168, 179, 0.12);
+    border-right: 1px solid rgba(166, 168, 179, 0.12);
+    text-align: right;
+    padding: 0.4vh 0.4vw;
+    letter-spacing: 1px;
+    font-size: 0.8em;
+    box-sizing: border-box;
+    color: #6d7377;
+    position: relative;
+}
+
+    .monthly-day:nth-of-type(n + 1):nth-of-type(-n + 7)[b-x8lk6nc1fm] {
+        grid-row: 2;
+    }
+
+    .monthly-day:nth-of-type(n + 8):nth-of-type(-n + 14)[b-x8lk6nc1fm] {
+        grid-row: 3;
+    }
+
+    .monthly-day:nth-of-type(n + 15):nth-of-type(-n + 21)[b-x8lk6nc1fm] {
+        grid-row: 4;
+    }
+
+    .monthly-day:nth-of-type(n + 22):nth-of-type(-n + 28)[b-x8lk6nc1fm] {
+        grid-row: 5;
+    }
+
+    .monthly-day:nth-of-type(n + 29):nth-of-type(-n + 35)[b-x8lk6nc1fm] {
+        grid-row: 6;
+    }
+
+    .monthly-day:nth-of-type(n + 36):nth-of-type(-n + 43)[b-x8lk6nc1fm] {
+        grid-row: 7;
+    }
+
+    .monthly-day:nth-of-type(7n + 1)[b-x8lk6nc1fm] {
+        grid-column: 1/1;
+    }
+
+    .monthly-day:nth-of-type(7n + 2)[b-x8lk6nc1fm] {
+        grid-column: 2/2;
+    }
+
+    .monthly-day:nth-of-type(7n + 3)[b-x8lk6nc1fm] {
+        grid-column: 3/3;
+    }
+
+    .monthly-day:nth-of-type(7n + 4)[b-x8lk6nc1fm] {
+        grid-column: 4/4;
+    }
+
+    .monthly-day:nth-of-type(7n + 5)[b-x8lk6nc1fm] {
+        grid-column: 5/5;
+    }
+
+    .monthly-day:nth-of-type(7n + 6)[b-x8lk6nc1fm] {
+        grid-column: 6/6;
+    }
+
+    .monthly-day:nth-of-type(7n + 7)[b-x8lk6nc1fm] {
+        grid-column: 7/7;
+    }
+
+.monthly-day--disabled[b-x8lk6nc1fm] {
+    color: rgba(#98a0a6, 0.6);
+    background-color: #ffffff;
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23f4f6f7' fill-opacity='1' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.monthly-today[b-x8lk6nc1fm] {
+    border: 3px solid #f75959;
+    border-radius: 5px;
+}
+
+.monthly-task[b-x8lk6nc1fm] {
+    border-radius: 3px;
+    padding: 2px 8px 2px 6px;
+    margin: 3px 11px 0 9px;
+    font-size: 0.8em;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+    color: #000;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 2vh;
+}
+
+
+@media (max-width: 767.98px) {
+    .monthly-task[b-x8lk6nc1fm] {
+        padding: 0px 8px 0px 4px;
+        margin: 3px 2px 0 4px;
+    }
+}
+
+.monthly-task-first[b-x8lk6nc1fm] {
+    align-self: start;
+    margin-top: 22px;
+}
+
+.monthly-task-second[b-x8lk6nc1fm] {
+    align-self: center;
+    margin-top: 8px;
+}
+
+.monthly-task-bottom[b-x8lk6nc1fm] {
+    align-self: end;
+    margin-bottom: 14px;
+}
+
+.monthly-more-tasks[b-x8lk6nc1fm] {
+    position: relative;
+    cursor: zoom-in;
+    align-self: end;
+    margin-top: 40px;
+    font-size: 0.6em;
+    font-weight: 600;
+    color: darkblue;
+    align-self: end;
+    margin-left: 10px;
+}
+/* _content/BlazorCalendar/WeekView.razor.rz.scp.css */
+.weekly-calendar[b-gszxamswzx] {
+    display: grid;
+    width: 100%;
+    overflow: auto;
+}
+
+.day-column[b-gszxamswzx] {
+    display: flex;
+    flex-flow: column;
+}
+
+.day-header[b-gszxamswzx] {
+    grid-area: 1 / 1 / span 1 / span 2;
+}
+
+.day-cellule:hover[b-gszxamswzx] {
+    font-weight: 600;
+}
+
+.hours[b-gszxamswzx] {
+    border: 1px solid #c6c6c6;
+    flex: 1;
+    display: grid;
+    justify-content: stretch;
+}
+
+.hour[b-gszxamswzx] {
+    grid-column-start: 1;
+    font-size: 0.8em;
+    padding-left: 0.5em;
+}
+
+.hour-task[b-gszxamswzx] {
+    text-align: center;
+    font-size: 0.8em;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media only screen and (max-width: 587px) {
+
+    .day-cellule[b-gszxamswzx] {
+        font-size: 0.6em;
+        padding-left: 0.3em;
+    }
+
+    .header-name[b-gszxamswzx] {
+        line-height:3vh;
+    }
+}
