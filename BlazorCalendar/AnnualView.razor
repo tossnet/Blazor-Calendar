@@ -4,21 +4,21 @@
 @inherits CalendarBase
 
 @{
-    string labelMonth = "";
-    string labelDay = "";
-    string? CSSbackground = null;
-    string taskContent = "";
-    string? taskColor = null;
-    string? taskComment = null;
-    string? classPin = null;
-    string? classPointer = null;
+    string labelMonth = string.Empty;
+    string labelDay = string.Empty;
+    string? CSSbackground;
+    string taskContent = string.Empty;
+    string? taskColor;
+    string? taskComment;
+    string? classPin;
+    string? classPointer;
     int tasksCounter;
     bool draggable = false;
-    string? ondragover = null;
-    string? disabled = null;   
+    string? ondragover;
+    string? disabled;   
     string? isHidden = DisplayedView == DisplayedView.Annual ? null : "hidden-element";
     bool NotbeDraggeble = false; 
-    string borderStyle = "";
+    string borderStyle = string.Empty;
 }
 <div class="frame">
 
@@ -43,8 +43,8 @@
                 if (j.Month != m.Month)
                 {
                     j = default;
-                    labelDay = "";
-                    taskContent = "";
+                    labelDay = string.Empty;
+                    taskContent = string.Empty;
                     taskColor = null;
                     taskComment = null;
                     classPin = null;
@@ -58,31 +58,19 @@
                 else
                 {
                     disabled = null;
-                    int d = (int)j.DayOfWeek;
-                    if (d == 6)
-                    {
-                        CSSbackground = $"background:{SaturdayColor}";
-                    }
-                    else if (d == 0)
-                    {
-                        CSSbackground = $"background:{SundayColor}";
-                    }
-                    else
-                    {
-                        CSSbackground = $"background:{WeekDaysColor}";
-                    }
+                    CSSbackground = GetBackground(j);
 
                     string jour = j.ToString("ddd").Substring(0, 1).ToUpper();
                     labelDay = $"{jour} {j.Day.ToString()}";
 
-                    taskContent = "";
+                    taskContent = string.Empty;
                     taskColor = null;
                     taskComment = null;
                     classPin = null;
                     classPointer = null;
                     tasksCounter = 0;    
                     ondragover = "event.preventDefault();";
-                    borderStyle = "";
+                    borderStyle = string.Empty;
                     if ( TasksList is not null )
                     {
                         for (var k = 0; k < TasksList.Length; k++)

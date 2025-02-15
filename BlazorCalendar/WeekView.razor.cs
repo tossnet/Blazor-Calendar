@@ -1,8 +1,8 @@
-﻿namespace BlazorCalendar;
-
-using BlazorCalendar.Models;
+﻿using BlazorCalendar.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+
+namespace BlazorCalendar;
 
 partial class WeekView : CalendarBase
 {
@@ -86,22 +86,6 @@ partial class WeekView : CalendarBase
         TaskDragged = null;
     }
 
-    private string GetBackground(DateTime day)
-    {
-        int d = (int)day.DayOfWeek;
-
-        if (d == 6)
-        {
-            return $"background:{SaturdayColor}";
-        }
-        else if (d == 0)
-        {
-            return $"background:{SundayColor}";
-        }
-
-        return $"background:{WeekDaysColor}";
-    }
-
     private async Task ClickDayInternal(MouseEventArgs e, DateTime day)
     {
         if (!DayClick.HasDelegate)
@@ -137,5 +121,4 @@ partial class WeekView : CalendarBase
 
         await TaskClick.InvokeAsync(clickTaskParameter);
     }
-
 }

@@ -5,14 +5,14 @@
 @inherits CalendarBase
 
 @{
-    DateTime FirstDateWeek = new DateTime(FirstDate.Year, FirstDate.Month, FirstDate.Day).AddDays(-(Dates.GetNumOfDay((int)FirstDate.Date.DayOfWeek) - 2));
+    DateTime firstDateWeek = FirstDate.AddDays(-(int)(FirstDate.DayOfWeek - System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek + 7) % 7);
+
     string[] dayNames = CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedDayNames;
     string? isHidden = DisplayedView == DisplayedView.Weekly ? null : "hidden-element";
-    string? CSSbackground = null;
-    string? taskColor = null;
-    string? classPin = null;
-    string? classPointer = null;
-    string borderStyle = "";
+    string? CSSbackground;
+    string? taskColor;
+    string? classPin;
+    string? classPointer;
 
     // The sorting must be done each time we redraw in case the user moves the spots
     if (TasksList is not null)
@@ -28,13 +28,12 @@
     @for (var i = 0; i < 7; i++)
     {
         int d = Dates.GetNumOfDay(i);
-        DateTime day = FirstDateWeek.AddDays(i);
+        DateTime day = firstDateWeek.AddDays(i);
 
         <div class="day-column" style="grid-column-start: @(i+1)">
             
             <div class="day-header header-name noselect" style="@HeaderStyle">
                 @dayNames[d] @day.ToString("dd.MM")
-
             </div>
 
             <div class="hours">
@@ -62,7 +61,6 @@
                         {
                             Tasks t = TasksList[k];
 
-             
                             if (t.DateEnd > hours && t.DateStart <= hours)
                             {
                                 column++;
@@ -89,7 +87,5 @@
             </div>
 
         </div>
-
     }
-
 </div>

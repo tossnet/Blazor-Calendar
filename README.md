@@ -36,7 +36,12 @@ https://github.com/tossnet/Blazor-Calendar/wiki
 
 ## <a name="ReleaseNotes"></a>Release Notes
 
-<details open="open"><summary>Version 2.7.0</summary>
+<details open="open"><summary>Version 2.7.1</summary>
+
+>- In the Weekview, the component did not correctly display the first day of the week according to Culture [Issue #24](https://github.com/tossnet/Blazor-Calendar/issues/24)
+</details>
+
+<details><summary>Version 2.7.0</summary>
 
 >- Add .NET9 and remove .NET6.0 
 </details>

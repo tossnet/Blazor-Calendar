@@ -45,4 +45,26 @@ public abstract class CalendarBase : ComponentBase
     /// </summary>
     [Parameter]
     public string SundayColor { get; set; } = "#DBE7F8";
+
+    /// <summary>
+    /// Allows the user to change the sunday background color
+    /// </summary>
+    [Parameter]
+    public string DisabledDayColor { get; set; } = "#DBE7F8";
+
+    public string GetBackground(DateTime day)
+    {
+        int d = (int)day.DayOfWeek;
+
+        if (d == 6)
+        {
+            return $"background:{SaturdayColor}";
+        }
+        else if (d == 0)
+        {
+            return $"background:{SundayColor}";
+        }
+
+        return $"background:{WeekDaysColor}";
+    }
 }

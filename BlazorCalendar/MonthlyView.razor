@@ -7,6 +7,7 @@
 @{
     FirstDate = new DateTime(FirstDate.Year, FirstDate.Month, 1);
     int firstDayWeek = (int)FirstDate.DayOfWeek;
+	
     StateCase State = StateCase.Before; 
     DateTime LastDay = new DateTime(FirstDate.Year, FirstDate.Month, 1).AddMonths(1);
     DateTime DayCounter = FirstDate;
@@ -39,9 +40,9 @@
 
     @for ( var i = 0; i < 40; i++ )
     {   
-        if ( State == StateCase.Before ) 
+        if (State == StateCase.Before) 
         {
-            if ( firstDayWeek == Dates.GetNumOfDay(i) )  // Cell is first day?
+            if (firstDayWeek == Dates.GetNumOfDay(i))  // Cell is first day?
             {
                 State = StateCase.InMonth; // Start filling days
                 var dayClick = DayCounter;
@@ -64,9 +65,9 @@
                 </div>
             }
         }
-        if ( State == StateCase.InMonth )
+        if (State == StateCase.InMonth)
         {
-            if ( DayCounter >= LastDay ) // Stop at last day
+            if (DayCounter >= LastDay) // Stop at last day
             {
                 State = StateCase.After;
                 // Again empty cells from here on
@@ -93,10 +94,11 @@
                 DayCounter = DayCounter.AddDays(1);
             }
         }
-        if ( State == StateCase.After )
+        if (State == StateCase.After)
         {
             <div class="monthly-day monthly-day--disabled cursor-bottom" 
-                 @onclick="() => HandleClickOutsideCurrentMonthClick(1)"></div>
+                 @onclick="() => HandleClickOutsideCurrentMonthClick(1)">
+            </div>
         }
     }
         
@@ -110,7 +112,7 @@
         }
 
         string? classPosition;
-        string taskContent = "";  
+        string taskContent = string.Empty;  
         string? taskComment = null;   
         bool onmMultiLine = false;  
         bool draggable = false;
@@ -226,7 +228,7 @@
                         y = (Start.Day + OffsetCell - 1) / 7 + 2;
                         s = (int)(End.Date - Start.Date).TotalDays + 1;
 
-                        borderClass = "";
+                        borderClass = string.Empty;
                     }
 
                 } while ( onmMultiLine );

@@ -172,19 +172,4 @@ partial class MonthlyView : CalendarBase
         TaskDragged = null;
     }
 
-    private string GetBackground(DateTime day)
-    {
-        int d = (int)day.DayOfWeek;
-
-        if (d == 6)
-        {
-            return $"background:{SaturdayColor}";
-        }
-        else if (d == 0)
-        {
-            return $"background:{SundayColor}";
-        }
-        
-        return $"background:{WeekDaysColor}";
-    }
 }

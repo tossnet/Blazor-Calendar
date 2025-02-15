@@ -1,9 +1,8 @@
-﻿namespace BlazorCalendar;
-
-using BlazorCalendar.Models;
+﻿using BlazorCalendar.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
+namespace BlazorCalendar;
 
 partial class AnnualView : CalendarBase
 {
