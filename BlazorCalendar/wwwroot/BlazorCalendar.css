@@ -55,6 +55,7 @@
     width: 100%;
     overflow-x: overlay;
 }
+
 /* AnnualView.razor */
 .calendar-container {
     width: 98.5%;

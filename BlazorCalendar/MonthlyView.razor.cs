@@ -31,6 +31,9 @@ partial class MonthlyView : CalendarBase
     [Parameter]
     public PriorityLabel PriorityDisplay { get; set; } = PriorityLabel.Code;
 
+    /// <summary>
+    /// When set to <c>true</c>, displays a red border around today's date for better visibility.
+    /// </summary>
     [Parameter]
     public bool HighlightToday { get; set; } = false;
 
@@ -172,4 +175,13 @@ partial class MonthlyView : CalendarBase
         TaskDragged = null;
     }
 
+    /// <summary>
+    /// Generates the background style for disabled days with a hatched pattern
+    /// </summary>
+    private string GetDisabledBackground()
+    {
+        // URL-encode the color (replace # with %23)
+        var encodedColor = DisabledDayColor.Replace("#", "%23");
+        return $"background-image: url(\"data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='{encodedColor}' fill-opacity='1' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E\")";
+    }
 }

@@ -61,6 +61,12 @@ partial class AnnualView : CalendarBase
     [Parameter]
     public EventCallback<DateTime> HeaderClick { get; set; }
 
+    /// <summary>
+    /// When set to <c>true</c>, displays a red border around today's date for better visibility.
+    /// </summary>
+    [Parameter]
+    public bool HighlightToday { get; set; } = false;
+
     private DateTime m = DateTime.Today;
     private Tasks? TaskDragged;
 
@@ -158,5 +164,16 @@ partial class AnnualView : CalendarBase
             return;
 
         await HeaderClick.InvokeAsync(month);
+    }
+
+    /// <summary>
+    /// Generates the background style for disabled days with a hatched pattern
+    /// </summary>
+    private string? GetDisabledBackground(bool isDisabled)
+    {
+        if (!isDisabled)
+            return null;
+
+        return $"background: linear-gradient(-45deg, {DisabledDayColor} 25%, transparent 25%, transparent 50%, {DisabledDayColor} 50%, {DisabledDayColor} 75%, transparent 75%, transparent); background-size: 8px 8px;";
     }
 }

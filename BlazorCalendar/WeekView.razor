@@ -9,10 +9,7 @@
 
     string[] dayNames = CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedDayNames;
     string? isHidden = DisplayedView == DisplayedView.Weekly ? null : "hidden-element";
-    string? CSSbackground;
-    string? taskColor;
     string? classPin;
-    string? classPointer;
 
     // The sorting must be done each time we redraw in case the user moves the spots
     if (TasksList is not null)
@@ -37,9 +34,6 @@
             </div>
 
             <div class="hours">
-                @{
-                    CSSbackground = GetBackground(day);
-                }
                 @for (int hour = 0; hour < 24; hour++)
                 {
                     DateTime hours = day.AddHours(hour);
@@ -49,7 +43,7 @@
                          @ondrop:preventDefault="true" 
                          @ondrop="() => HandleDayOnDrop(hours)"
                          @onclick="e => ClickDayInternal(e, hours)"
-                         style="@CSSbackground">
+                         style="@GetBackground(day)">
                         @hours.ToString("HH:mm")
                     </div>
 
@@ -65,20 +59,15 @@
                             {
                                 column++;
 
-                                taskColor = Colors.GetHatching(t.FillStyle, t.Color);
-                                taskColor = $"{taskColor};color:{t.ForeColor}";
-
                                 classPin = string.IsNullOrWhiteSpace(t.Comment) ? null : " pin";
-                                classPointer = " cursor-pointer";
 
-                                <div class="@($"hour-task {classPin}{classPointer} border-start border-top border-bottom")"
-                                     style="grid-column-start: @column; @taskColor"
+                                <div class="@($"hour-task {classPin} cursor-pointer border-start border-top border-bottom")"
+                                     style="grid-column-start: @column; @GetTaskStyle(t)"
                                      draggable="@Draggable.ToString()" 
                                      @ondragstart="() => HandleDragStart(t.ID)"
                                      @onclick="e => ClickTaskInternal(e, t.ID, day)">
                                     @t.Code
                                 </div>
-
                             }
                         }
                     }

@@ -1,6 +1,6 @@
-﻿namespace BlazorCalendar;
+﻿using System.Globalization;
 
-using System.Globalization;
+namespace BlazorCalendar;
 
 internal sealed class Dates
 {

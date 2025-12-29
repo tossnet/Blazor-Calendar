@@ -18,6 +18,30 @@
 		<input type="checkbox" @bind="draggable" id="is-draggable" />
 		<label for="is-draggable">Draggable</label>
 	</div>
+	<div style="margin-left:8px">
+		<input type="checkbox" @bind="highlightToday" id="is-highlightToday" />
+		<label for="is-highlightToday">highlight Today</label>
+	</div>
+	<div class="command">
+		<label for="favdisabledcolor">Disabled Days Color :</label>
+		<input type="color" id="favdisabledcolor" name="favdisabledcolor" @bind-value="@disabledDayColor" @bind:after="@StateHasChanged">
+	</div>
+	<div class="command">
+		<label for="favsundaycolor">Sunday Color :</label>
+		<input type="color" id="favsundaycolor" name="favsundaycolor" @bind-value="@sundayColor" @bind:after="@StateHasChanged">
+	</div>
+	<div class="command">
+		<label for="favsaturdayColor">Saturday Color :</label>
+		<input type="color" id="favsaturdayColor" name="favsaturdayColor" @bind-value="@saturdayColor" @bind:after="@StateHasChanged">
+	</div>
+	<div class="command">
+		<label for="favweekDaysColor">Other days Color :</label>
+		<input type="color" id="favweekDaysColor" name="favweekDaysColor" @bind-value="@weekDaysColor" @bind:after="@StateHasChanged">
+	</div>	   
+	<div class="command">
+		<label for="favfontColor">Font color :</label>
+		<input type="color" id="favfontColor" name="favfontColor" @bind-value="@fontColor" @bind:after="@StateHasChanged">
+	</div>
 </div>
 
 
@@ -25,8 +49,17 @@
 	<AnnualView Months="months" Style="height:80vh"
 				PriorityDisplay="@PriorityDisplay"
 				HeaderClick="HeaderClick"
-				TaskClick="TaskClick" EmptyDayClick="EmptyDayClick"
-				Draggable="@draggable" DragStart="DragStart" DropTask="DropTask" />
+				TaskClick="TaskClick" 
+				EmptyDayClick="EmptyDayClick"
+				Draggable="@draggable" 
+				DragStart="DragStart" 
+				DropTask="DropTask"
+				HighlightToday="@highlightToday"
+				DisabledDayColor="@disabledDayColor"
+				SundayColor="@sundayColor"
+				SaturdayColor="@saturdayColor"
+				WeekDaysColor="@weekDaysColor"
+				FontColor="@fontColor" />
 </CalendarContainer>
 
 
@@ -40,6 +73,12 @@
 	private string fakeConsole = string.Empty;
 	private BlazorCalendar.PriorityLabel PriorityDisplay = PriorityLabel.Code;
 	private bool draggable = true;
+	private bool highlightToday = true;
+	private string disabledDayColor = "#f4f6f7";
+	private string sundayColor = "#DBE7F8";
+	private string saturdayColor = "#ECF4FD";
+	private string weekDaysColor = "#FFFFFF";
+	private string fontColor = "#6d7377";
 
 	protected override void OnInitialized()
 	{

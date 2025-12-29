@@ -1,0 +1,7 @@
+.annual-today {
+    border: 3px solid #f75959;
+    border-radius: 5px;
+}
+    .annual-today::before, .annual-today::after {
+        box-sizing: border-box;
+    }

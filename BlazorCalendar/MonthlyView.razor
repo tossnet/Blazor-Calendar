@@ -15,7 +15,6 @@
     string[] dayNames = CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedDayNames;
     int OffsetCell = 0;
     string? isHidden = DisplayedView == DisplayedView.Monthly ? null : "hidden-element"; 
-    string? CSSbackground = null;
     string? CSSToday = null;
 
     // The sorting must be done each time we redraw in case the user moves the spots
@@ -46,9 +45,8 @@
             {
                 State = StateCase.InMonth; // Start filling days
                 var dayClick = DayCounter;
-                CSSbackground = GetBackground(dayClick);
                 <div class="fade-in monthly-day noselect" 
-                     style="@CSSbackground"
+                     style="@GetBackground(dayClick)"
                      ondragover="event.preventDefault();"
                      @onclick="e => ClickDayInternal(e, dayClick)" 
                      @ondrop="() => HandleDayOnDrop(dayClick)">
@@ -60,7 +58,8 @@
             else
             {
                 // Still empty cells
-                <div class="monthly-day monthly-day--disabled cursor-top" 
+                <div class="monthly-day cursor-top" 
+                     style="@GetDisabledBackground()"
                      @onclick="() => HandleClickOutsideCurrentMonthClick(-1)">
                 </div>
             }
@@ -71,21 +70,21 @@
             {
                 State = StateCase.After;
                 // Again empty cells from here on
-                <div class="monthly-day monthly-day--disabled cursor-bottom" 
+                <div class="monthly-day ursor-bottom" 
+                     style="@GetDisabledBackground()"
                      @onclick="() => HandleClickOutsideCurrentMonthClick(1)">
                 </div>
             }
             else
             {
                 DateTime _dayClick = DayCounter;
-                CSSbackground = GetBackground(_dayClick);
                 if (HighlightToday)
                 {
                     CSSToday = DayCounter == Today ? "monthly-today" : null;
                 }
 
                 <div class="fade-in monthly-day noselect @CSSToday"
-                     style="@CSSbackground"
+                     style="@GetBackground(_dayClick)"
                      ondragover="event.preventDefault();"
                      @onclick="e => ClickDayInternal(e, _dayClick)" 
                      @ondrop="() => HandleDayOnDrop(_dayClick)">
@@ -96,7 +95,8 @@
         }
         if (State == StateCase.After)
         {
-            <div class="monthly-day monthly-day--disabled cursor-bottom" 
+            <div class="monthly-day cursor-bottom" 
+                 style="@GetDisabledBackground()"
                  @onclick="() => HandleClickOutsideCurrentMonthClick(1)">
             </div>
         }

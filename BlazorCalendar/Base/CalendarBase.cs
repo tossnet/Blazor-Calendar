@@ -47,10 +47,13 @@ public abstract class CalendarBase : ComponentBase
     public string SundayColor { get; set; } = "#DBE7F8";
 
     /// <summary>
-    /// Allows the user to change the sunday background color
+    /// Allows the user to change the disabled day background color
     /// </summary>
     [Parameter]
-    public string DisabledDayColor { get; set; } = "#DBE7F8";
+    public string DisabledDayColor { get; set; } = "#f4f6f7";
+
+    [Parameter]
+    public string FontColor { get; set; } = "#6d7377";
 
     public string GetBackground(DateTime day)
     {
@@ -58,13 +61,14 @@ public abstract class CalendarBase : ComponentBase
 
         if (d == 6)
         {
-            return $"background:{SaturdayColor}";
+            return $"background:{SaturdayColor};color:{FontColor}";
         }
         else if (d == 0)
         {
-            return $"background:{SundayColor}";
+            return $"background:{SundayColor};color:{FontColor}";
         }
 
-        return $"background:{WeekDaysColor}";
+        return $"background:{WeekDaysColor};color:{FontColor}";
     }
+
 }

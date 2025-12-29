@@ -4,146 +4,149 @@
 @inherits CalendarBase
 
 @{
-    string labelMonth = string.Empty;
-    string labelDay = string.Empty;
-    string? CSSbackground;
-    string taskContent = string.Empty;
-    string? taskColor;
-    string? taskComment;
-    string? classPin;
-    string? classPointer;
-    int tasksCounter;
-    bool draggable = false;
-    string? ondragover;
-    string? disabled;   
-    string? isHidden = DisplayedView == DisplayedView.Annual ? null : "hidden-element";
-    bool NotbeDraggeble = false; 
-    string borderStyle = string.Empty;
+	string labelMonth = string.Empty;
+	string labelDay = string.Empty;
+	string? CSSbackground;
+	string taskContent = string.Empty;
+	string? taskColor;
+	string? taskComment;
+	string? classPin;
+	string? classPointer;
+	int tasksCounter;
+	bool draggable = false;
+	string? ondragover;
+	string? isHidden = DisplayedView == DisplayedView.Annual ? null : "hidden-element";
+	bool NotbeDraggeble = false;
+	string borderStyle = string.Empty;
+	DateTime today = DateTime.Today;
 }
 <div class="frame">
 
-    <div class=@($"{isHidden} calendar-container {Class}") style="@Style">
+	<div class=@($"{isHidden} calendar-container {Class}") style="@Style">
 
-    @for (var month = 0; month <= Months; month++)
-    {
-        m = FirstDate.AddMonths(month);
-        var day = new DateTime(m.Year, m.Month, 1);
-        labelMonth = day.ToString("MMMM");
+		@for (var month = 0; month <= Months; month++)
+		{
+			m = FirstDate.AddMonths(month);
+			var day = new DateTime(m.Year, m.Month, 1);
+			labelMonth = day.ToString("MMMM");
 
-        <div class="month-column">
-	        <div class="header-name noselect" style="@HeaderStyle" @onclick="() => HandleHeaderClick(day)">
-                @labelMonth
-            </div>
-        
-            @for (var i = 0; i < 31; i++)
-            {
-                CSSbackground = null;
-                var j = day.AddDays(i);
-                int taskID = -1;
-                if (j.Month != m.Month)
-                {
-                    j = default;
-                    labelDay = string.Empty;
-                    taskContent = string.Empty;
-                    taskColor = null;
-                    taskComment = null;
-                    classPin = null;
-                    classPointer = null;
-                    draggable = false;
-                    ondragover = null;
-                    taskID = -1;
-                    disabled = "cellule-disabled";
-                    CSSbackground = null;
-                }
-                else
-                {
-                    disabled = null;
-                    CSSbackground = GetBackground(j);
+			<div class="month-column">
+				<div class="header-name noselect" style="@HeaderStyle" @onclick="() => HandleHeaderClick(day)">
+					@labelMonth
+				</div>
 
-                    string jour = j.ToString("ddd").Substring(0, 1).ToUpper();
-                    labelDay = $"{jour} {j.Day.ToString()}";
+				@for (var i = 0; i < 31; i++)
+				{
+					CSSbackground = null;
+					var j = day.AddDays(i);
+					int taskID = -1;
+					if (j.Month != m.Month)
+					{
+						j = default;
+						labelDay = string.Empty;
+						taskContent = string.Empty;
+						taskColor = null;
+						taskComment = null;
+						classPin = null;
+						classPointer = null;
+						draggable = false;
+						ondragover = null;
+						taskID = -1;
+					}
+					else
+					{
+						CSSbackground = GetBackground(j);
 
-                    taskContent = string.Empty;
-                    taskColor = null;
-                    taskComment = null;
-                    classPin = null;
-                    classPointer = null;
-                    tasksCounter = 0;    
-                    ondragover = "event.preventDefault();";
-                    borderStyle = string.Empty;
-                    if ( TasksList is not null )
-                    {
-                        for (var k = 0; k < TasksList.Length; k++)
-                        {
-                            Tasks t = TasksList[k];
+						string jour = j.ToString("ddd").Substring(0, 1).ToUpper();
+						labelDay = $"{jour} {j.Day.ToString()}";
 
-                            if ( t.DateStart.Date <= j.Date && j.Date <= t.DateEnd.Date )
-                            {                
-                                taskID = t.ID;
-                                tasksCounter++;
-                                if ( PriorityDisplay == PriorityLabel.Code )
-                                {   
-                                    taskContent = string.IsNullOrWhiteSpace(t.Code) ? t.Caption : t.Code;
-                                }
-                                else
-                                {   
-                                    taskContent = string.IsNullOrWhiteSpace(t.Caption) ? t.Code : t.Caption;
-                                }
+						taskContent = string.Empty;
+						taskColor = null;
+						taskComment = null;
+						classPin = null;
+						classPointer = null;
+						tasksCounter = 0;
+						ondragover = "event.preventDefault();";
+						borderStyle = string.Empty;
+						if (TasksList is not null)
+						{
+							for (var k = 0; k < TasksList.Length; k++)
+							{
+								Tasks t = TasksList[k];
 
-                                taskColor = Colors.GetHatching(t.FillStyle, t.Color);
-                                taskColor = $"{taskColor};color:{t.ForeColor}";
+								if (t.DateStart.Date <= j.Date && j.Date <= t.DateEnd.Date)
+								{
+									taskID = t.ID;
+									tasksCounter++;
+									if (PriorityDisplay == PriorityLabel.Code)
+									{
+										taskContent = string.IsNullOrWhiteSpace(t.Code) ? t.Caption : t.Code;
+									}
+									else
+									{
+										taskContent = string.IsNullOrWhiteSpace(t.Caption) ? t.Code : t.Caption;
+									}
 
-                                taskComment = t.Comment;
-                                classPin = string.IsNullOrWhiteSpace(t.Comment) ? null : " pin";
-                                classPointer = " cursor-pointer";
-                                NotbeDraggeble = t.NotBeDraggable;
+									taskColor = Colors.GetHatching(t.FillStyle, t.Color);
+									taskColor = $"{taskColor};color:{t.ForeColor}";
 
-                                if (t.DateStart.Date == j.Date && t.DateEnd.Date != j.Date)
-                                    borderStyle = "border-top";
-                                else if (t.DateEnd.Date == j.Date && t.DateStart.Date != j.Date)  
-                                    borderStyle = "border-bottom";
-                                else if (t.DateEnd.Date == j.Date && t.DateStart.Date == j.Date)     
-                                    borderStyle = "border-top border-bottom";
-                            }
-                        }   
-                    }
-                    if ( tasksCounter > 1 )
-                    {
-                        taskContent = "…";
-                        taskComment = null;
-                        taskColor = null;
-                        classPin = " pin-top";
-                        draggable = false; 
-                        taskID = -1;
-                    }
-                    else if ( tasksCounter == 1 )
-                    {  
-                        draggable = Draggable != true ? false : true; 
-                        if (NotbeDraggeble == true ) draggable = false; 
-                    }
-                }  
+									taskComment = t.Comment;
+									classPin = string.IsNullOrWhiteSpace(t.Comment) ? null : " pin";
+									classPointer = " cursor-pointer";
+									NotbeDraggeble = t.NotBeDraggable;
 
-                <div class=@($"cellule day-cellule noselect {disabled}") 
-                     style="@CSSbackground" 
-                     ondragover="@ondragover" 
-                     @ondrop="() => HandleDayOnDrop(j)" 
-                     @ondrop:preventDefault="true">
-                    <div class="day" style="@CSSbackground">
-                        @labelDay
-                    </div>
-                    <div id="task-@taskID" 
-                         class="@($"task{classPin}{classPointer} {borderStyle}")" 
-                         style="@taskColor" 
-                         title="@taskComment" 
-                         @onclick="e => ClickInternal(e, j)" 
-                         @ondragstart="() => HandleDragStart(j, taskID)"
-                         draggable="@draggable.ToString()" >
-                        @taskContent
-                    </div>
-                </div>  
-            }
-        </div>
-    }
+									if (t.DateStart.Date == j.Date && t.DateEnd.Date != j.Date)
+										borderStyle = "border-top";
+									else if (t.DateEnd.Date == j.Date && t.DateStart.Date != j.Date)
+										borderStyle = "border-bottom";
+									else if (t.DateEnd.Date == j.Date && t.DateStart.Date == j.Date)
+										borderStyle = "border-top border-bottom";
+								}
+							}
+						}
+						if (tasksCounter > 1)
+						{
+							taskContent = "…";
+							taskComment = null;
+							taskColor = null;
+							classPin = " pin-top";
+							draggable = false;
+							taskID = -1;
+						}
+						else if (tasksCounter == 1)
+						{
+							draggable = Draggable != true ? false : true;
+							if (NotbeDraggeble == true) draggable = false;
+						}
+					}
 
-    </div>
+					string CSSToday = null;
+					@if (HighlightToday)
+					{
+						CSSToday = j == today ? "annual-today" : null;
+					}
+
+                    <div class=@($"cellule day-cellule noselect {CSSToday}")
+						 style="@CSSbackground @GetDisabledBackground(j.Month != m.Month)"
+						 ondragover="@ondragover"
+						 @ondrop="() => HandleDayOnDrop(j)"
+						 @ondrop:preventDefault="true">
+						<div class="day" style="@CSSbackground">
+							@labelDay
+						</div>
+						<div id="task-@taskID"
+							 class="@($"task{classPin}{classPointer} {borderStyle}")"
+							 style="@taskColor"
+							 title="@taskComment"
+							 @onclick="e => ClickInternal(e, j)"
+							 @ondragstart="() => HandleDragStart(j, taskID)"
+							 draggable="@draggable.ToString()">
+							@taskContent
+						</div>
+					</div>
+				}
+			</div>
+		}
+
+	</div>
 </div>

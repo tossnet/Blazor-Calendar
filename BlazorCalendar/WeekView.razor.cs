@@ -1,4 +1,5 @@
 ﻿using BlazorCalendar.Models;
+using BlazorCalendar.Styles;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
@@ -120,5 +121,11 @@ partial class WeekView : CalendarBase
         };
 
         await TaskClick.InvokeAsync(clickTaskParameter);
+    }
+
+    private string GetTaskStyle(Tasks task)
+    {
+        string style = Colors.GetHatching(task.FillStyle, task.Color);
+        return $"{style};color:{task.ForeColor}";
     }
 }

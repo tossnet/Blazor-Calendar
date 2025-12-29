@@ -63,6 +63,14 @@ a, .btn-link {
         content: "An error has occurred."
     }
 
+
+.command {
+    margin-left: 8px;
+    display: flex;
+    flex-direction: column;
+    font-size: x-small;
+}
+
 .console {
     background: #262626;
     color: white;
