@@ -2,13 +2,19 @@
 @using BlazorCalendar
 
 <div class="d-flex flex-row mb-2">
-
-	<select @bind="@SelectedView" class="me-2">
+	<WinOldSelect Appearance="Appearance.Win98"
+				  T="BlazorCalendar.DisplayedView"
+				  @bind-Value="SelectedView">
+		<WinOldOption Value="DisplayedView.Annual" selected>Annual view</WinOldOption>
+		<WinOldOption Value="DisplayedView.Monthly">Monthly view</WinOldOption>
+		<WinOldOption Value="DisplayedView.Weekly">Weeky view</WinOldOption>
+	</WinOldSelect>
+@* 	<select @bind="@SelectedView" class="me-2">
 		<option value="@DisplayedView.Annual" selected>Annual view</option>
 		<option value="@DisplayedView.Monthly">Monthly view</option>
 		<option value="@DisplayedView.Weekly">Weeky view</option>
 	</select>
-	 
+	  *@
 </div>
 
 <CalendarContainer  DisplayedView="SelectedView"  >

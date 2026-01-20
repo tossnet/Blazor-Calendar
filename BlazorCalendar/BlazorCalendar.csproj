@@ -2,10 +2,14 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
-		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Version>3.0.0</Version>
+		<Nullable>enable</Nullable>
+
+		<!-- Package metadata -->
+		<PackageId>BlazorCalendar</PackageId>
+		<Version>3.0.2</Version>
 		<Authors>Christophe Peugnet</Authors>
+		<Copyright>Copyright 2026</Copyright>
 		<Description>Yearly, monthly and weekly calendar Blazor Component. For use with .NET 8.0 or higher Blazor applications</Description>
 		<PackageTags>blazor, calendar, schedule, component</PackageTags>
 		<PackageProjectUrl>https://github.com/tossnet/Blazor-Calendar</PackageProjectUrl>
@@ -14,13 +18,15 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageReleaseNotes>https://github.com/tossnet/Blazor-Calendar#release-notes</PackageReleaseNotes>
+		<PackageIcon>icon.png</PackageIcon>
+
+		<!-- Build and symbols -->
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-		<Copyright>Copyright 2026</Copyright>
-		<PackageIcon>icon.png</PackageIcon>
-		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<DebugType>portable</DebugType>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -36,11 +42,11 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
-		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.12" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
-		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.2" />
 	</ItemGroup>
 
 	<ItemGroup>

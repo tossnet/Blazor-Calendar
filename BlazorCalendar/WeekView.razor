@@ -33,45 +33,86 @@
                 @dayNames[d] @day.ToString("dd.MM")
             </div>
 
+
             <div class="hours">
                 @for (int hour = 0; hour < 24; hour++)
                 {
                     DateTime hours = day.AddHours(hour);
+                    int row = hour + 1;
+
                     <div class="hour day-cellule noselect"
                          ondragover="event.preventDefault();this.style.fontWeight = '600';"
                          ondragleave="this.style.fontWeight='100';"
                          @ondrop:preventDefault="true" 
                          @ondrop="() => HandleDayOnDrop(hours)"
                          @onclick="e => ClickDayInternal(e, hours)"
-                         style="@GetBackground(day)">
+                         style="grid-row: @row; @GetBackground(day)">
                         @hours.ToString("HH:mm")
                     </div>
 
-                    @if (TasksList is not null)
+                    <div class="hour-dropzone"
+                         ondragover="event.preventDefault();this.style.backgroundColor = 'rgba(0,120,215,0.1)';"
+                         ondragleave="this.style.backgroundColor='transparent';"
+                         @ondrop:preventDefault="true"
+                         @ondrop="() => { HandleDayOnDrop(hours); }"
+                         @ondrop:stopPropagation="true"
+                         @onclick="e => ClickDayInternal(e, hours)"
+                         style="grid-row: @row;">
+                    </div>
+                }
+
+                @if (TasksList is not null)
+                {
+                    // Filter and prepare tasks for this day
+                    var dayTasks = TasksList
+                        .Where(t => t.DateStart.Date <= day.Date && t.DateEnd > day)
+                        .Select(t => {
+                            DateTime effectiveStart = t.DateStart.Date < day.Date ? day : t.DateStart;
+                            DateTime effectiveEnd = t.DateEnd.Date > day.Date ? day.AddDays(1) : t.DateEnd;
+                            return (Task: t, EffectiveStart: effectiveStart, EffectiveEnd: effectiveEnd);
+                        })
+                        .OrderBy(x => x.EffectiveStart)
+                        .ThenByDescending(x => x.EffectiveEnd)
+                        .ToList();
+
+                    // Track column end times to find available columns for overlapping tasks
+                    var columnEndTimes = new List<DateTime>();
+
+                    foreach (var item in dayTasks)
                     {
-                        int column = 1;
-
-                        for (var k = 0; k < TasksList.Length; k++)
+                        // Find first available column where task doesn't overlap
+                        int taskColumn = -1;
+                        for (int c = 0; c < columnEndTimes.Count; c++)
                         {
-                            Tasks t = TasksList[k];
-
-                            if (t.DateEnd > hours && t.DateStart <= hours)
+                            if (columnEndTimes[c] <= item.EffectiveStart)
                             {
-                                column++;
-
-                                classPin = string.IsNullOrWhiteSpace(t.Comment) ? null : " pin";
-
-                                <div class="@($"hour-task {classPin} cursor-pointer border-start border-top border-bottom")"
-                                     style="grid-column-start: @column; @GetTaskStyle(t)"
-                                     draggable="@Draggable.ToString()" 
-                                     @ondragstart="() => HandleDragStart(t.ID)"
-                                     @onclick="e => ClickTaskInternal(e, t.ID, day)">
-                                    @t.Code
-                                </div>
+                                taskColumn = c + 2; // +2 because column 1 is for hours
+                                columnEndTimes[c] = item.EffectiveEnd;
+                                break;
                             }
                         }
-                    }
 
+                        // If no existing column is available, create a new one
+                        if (taskColumn == -1)
+                        {
+                            columnEndTimes.Add(item.EffectiveEnd);
+                            taskColumn = columnEndTimes.Count + 1; // +1 because column 1 is for hours
+                        }
+
+                        int startRow = item.EffectiveStart.Hour + 1;
+                        int spanHours = Math.Max(1, (int)Math.Ceiling((item.EffectiveEnd - item.EffectiveStart).TotalHours));
+
+                        classPin = string.IsNullOrWhiteSpace(item.Task.Comment) ? null : " pin";
+
+                        <div class="@($"hour-task {classPin} cursor-pointer border-start border-top border-bottom")"
+                             style="grid-column: @taskColumn; grid-row: @startRow / span @spanHours; @GetTaskStyle(item.Task)"
+                             draggable="@Draggable.ToString()" 
+                             @ondragstart="() => HandleDragStart(item.Task.ID)"
+                             ondragend="document.querySelectorAll('.hour-dropzone').forEach(e => e.style.backgroundColor='transparent');"
+                             @onclick="e => ClickTaskInternal(e, item.Task.ID, day)">
+                            @item.Task.Code
+                        </div>
+                    }
                 }
             </div>
 

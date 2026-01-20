@@ -3,18 +3,25 @@
 @using BlazorCalendar.Models
 @using System.Globalization
 
-<div class="d-flex flex-row mb-2">
+<div class="d-flex flex-row mb-2" style="max-height: 35px;">
 	<button type="button" @onclick="GoToday" class="btn">📅 Go Today</button>
-	<button type="button" @onclick="@(m => ClicMonthNavigate(-7))" class="btn">🔼</button>
-	<button type="button" @onclick="@(m => ClicMonthNavigate(7))" class="btn me-2">🔽</button>
+	<WinOldButton OnClick="@(m => ClicMonthNavigate(-7))"
+				  Appearance="Appearance.Win98"
+				  Style="min-width: unset;">▲</WinOldButton>
+	<WinOldButton OnClick="@(m => ClicMonthNavigate(7))"
+				  Appearance="Appearance.Win98"
+				  Style="min-width: unset;">▼</WinOldButton>
 	<input type="date" class="me-2" value="@(today.ToString("yyyy-MM-dd"))" @onchange="@(e => ChangeFirstDate(e.Value.ToString()))" />
-	<select @bind="@PriorityDisplay" class="me-2">
-		<option value="@PriorityLabel.Code" selected>priority Code</option>
-		<option value="@PriorityLabel.Caption">priority Caption</option>
-	</select>
+	<WinOldSelect Appearance="Appearance.Win98"
+				  T="BlazorCalendar.PriorityLabel"
+				  @bind-Value="PriorityDisplay">
+		<WinOldOption Value="PriorityLabel.Code">Label: Code</WinOldOption>
+		<WinOldOption Value="PriorityLabel.Caption">Label: Caption</WinOldOption>
+	</WinOldSelect>
 	<div>
-		<input type="checkbox" @bind="draggable" id="is-draggable" />
-		<label for="is-draggable">Draggable</label>
+		<WinOldCheckBox Appearance="Appearance.Win98"
+						Label="Draggable"
+						@bind-Value="draggable" />
 	</div>
 </div>
 

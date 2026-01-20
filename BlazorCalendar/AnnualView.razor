@@ -68,42 +68,37 @@
 						tasksCounter = 0;
 						ondragover = "event.preventDefault();";
 						borderStyle = string.Empty;
-						if (TasksList is not null)
+
+						// Use indexed lookup for O(1) performance
+						List<Tasks> tasksForDay = GetTasksForDate(j);
+						foreach (Tasks t in tasksForDay)
 						{
-							for (var k = 0; k < TasksList.Length; k++)
+							taskID = t.ID;
+							tasksCounter++;
+							if (PriorityDisplay == PriorityLabel.Code)
 							{
-								Tasks t = TasksList[k];
-
-								if (t.DateStart.Date <= j.Date && j.Date <= t.DateEnd.Date)
-								{
-									taskID = t.ID;
-									tasksCounter++;
-									if (PriorityDisplay == PriorityLabel.Code)
-									{
-										taskContent = string.IsNullOrWhiteSpace(t.Code) ? t.Caption : t.Code;
-									}
-									else
-									{
-										taskContent = string.IsNullOrWhiteSpace(t.Caption) ? t.Code : t.Caption;
-									}
-
-									taskColor = Colors.GetHatching(t.FillStyle, t.Color);
-									taskColor = $"{taskColor};color:{t.ForeColor}";
-
-									taskComment = t.Comment;
-									classPin = string.IsNullOrWhiteSpace(t.Comment) ? null : " pin";
-									classPointer = " cursor-pointer";
-									NotbeDraggeble = t.NotBeDraggable;
-
-									if (t.DateStart.Date == j.Date && t.DateEnd.Date != j.Date)
-										borderStyle = "border-top";
-									else if (t.DateEnd.Date == j.Date && t.DateStart.Date != j.Date)
-										borderStyle = "border-bottom";
-									else if (t.DateEnd.Date == j.Date && t.DateStart.Date == j.Date)
-										borderStyle = "border-top border-bottom";
-								}
+								taskContent = string.IsNullOrWhiteSpace(t.Code) ? t.Caption : t.Code;
 							}
+							else
+							{
+								taskContent = string.IsNullOrWhiteSpace(t.Caption) ? t.Code : t.Caption;
+							}
+							taskColor = Colors.GetHatching(t.FillStyle, t.Color);
+							taskColor = $"{taskColor};color:{t.ForeColor}";
+
+							taskComment = t.Comment;
+							classPin = string.IsNullOrWhiteSpace(t.Comment) ? null : " pin";
+							classPointer = " cursor-pointer";
+							NotbeDraggeble = t.NotBeDraggable;
+
+							if (t.DateStart.Date == j.Date && t.DateEnd.Date != j.Date)
+								borderStyle = "border-top";
+							else if (t.DateEnd.Date == j.Date && t.DateStart.Date != j.Date)
+								borderStyle = "border-bottom";
+							else if (t.DateEnd.Date == j.Date && t.DateStart.Date == j.Date)
+								borderStyle = "border-top border-bottom";
 						}
+
 						if (tasksCounter > 1)
 						{
 							taskContent = "…";
@@ -120,13 +115,13 @@
 						}
 					}
 
-					string CSSToday = null;
+					string? CSSToday = null;
 					@if (HighlightToday)
 					{
 						CSSToday = j == today ? "annual-today" : null;
 					}
 
-                    <div class=@($"cellule day-cellule noselect {CSSToday}")
+					<div class=@($"cellule day-cellule noselect {CSSToday}")
 						 style="@CSSbackground @GetDisabledBackground(j.Month != m.Month)"
 						 ondragover="@ondragover"
 						 @ondrop="() => HandleDayOnDrop(j)"
@@ -134,15 +129,15 @@
 						<div class="day" style="@CSSbackground">
 							@labelDay
 						</div>
-						<div id="task-@taskID"
-							 class="@($"task{classPin}{classPointer} {borderStyle}")"
-							 style="@taskColor"
-							 title="@taskComment"
-							 @onclick="e => ClickInternal(e, j)"
-							 @ondragstart="() => HandleDragStart(j, taskID)"
-							 draggable="@draggable.ToString()">
-							@taskContent
-						</div>
+					<div id="task-@taskID"
+						 class="@($"task{classPin}{classPointer} {borderStyle}")"
+						 style="@taskColor"
+						 title="@taskComment"
+						 @onclick="e => ClickInternal(e, j)"
+						 @ondragstart="() => HandleDragStart(j, taskID)"
+						 draggable="@(draggable ? "true" : "false")">
+						@taskContent
+					</div>
 					</div>
 				}
 			</div>

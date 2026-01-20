@@ -22,10 +22,14 @@
     flex: 1;
     display: grid;
     justify-content: stretch;
+    grid-template-columns: 50px 1fr;
+    grid-auto-columns: 1fr;
+    grid-template-rows: repeat(24, 1fr);
+    grid-auto-flow: column;
 }
 
 .hour {
-    grid-column-start: 1;
+    grid-column: 1;
     font-size: 0.8em;
     padding-left: 0.5em;
 }
@@ -36,6 +40,12 @@
     font-weight: 600;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.hour-dropzone {
+    grid-column-end: -1;
+    min-width: 30px;
+    cursor: pointer;
 }
 
 @media only screen and (max-width: 587px) {

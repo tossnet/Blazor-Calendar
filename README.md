@@ -36,7 +36,14 @@ https://github.com/tossnet/Blazor-Calendar/wiki
 
 ## <a name="ReleaseNotes"></a>Release Notes
 
-<details open="open"><summary>Version 3.0.0</summary>
+<details open="open"><summary>Version 3.0.2</summary>
+
+>- **Performance optimization** : AnnualView now uses Dictionary-based O(1) lookup instead of O(n) linear search for tasks
+>- **Smart change detection** : Index is rebuilt only when task content actually changes (using hash comparison), not on every render cycle
+>- **WeekView improvement** : Overlapping tasks are now displayed in separate columns for better visibility
+</details>
+
+<details><summary>Version 3.0.0</summary>
 
 >- Add .NET10 and remove .NET7
 >- Highlight TODAY in AnnualView [Issue #22](https://github.com/tossnet/Blazor-Calendar/issues/22)

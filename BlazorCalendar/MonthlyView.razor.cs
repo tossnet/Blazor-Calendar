@@ -99,31 +99,31 @@ partial class MonthlyView : CalendarBase
 		if (!TaskClick.HasDelegate) 
             return;
 
-		// There can be several tasks in one day :
-		List<int> listID = new();
+        if (TasksList is null)
+            return;
 
-        if (TasksList is not null)
+        // There can be several tasks in one day :
+        List<int> listID = new();
+
+        for (var k = 0; k < TasksList.Length; k++)
         {
-            for (var k = 0; k < TasksList.Length; k++)
-            {
-                Tasks t = TasksList[k];
+            Tasks t = TasksList[k];
 
-                if (t.DateStart.Date <= day.Date && day.Date <= t.DateEnd.Date)
-                {
-                    listID.Add(t.ID);
-                }
+            if (t.DateStart.Date <= day.Date && day.Date <= t.DateEnd.Date)
+            {
+                listID.Add(t.ID);
             }
-
-            ClickTaskParameter clickTaskParameter = new()
-            {
-                IDList = listID,
-                X = e.ClientX,
-                Y = e.ClientY,
-                Day = day
-            };
-
-            await TaskClick.InvokeAsync(clickTaskParameter);
         }
+
+        ClickTaskParameter clickTaskParameter = new()
+        {
+            IDList = listID,
+            X = e.ClientX,
+            Y = e.ClientY,
+            Day = day
+        };
+
+        await TaskClick.InvokeAsync(clickTaskParameter);
     }
 
     private async Task ClickDayInternal(MouseEventArgs e, DateTime day)

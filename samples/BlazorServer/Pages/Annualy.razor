@@ -23,6 +23,9 @@
 		<label for="is-highlightToday">highlight Today</label>
 	</div>
 	<div class="command">
+		<button type="button" @onclick="@AddRandomTask" class="btn">➕ Random Task</button>
+	</div>
+	<div class="command">
 		<label for="favdisabledcolor">Disabled Days Color :</label>
 		<input type="color" id="favdisabledcolor" name="favdisabledcolor" @bind-value="@disabledDayColor" @bind:after="@StateHasChanged">
 	</div>
@@ -37,7 +40,7 @@
 	<div class="command">
 		<label for="favweekDaysColor">Other days Color :</label>
 		<input type="color" id="favweekDaysColor" name="favweekDaysColor" @bind-value="@weekDaysColor" @bind:after="@StateHasChanged">
-	</div>	   
+	</div>
 	<div class="command">
 		<label for="favfontColor">Font color :</label>
 		<input type="color" id="favfontColor" name="favfontColor" @bind-value="@fontColor" @bind:after="@StateHasChanged">
@@ -49,10 +52,10 @@
 	<AnnualView Months="months" Style="height:80vh"
 				PriorityDisplay="@PriorityDisplay"
 				HeaderClick="HeaderClick"
-				TaskClick="TaskClick" 
+				TaskClick="TaskClick"
 				EmptyDayClick="EmptyDayClick"
-				Draggable="@draggable" 
-				DragStart="DragStart" 
+				Draggable="@draggable"
+				DragStart="DragStart"
 				DropTask="DropTask"
 				HighlightToday="@highlightToday"
 				DisabledDayColor="@disabledDayColor"
@@ -84,7 +87,7 @@
 	{
 		TasksList = new()
 		{
-			new Tasks { ID = 1, DateStart = today.AddDays(8), DateEnd = today.AddDays(8), Code = "CP", Color = "#19C319", Caption = "Lorem ipsum dolor sit amet", FillStyle=BlazorCalendar.FillStyleEnum.CrossDots },
+			new Tasks { ID = 1, DateStart = today.AddDays(8), DateEnd = today.AddDays(8), Code = "VAC", Color = "#19C319", Caption = "Lorem ipsum dolor sit amet", FillStyle=BlazorCalendar.FillStyleEnum.CrossDots },
 			new Tasks { ID = 2, DateStart = today.AddDays(50), DateEnd = today.AddDays(52), Code = "DEV", Color = "#FFD800", Comment="on Teams template", Caption = "Fusce quis purus eu ante", FillStyle=BlazorCalendar.FillStyleEnum.ZigZag },
 			new Tasks { ID = 3, DateStart = today.AddDays(40), DateEnd = today.AddDays(41), Code = "FORM", Color = "#FFC3FF", ForeColor = "#FF0000", Caption = "Lorem ipsum dolor sit amet" },
 			new Tasks { ID = 4, DateStart = today.AddDays(62), DateEnd = today.AddDays(62), Code = "DEV", Color = "#FFD800" },
@@ -133,5 +136,26 @@
 		var TotalDay = (taskDropped.DateEnd - taskDropped.DateStart).TotalDays;
 		taskDropped.DateEnd = dragDropParameter.Day.AddDays(TotalDay);
 		taskDropped.DateStart = dragDropParameter.Day;
+	}
+
+	private void AddRandomTask()
+	{
+		Random rnd = new Random();
+		int id = TasksList.Count > 0 ? TasksList.Max(t => t.ID) + 1 : 1;
+		int startOffset = rnd.Next(0, months * 30);
+		int duration = rnd.Next(0, 5);
+		string[] codes = new string[] { "VAC", "DEV", "FORM", "MEETING", "TEST" };
+		string code = codes[rnd.Next(0, codes.Length)];
+		string color = String.Format("#{0:X6}", rnd.Next(0x1000000));
+		Tasks newTask = new Tasks
+		{
+			ID = id,
+			DateStart = today.AddDays(startOffset),
+			DateEnd = today.AddDays(startOffset + duration),
+			Code = code,
+			Color = color,
+			Caption = "New random task"
+		};
+		TasksList.Add(newTask);
 	}
 }

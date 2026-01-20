@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31710.8
+# Visual Studio Version 18
+VisualStudioVersion = 18.3.11408.92 d18.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorCalendar", "BlazorCalendar\BlazorCalendar.csproj", "{D018189F-E4BE-4693-9BF0-FE8325CB0899}"
 EndProject
@@ -10,6 +10,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorServer", "samples\BlazorServer\BlazorServer.csproj", "{C61DD137-FEBF-4644-8098-EC4263AF3967}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWebAssembly", "samples\BlazorWebAssembly\BlazorWebAssembly.csproj", "{5D3171BB-C17D-462D-AECE-3C8DEAC85441}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Benchmarks", "Benchmarks", "{C9CF3B12-5BCB-406A-B2B6-A6701652DACA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorCalendar.Benchmarks", "BlazorCalendar.Benchmarks\BlazorCalendar.Benchmarks.csproj", "{33B127B9-2341-493B-A0FD-05EB7E1DA664}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +33,10 @@ Global
 		{5D3171BB-C17D-462D-AECE-3C8DEAC85441}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D3171BB-C17D-462D-AECE-3C8DEAC85441}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D3171BB-C17D-462D-AECE-3C8DEAC85441}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33B127B9-2341-493B-A0FD-05EB7E1DA664}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33B127B9-2341-493B-A0FD-05EB7E1DA664}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33B127B9-2341-493B-A0FD-05EB7E1DA664}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33B127B9-2341-493B-A0FD-05EB7E1DA664}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -36,6 +44,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{C61DD137-FEBF-4644-8098-EC4263AF3967} = {9A175C09-D84D-4734-9E6E-00C89C09AA2A}
 		{5D3171BB-C17D-462D-AECE-3C8DEAC85441} = {9A175C09-D84D-4734-9E6E-00C89C09AA2A}
+		{33B127B9-2341-493B-A0FD-05EB7E1DA664} = {C9CF3B12-5BCB-406A-B2B6-A6701652DACA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B68E7280-0A03-4BD1-B3B5-AB2A9B68195D}
