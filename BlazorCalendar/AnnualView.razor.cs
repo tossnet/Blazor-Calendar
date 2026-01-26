@@ -164,8 +164,146 @@ partial class AnnualView : CalendarBase
         return tasks;
     }
 
-    private async Task ClickInternal(MouseEventArgs e, DateTime day)
+    /// <summary>
+    /// Gets tasks that start on a specific date or continue from a previous month.
+    /// Returns tasks with their calculated span within the current month.
+    /// </summary>
+    private List<(Tasks Task, int StartRow, int Span)> GetTasksForMonth(DateTime monthStart)
     {
+        if (TasksList is null)
+            return [];
+
+        var result = new List<(Tasks Task, int StartRow, int Span)>();
+        var lastDayOfMonth = new DateTime(monthStart.Year, monthStart.Month, DateTime.DaysInMonth(monthStart.Year, monthStart.Month));
+
+        foreach (var task in TasksList)
+        {
+            // Check if task overlaps with this month
+            if (task.DateEnd.Date < monthStart.Date || task.DateStart.Date > lastDayOfMonth.Date)
+                continue;
+
+            // Calculate effective start within the month
+            var effectiveStart = task.DateStart.Date < monthStart.Date ? monthStart.Date : task.DateStart.Date;
+            // Calculate effective end within the month
+            var effectiveEnd = task.DateEnd.Date > lastDayOfMonth.Date ? lastDayOfMonth.Date : task.DateEnd.Date;
+
+            // StartRow is 1-based (row 1 is header, row 2 is day 1)
+            int startRow = effectiveStart.Day + 1;
+            int span = (effectiveEnd - effectiveStart).Days + 1;
+
+            result.Add((task, startRow, span));
+        }
+
+        // Sort by start date, then by duration (longer tasks first for overlap handling)
+        return result.OrderBy(x => x.StartRow).ThenByDescending(x => x.Span).ToList();
+    }
+
+    /// <summary>
+    /// Assigns columns to tasks to handle overlapping tasks within a month.
+    /// Also calculates column span so non-overlapping tasks can use full width.
+    /// </summary>
+    private List<(Tasks Task, int StartRow, int Span, int Column, int ColSpan)> AssignTaskColumns(List<(Tasks Task, int StartRow, int Span)> tasks)
+    {
+        var result = new List<(Tasks Task, int StartRow, int Span, int Column, int ColSpan)>();
+        var columnEndRows = new List<int>(); // Track the end row of each column
+
+        // First pass: assign columns
+        var taskAssignments = new List<(Tasks Task, int StartRow, int Span, int Column, int EndRow)>();
+
+        foreach (var (task, startRow, span) in tasks)
+        {
+            int endRow = startRow + span - 1;
+            int assignedColumn = -1;
+
+            // Find first available column
+            for (int c = 0; c < columnEndRows.Count; c++)
+            {
+                if (columnEndRows[c] < startRow)
+                {
+                    assignedColumn = c + 1; // Columns are 1-based
+                    columnEndRows[c] = endRow;
+                    break;
+                }
+            }
+
+            // If no column available, create a new one
+            if (assignedColumn == -1)
+            {
+                columnEndRows.Add(endRow);
+                assignedColumn = columnEndRows.Count;
+            }
+
+            taskAssignments.Add((task, startRow, span, assignedColumn, endRow));
+        }
+
+        int totalColumns = columnEndRows.Count > 0 ? columnEndRows.Count : 1;
+
+        // Second pass: calculate column spans for each task
+        foreach (var (task, startRow, span, column, endRow) in taskAssignments)
+        {
+            int colSpan = 1;
+
+            // Check how many consecutive columns to the right are free during this task's time
+            for (int nextCol = column + 1; nextCol <= totalColumns; nextCol++)
+            {
+                bool canExtend = true;
+
+                // Check if any other task uses nextCol and overlaps with this task's rows
+                foreach (var other in taskAssignments)
+                {
+                    if (other.Column == nextCol)
+                    {
+                        int otherEndRow = other.StartRow + other.Span - 1;
+                        // Check for overlap in rows
+                        if (!(other.StartRow > endRow || otherEndRow < startRow))
+                        {
+                            canExtend = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (canExtend)
+                    colSpan++;
+                else
+                    break;
+            }
+
+            result.Add((task, startRow, span, column, colSpan));
+        }
+
+        return result;
+    }
+
+    /// <summary>
+    /// Gets the maximum number of task columns needed for a month.
+    /// </summary>
+    private int GetMaxTaskColumns(List<(Tasks Task, int StartRow, int Span, int Column, int ColSpan)> tasksWithColumns)
+    {
+        if (tasksWithColumns.Count == 0)
+            return 1;
+        return tasksWithColumns.Max(x => x.Column);
+    }
+
+    private async Task ClickInternal(MouseEventArgs e, DateTime day,int? taskId = null)
+    {
+        if (taskId.HasValue)
+        {
+            // Clicked on a specific task
+            if (TaskClick.HasDelegate)
+            {
+                ClickTaskParameter clickTaskParameter = new()
+                {
+                    IDList = new List<int> { taskId.Value },
+                    X = e.ClientX,
+                    Y = e.ClientY,
+                    Day = day
+                };
+                await TaskClick.InvokeAsync(clickTaskParameter);
+            }
+            return;
+        }
+
         if (day == default) 
             return;
 

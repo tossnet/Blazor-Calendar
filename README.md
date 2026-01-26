@@ -36,7 +36,12 @@ https://github.com/tossnet/Blazor-Calendar/wiki
 
 ## <a name="ReleaseNotes"></a>Release Notes
 
-<details open="open"><summary>Version 3.0.2</summary>
+<details open="open"><summary>Version 3.1.0</summary>
+
+>- **AnnualView improvement** : Non-overlapping tasks now span the full available width instead of being restricted to a single column, improving calendar readability
+</details>
+
+<details><summary>Version 3.0.2</summary>
 
 >- **Performance optimization** : AnnualView now uses Dictionary-based O(1) lookup instead of O(n) linear search for tasks
 >- **Smart change detection** : Index is rebuilt only when task content actually changes (using hash comparison), not on every render cycle

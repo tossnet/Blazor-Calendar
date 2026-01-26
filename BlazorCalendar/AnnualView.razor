@@ -1,4 +1,4 @@
-﻿@using BlazorCalendar.Models
+@using BlazorCalendar.Models
 @using BlazorCalendar.Styles
 
 @inherits CalendarBase
@@ -9,15 +9,11 @@
 	string? CSSbackground;
 	string taskContent = string.Empty;
 	string? taskColor;
-	string? taskComment;
 	string? classPin;
 	string? classPointer;
-	int tasksCounter;
 	bool draggable = false;
 	string? ondragover;
 	string? isHidden = DisplayedView == DisplayedView.Annual ? null : "hidden-element";
-	bool NotbeDraggeble = false;
-	string borderStyle = string.Empty;
 	DateTime today = DateTime.Today;
 }
 <div class="frame">
@@ -27,117 +23,111 @@
 		@for (var month = 0; month <= Months; month++)
 		{
 			m = FirstDate.AddMonths(month);
-			var day = new DateTime(m.Year, m.Month, 1);
-			labelMonth = day.ToString("MMMM");
+			var monthStart = new DateTime(m.Year, m.Month, 1);
+			int daysInMonth = DateTime.DaysInMonth(m.Year, m.Month);
+			labelMonth = monthStart.ToString("MMMM");
 
-			<div class="month-column">
-				<div class="header-name noselect" style="@HeaderStyle" @onclick="() => HandleHeaderClick(day)">
+			// Get tasks for this month with their spans
+			var tasksForMonth = GetTasksForMonth(monthStart);
+			var tasksWithColumns = AssignTaskColumns(tasksForMonth);
+			int maxColumns = GetMaxTaskColumns(tasksWithColumns);
+
+			// Generate grid-template-columns dynamically: day-label + task columns
+			string gridColumns = $"auto repeat({maxColumns}, 1fr)";
+
+			<div class="month-column" style="grid-template-columns: @gridColumns;">
+				<div class="header-name noselect" style="@HeaderStyle" @onclick="() => HandleHeaderClick(monthStart)">
 					@labelMonth
 				</div>
 
+				@* Render day cells *@
 				@for (var i = 0; i < 31; i++)
 				{
-					CSSbackground = null;
-					var j = day.AddDays(i);
-					int taskID = -1;
+					var j = monthStart.AddDays(i);
+					int gridRow = i + 2; // Row 1 is header, row 2 is day 1
+
 					if (j.Month != m.Month)
 					{
-						j = default;
-						labelDay = string.Empty;
-						taskContent = string.Empty;
-						taskColor = null;
-						taskComment = null;
-						classPin = null;
-						classPointer = null;
-						draggable = false;
-						ondragover = null;
-						taskID = -1;
+						<div class="cellule day-cellule noselect day-only"
+							 style="grid-row: @gridRow; @GetDisabledBackground(true)">
+							<div class="day"></div>
+						</div>
 					}
 					else
 					{
 						CSSbackground = GetBackground(j);
-
 						string jour = j.ToString("ddd").Substring(0, 1).ToUpper();
-						labelDay = $"{jour} {j.Day.ToString()}";
-
-						taskContent = string.Empty;
-						taskColor = null;
-						taskComment = null;
-						classPin = null;
-						classPointer = null;
-						tasksCounter = 0;
+						labelDay = $"{jour} {j.Day}";
 						ondragover = "event.preventDefault();";
-						borderStyle = string.Empty;
 
-						// Use indexed lookup for O(1) performance
-						List<Tasks> tasksForDay = GetTasksForDate(j);
-						foreach (Tasks t in tasksForDay)
+						string? CSSToday = null;
+						if (HighlightToday)
 						{
-							taskID = t.ID;
-							tasksCounter++;
-							if (PriorityDisplay == PriorityLabel.Code)
-							{
-								taskContent = string.IsNullOrWhiteSpace(t.Code) ? t.Caption : t.Code;
-							}
-							else
-							{
-								taskContent = string.IsNullOrWhiteSpace(t.Caption) ? t.Code : t.Caption;
-							}
-							taskColor = Colors.GetHatching(t.FillStyle, t.Color);
-							taskColor = $"{taskColor};color:{t.ForeColor}";
-
-							taskComment = t.Comment;
-							classPin = string.IsNullOrWhiteSpace(t.Comment) ? null : " pin";
-							classPointer = " cursor-pointer";
-							NotbeDraggeble = t.NotBeDraggable;
-
-							if (t.DateStart.Date == j.Date && t.DateEnd.Date != j.Date)
-								borderStyle = "border-top";
-							else if (t.DateEnd.Date == j.Date && t.DateStart.Date != j.Date)
-								borderStyle = "border-bottom";
-							else if (t.DateEnd.Date == j.Date && t.DateStart.Date == j.Date)
-								borderStyle = "border-top border-bottom";
+							CSSToday = j == today ? "annual-today" : null;
 						}
 
-						if (tasksCounter > 1)
-						{
-							taskContent = "…";
-							taskComment = null;
-							taskColor = null;
-							classPin = " pin-top";
-							draggable = false;
-							taskID = -1;
-						}
-						else if (tasksCounter == 1)
-						{
-							draggable = Draggable != true ? false : true;
-							if (NotbeDraggeble == true) draggable = false;
-						}
-					}
-
-					string? CSSToday = null;
-					@if (HighlightToday)
-					{
-						CSSToday = j == today ? "annual-today" : null;
-					}
-
-					<div class=@($"cellule day-cellule noselect {CSSToday}")
-						 style="@CSSbackground @GetDisabledBackground(j.Month != m.Month)"
-						 ondragover="@ondragover"
-						 @ondrop="() => HandleDayOnDrop(j)"
-						 @ondrop:preventDefault="true">
-						<div class="day" style="@CSSbackground">
-							@labelDay
+						<div class=@($"cellule day-cellule noselect day-only {CSSToday}")
+							 style="grid-row: @gridRow; @CSSbackground"
+							 ondragover="@ondragover"
+							 @ondrop="() => HandleDayOnDrop(j)"
+							 @ondrop:preventDefault="true"
+							 @onclick="e => ClickInternal(e, j)">
+							<div class="day" style="@CSSbackground">
+								@labelDay
+							</div>
 						</div>
-					<div id="task-@taskID"
-						 class="@($"task{classPin}{classPointer} {borderStyle}")"
-						 style="@taskColor"
-						 title="@taskComment"
-						 @onclick="e => ClickInternal(e, j)"
-						 @ondragstart="() => HandleDragStart(j, taskID)"
+					}
+				}
+
+				@* Render tasks as spanning elements *@
+				@foreach (var (task, startRow, span, column, colSpan) in tasksWithColumns)
+				{
+					// Determine task content
+					if (PriorityDisplay == PriorityLabel.Code)
+					{
+						taskContent = string.IsNullOrWhiteSpace(task.Code) ? task.Caption : task.Code;
+					}
+					else
+					{
+						taskContent = string.IsNullOrWhiteSpace(task.Caption) ? task.Code : task.Caption;
+					}
+
+					taskColor = Colors.GetHatching(task.FillStyle, task.Color);
+					taskColor = $"{taskColor};color:{task.ForeColor}";
+
+					classPin = string.IsNullOrWhiteSpace(task.Comment) ? null : " pin";
+					classPointer = " cursor-pointer";
+
+					draggable = Draggable && !task.NotBeDraggable;
+
+					// Calculate effective dates for this month
+					var lastDayOfMonth = new DateTime(monthStart.Year, monthStart.Month, daysInMonth);
+					var effectiveStart = task.DateStart.Date < monthStart.Date ? monthStart.Date : task.DateStart.Date;
+					var effectiveEnd = task.DateEnd.Date > lastDayOfMonth.Date ? lastDayOfMonth.Date : task.DateEnd.Date;
+
+					// Border styles for visual continuity
+					string borderStyle = "";
+					bool isStartInMonth = task.DateStart.Date >= monthStart.Date && task.DateStart.Date <= lastDayOfMonth.Date;
+					bool isEndInMonth = task.DateEnd.Date >= monthStart.Date && task.DateEnd.Date <= lastDayOfMonth.Date;
+
+					if (isStartInMonth && isEndInMonth)
+						borderStyle = "border-top border-bottom";
+					else if (isStartInMonth)
+						borderStyle = "border-top";
+					else if (isEndInMonth)
+						borderStyle = "border-bottom";
+
+					// Grid column is offset by 1 (column 1 is day labels)
+					int gridColumn = column + 1;
+
+					<div id="task-@task.ID"
+						 class="@($"task-span{classPin}{classPointer} {borderStyle}")"
+						 style="grid-row: @startRow / span @span; grid-column: @gridColumn / span @colSpan; @taskColor"
+						 title="@task.Comment"
+						 @onclick="e => ClickInternal(e, effectiveStart, task.ID)"
+						 @ondragstart="() => HandleDragStart(effectiveStart, task.ID)"
 						 draggable="@(draggable ? "true" : "false")">
-						@taskContent
-					</div>
+						<span class="task-content">@taskContent</span>
 					</div>
 				}
 			</div>
