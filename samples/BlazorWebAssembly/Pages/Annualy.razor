@@ -37,18 +37,18 @@
 		<WinOldButton OnClick="AddRandomTask"
 					  Appearance="Appearance.Win98">➕ Random Task</WinOldButton>
 	</div>
-	<div class="command" style="position:relative;">
-		<WinOldButton OnClick="@(() => OpenColor("favdisabledcolor"))"
+		<div class="command" style="position:relative;">
+ 		<WinOldButton OnClick="@(() => OpenColor("favdisabledcolor"))"
 					  Appearance="Appearance.Win98"
 					  Style="min-width: unset;">
 			<div class="button-color-container">
 				<div class="square" style="background:@disabledDayColor;"></div>
 				<span class="label">Disabled Days Color</span>
 			</div>
-		</WinOldButton>
+		</WinOldButton> 
 		<input type="color"
 			   id="favdisabledcolor"
-			   @bind-value="@disabledDayColor"
+			   @bind="@disabledDayColor"
 			   @bind:after="@StateHasChanged"
 			   class="input-button-color-hidden">
 	</div>
@@ -63,7 +63,7 @@
 		</WinOldButton>
 		<input type="color"
 			   id="favsundaycolor"
-			   @bind-value="@sundayColor"
+			   @bind="@sundayColor"
 			   @bind:after="@StateHasChanged"
 			   class="input-button-color-hidden">
 	</div>
@@ -78,7 +78,7 @@
 		</WinOldButton>
 		<input type="color"
 			   id="favsaturdayColor"
-			   @bind-value="@saturdayColor"
+			   @bind="@saturdayColor"
 			   @bind:after="@StateHasChanged"
 			   class="input-button-color-hidden">
 	</div>
@@ -93,7 +93,7 @@
 		</WinOldButton>
 		<input type="color"
 			   id="favweekDaysColor"
-			   @bind-value="@weekDaysColor"
+			   @bind="@weekDaysColor"
 			   @bind:after="@StateHasChanged"
 			   class="input-button-color-hidden">
 	</div>
@@ -108,7 +108,7 @@
 		</WinOldButton>
 		<input type="color"
 			   id="favfontColor"
-			   @bind-value="@fontColor"
+			   @bind="@fontColor"
 			   @bind:after="@StateHasChanged"
 			   class="input-button-color-hidden">
 	</div>
