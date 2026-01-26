@@ -7,7 +7,9 @@ For Blazor Server or Blazor WebAssembly
 ## Live demo
 Blazor webassembly : https://tossnet.github.io/Blazor-Calendar/monthlyview
 
-![blazorcalendar201](https://user-images.githubusercontent.com/3845786/158783479-35e614fe-fcca-4162-8e64-b5b33338251d.gif)
+![peek_5](https://github.com/user-attachments/assets/a3e3dda4-ecc6-465a-af8f-68cd5a6dfb5b)
+
+
 
 ![monthlyView](https://user-images.githubusercontent.com/3845786/159467420-8140bf09-b24b-4880-91a2-036c9824336a.gif)
 
