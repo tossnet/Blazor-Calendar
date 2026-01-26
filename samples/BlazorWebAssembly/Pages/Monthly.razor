@@ -2,7 +2,6 @@
 @using BlazorCalendar
 @using BlazorCalendar.Models
 @using System.Globalization
-@inject IJSRuntime JS
 
 <div class="scrollhor-toolbar mb-2" style="max-height: 35px;">
 	<button type="button" @onclick="GoToday" class="btn">📅 Go Today</button>
@@ -31,14 +30,15 @@
 						@bind-Value="highlightToday" />
 	</div>
 	<div class="command" style="position:relative;">
-		<WinOldButton OnClick="@(() => OpenColor("favdisabledcolor"))"
-					  Appearance="Appearance.Win7"
-					  Style="min-width: unset;">
-			<div class="button-color-container">
-				<div class="square" style="background:@disabledDayColor;"></div>
-				<span class="label">Disabled Days Color</span>
-			</div>
-		</WinOldButton>
+		<label for="favdisabledcolor" class="color-picker-wrapper">
+			<WinOldButton Appearance="Appearance.Win7"
+						  Style="min-width: unset; pointer-events: none;">
+				<div class="button-color-container">
+					<div class="square" style="background:@disabledDayColor;"></div>
+					<span class="label">Disabled Days Color</span>
+				</div>
+			</WinOldButton>
+		</label>
 		<input type="color" 
 			   id="favdisabledcolor" 
 			   @bind="@disabledDayColor" 
@@ -46,14 +46,15 @@
 			   class="input-button-color-hidden">
 	</div>
 	<div class="command">
-		<WinOldButton OnClick="@(() => OpenColor("favsundaycolor"))"
-					  Appearance="Appearance.Win7"
-					  Style="min-width: unset;">
-			<div class="button-color-container">
-				<div class="square" style="background:@sundayColor;"></div>
-				<span class="label">Sunday Color</span>
-			</div>
-		</WinOldButton>
+		<label for="favsundaycolor" class="color-picker-wrapper">
+			<WinOldButton Appearance="Appearance.Win7"
+						  Style="min-width: unset; pointer-events: none;">
+				<div class="button-color-container">
+					<div class="square" style="background:@sundayColor;"></div>
+					<span class="label">Sunday Color</span>
+				</div>
+			</WinOldButton>
+		</label>
 		<input type="color" 
 			   id="favsundaycolor" 
 			   @bind="@sundayColor" 
@@ -61,14 +62,15 @@
 			   class="input-button-color-hidden">
 	</div>
 	<div class="command">
-		<WinOldButton OnClick="@(() => OpenColor("favsaturdayColor"))"
-					  Appearance="Appearance.Win7"
-					  Style="min-width: unset;">
-			<div class="button-color-container">
-				<div class="square" style="background:@saturdayColor;"></div>
-				<span class="label">Saturday Color</span>
-			</div>
-		</WinOldButton>
+		<label for="favsaturdayColor" class="color-picker-wrapper">
+			<WinOldButton Appearance="Appearance.Win7"
+						  Style="min-width: unset; pointer-events: none;">
+				<div class="button-color-container">
+					<div class="square" style="background:@saturdayColor;"></div>
+					<span class="label">Saturday Color</span>
+				</div>
+			</WinOldButton>
+		</label>
 		<input type="color"
 			   id="favsaturdayColor"
 			   @bind="@saturdayColor"
@@ -76,14 +78,15 @@
 			   class="input-button-color-hidden">
 	</div>
 	<div class="command">
-		<WinOldButton OnClick="@(() => OpenColor("favweekDaysColor"))"
-					  Appearance="Appearance.Win7"
-					  Style="min-width: unset;">
-			<div class="button-color-container">
-				<div class="square" style="background:@weekDaysColor;"></div>
-				<span class="label">Other days Color</span>
-			</div>
-		</WinOldButton>
+		<label for="favweekDaysColor" class="color-picker-wrapper">
+			<WinOldButton Appearance="Appearance.Win7"
+						  Style="min-width: unset; pointer-events: none;">
+				<div class="button-color-container">
+					<div class="square" style="background:@weekDaysColor;"></div>
+					<span class="label">Other days Color</span>
+				</div>
+			</WinOldButton>
+		</label>
 		<input type="color"
 			   id="favweekDaysColor"
 			   @bind="@weekDaysColor"
@@ -91,14 +94,15 @@
 			   class="input-button-color-hidden">
 	</div>
 	<div class="command">
-		<WinOldButton OnClick="@(() => OpenColor("favfontColor"))"
-					  Appearance="Appearance.Win7"
-					  Style="min-width: unset;">
-			<div class="button-color-container">
-				<div class="square" style="background:@fontColor;"></div>
-				<span class="label">Font Color</span>
-			</div>
-		</WinOldButton>
+		<label for="favfontColor" class="color-picker-wrapper">
+			<WinOldButton Appearance="Appearance.Win7"
+						  Style="min-width: unset; pointer-events: none;">
+				<div class="button-color-container">
+					<div class="square" style="background:@fontColor;"></div>
+					<span class="label">Font Color</span>
+				</div>
+			</WinOldButton>
+		</label>
 		<input type="color"
 			   id="favfontColor"
 			   @bind="@fontColor"
@@ -207,10 +211,5 @@
 		var TotalDay = (taskDropped.DateEnd - taskDropped.DateStart).TotalDays;
 		taskDropped.DateEnd = dragDropParameter.Day.AddDays(TotalDay);
 		taskDropped.DateStart = dragDropParameter.Day;
-	}
-
-	private async Task OpenColor(string elementHTML)
-	{
-		await JS.InvokeVoidAsync("clickElement", elementHTML);
 	}
 }

@@ -112,3 +112,8 @@ a, .btn-link {
         white-space: nowrap;
         text-overflow: ellipsis;
     }
+
+.color-picker-wrapper {
+    display: inline-block;
+    cursor: pointer;
+}
