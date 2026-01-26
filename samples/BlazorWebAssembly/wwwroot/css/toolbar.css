@@ -1,0 +1,16 @@
+﻿.scrollhor-toolbar {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    scrollbar-color: #c4c4c4 transparent;
+    scrollbar-width: thin;
+    display: flex;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none; /* IE and Edge */
+    /*scrollbar-width: none;*/ /* Firefox */
+}
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .scrollhor-toolbar::-webkit-scrollbar {
+        display: none;
+    }

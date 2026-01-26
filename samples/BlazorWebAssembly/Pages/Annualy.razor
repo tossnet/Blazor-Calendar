@@ -6,40 +6,40 @@
 
 <PageTitle>Blazor Calendar Samples</PageTitle>
 
-<div class="d-flex flex-row mb-2" style="max-height: 35px;">
+<div class="scrollhor-toolbar mb-2" style="max-height: 35px;">
 	<WinOldButton OnClick="@(m => ClicMonthNavigate(-1))"
-				  Appearance="Appearance.Win98"
+				  Appearance="Appearance.Win7"
 				  Style="min-width: unset;">◄</WinOldButton>
 	<WinOldButton OnClick="@(m => ClicMonthNavigate(1))"
-				  Appearance="Appearance.Win98"
+				  Appearance="Appearance.Win7"
 				  Style="min-width: unset;">►</WinOldButton>
 
 	<input type="date" class="me-2" value="@(today.ToString("yyyy-MM-dd"))" @onchange="@(e => ChangeFirstDate(e.Value.ToString()))" />
 	<input type="number" class="me-2" min="1" @bind-value="months">
 
-	<WinOldSelect Appearance="Appearance.Win98"
+	<WinOldSelect Appearance="Appearance.Win7"
 				  T="BlazorCalendar.PriorityLabel"
 				  @bind-Value="PriorityDisplay">
 		<WinOldOption Value="PriorityLabel.Code">Label: Code</WinOldOption>
 		<WinOldOption Value="PriorityLabel.Caption">Label: Caption</WinOldOption>
 	</WinOldSelect>
 	<div>
-		<WinOldCheckBox Appearance="Appearance.Win98"
+		<WinOldCheckBox Appearance="Appearance.Win7"
 						Label="Draggable"
 						@bind-Value="draggable" />
 	</div>
 	<div style="margin-left:8px">
-		<WinOldCheckBox Appearance="Appearance.Win98"
+		<WinOldCheckBox Appearance="Appearance.Win7"
 						Label="highlight Today"
 						@bind-Value="highlightToday" />
 	</div>
 	<div class="command">
 		<WinOldButton OnClick="AddRandomTask"
-					  Appearance="Appearance.Win98">➕ Random Task</WinOldButton>
+					  Appearance="Appearance.Win7">➕ Random Task</WinOldButton>
 	</div>
 		<div class="command" style="position:relative;">
  		<WinOldButton OnClick="@(() => OpenColor("favdisabledcolor"))"
-					  Appearance="Appearance.Win98"
+					  Appearance="Appearance.Win7"
 					  Style="min-width: unset;">
 			<div class="button-color-container">
 				<div class="square" style="background:@disabledDayColor;"></div>
@@ -54,7 +54,7 @@
 	</div>
 	<div class="command">
 		<WinOldButton OnClick="@(() => OpenColor("favsundaycolor"))"
-					  Appearance="Appearance.Win98"
+					  Appearance="Appearance.Win7"
 					  Style="min-width: unset;">
 			<div class="button-color-container">
 				<div class="square" style="background:@sundayColor;"></div>
@@ -69,7 +69,7 @@
 	</div>
 	<div class="command">
 		<WinOldButton OnClick="@(() => OpenColor("favsaturdayColor"))"
-					  Appearance="Appearance.Win98"
+					  Appearance="Appearance.Win7"
 					  Style="min-width: unset;">
 			<div class="button-color-container">
 				<div class="square" style="background:@saturdayColor;"></div>
@@ -84,7 +84,7 @@
 	</div>
 	<div class="command">
 		<WinOldButton OnClick="@(() => OpenColor("favweekDaysColor"))"
-					  Appearance="Appearance.Win98"
+					  Appearance="Appearance.Win7"
 					  Style="min-width: unset;">
 			<div class="button-color-container">
 				<div class="square" style="background:@weekDaysColor;"></div>
@@ -99,7 +99,7 @@
 	</div>
 	<div class="command">
 		<WinOldButton OnClick="@(() => OpenColor("favfontColor"))"
-					  Appearance="Appearance.Win98"
+					  Appearance="Appearance.Win7"
 					  Style="min-width: unset;">
 			<div class="button-color-container">
 				<div class="square" style="background:@fontColor;"></div>

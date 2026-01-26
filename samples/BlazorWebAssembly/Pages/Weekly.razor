@@ -3,23 +3,23 @@
 @using BlazorCalendar.Models
 @using System.Globalization
 
-<div class="d-flex flex-row mb-2" style="max-height: 35px;">
+<div class="scrollhor-toolbar mb-2" style="max-height: 35px;">
 	<button type="button" @onclick="GoToday" class="btn">📅 Go Today</button>
 	<WinOldButton OnClick="@(m => ClicMonthNavigate(-7))"
-				  Appearance="Appearance.Win98"
+				  Appearance="Appearance.Win7"
 				  Style="min-width: unset;">▲</WinOldButton>
 	<WinOldButton OnClick="@(m => ClicMonthNavigate(7))"
-				  Appearance="Appearance.Win98"
+				  Appearance="Appearance.Win7"
 				  Style="min-width: unset;">▼</WinOldButton>
 	<input type="date" class="me-2" value="@(today.ToString("yyyy-MM-dd"))" @onchange="@(e => ChangeFirstDate(e.Value.ToString()))" />
-	<WinOldSelect Appearance="Appearance.Win98"
+	<WinOldSelect Appearance="Appearance.Win7"
 				  T="BlazorCalendar.PriorityLabel"
 				  @bind-Value="PriorityDisplay">
 		<WinOldOption Value="PriorityLabel.Code">Label: Code</WinOldOption>
 		<WinOldOption Value="PriorityLabel.Caption">Label: Caption</WinOldOption>
 	</WinOldSelect>
 	<div>
-		<WinOldCheckBox Appearance="Appearance.Win98"
+		<WinOldCheckBox Appearance="Appearance.Win7"
 						Label="Draggable"
 						@bind-Value="draggable" />
 	</div>
