@@ -8,7 +8,7 @@
     }
 
 
-@container ((max-width: 80px) or (max-height: 20px)) {
+@container ((max-width: 80px) and (max-height: 15px)) {
     .task-time {
         display: none;
     }
@@ -19,20 +19,15 @@
     position: absolute;
     font-weight: lighter;
     left: 1px;
+    line-height: 1;
+    margin: 0;
+    padding: 0;
 }
 
     .task-time.top {
-        top: -0.2rem;
+        top: 0.8px;
     }
 
     .task-time.bottom {
-        bottom: -0.2rem;
+        bottom: -1.2px;
     }
-
-.task-time-top-slim {
-    top: 0px;
-}
-
-.task-time-bottom-slim {
-    bottom: -0.07rem;
-}

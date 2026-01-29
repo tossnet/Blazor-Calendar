@@ -38,7 +38,12 @@ https://github.com/tossnet/Blazor-Calendar/wiki
 
 ## <a name="ReleaseNotes"></a>Release Notes
 
-<details open="open"><summary>Version 3.1.1</summary>
+<details open="open"><summary>Version 3.1.2</summary>
+
+>- **AnnualView improvement** : Fix task hours visibility logic
+</details>
+
+<details><summary>Version 3.1.1</summary>
 
 >- **AnnualView improvement** : display the start and end times of the task if space is available graphically
  - **AnnualView** : fix : if drag and drop is disabled, the Drop event does not check the boolean

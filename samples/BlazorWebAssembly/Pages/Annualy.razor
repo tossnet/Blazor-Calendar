@@ -14,7 +14,7 @@
 				  Style="min-width: unset;">►</WinOldButton>
 
 	<input type="date" class="me-2" value="@(today.ToString("yyyy-MM-dd"))" @onchange="@(e => ChangeFirstDate(e.Value.ToString()))" />
-	<input type="number" class="me-2" min="1" @bind-value="months">
+	<input type="number" min="1" class="me-2" style="max-width:55px" @bind-value="months">
 
 	<WinOldSelect Appearance="Appearance.Win7"
 				  T="BlazorCalendar.PriorityLabel"
