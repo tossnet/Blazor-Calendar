@@ -2,6 +2,37 @@
     border: 3px solid #f75959;
     border-radius: 5px;
 }
+
     .annual-today::before, .annual-today::after {
         box-sizing: border-box;
     }
+
+
+@container ((max-width: 80px) or (max-height: 20px)) {
+    .task-time {
+        display: none;
+    }
+}
+
+.task-time {
+    font-size: 10px;
+    position: absolute;
+    font-weight: lighter;
+    left: 1px;
+}
+
+    .task-time.top {
+        top: -0.2rem;
+    }
+
+    .task-time.bottom {
+        bottom: -0.2rem;
+    }
+
+.task-time-top-slim {
+    top: 0px;
+}
+
+.task-time-bottom-slim {
+    bottom: -0.07rem;
+}

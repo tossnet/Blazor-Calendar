@@ -134,6 +134,7 @@
     padding: 2px;
     min-height: 0;
     z-index: 1;
+    container-type: size;
 }
 
 .task-span .task-content {

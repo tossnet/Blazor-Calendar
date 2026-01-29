@@ -4,7 +4,6 @@ public sealed class Colors
 {
     public static string GetHatching(FillStyleEnum FillStyle, string HexaColor)
     {
-
         string css;
         switch (FillStyle)
         {

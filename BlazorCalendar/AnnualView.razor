@@ -1,5 +1,6 @@
 @using BlazorCalendar.Models
 @using BlazorCalendar.Styles
+@using BlazorCalendar.Helpers
 
 @inherits CalendarBase
 
@@ -93,7 +94,7 @@
 					}
 
 					taskColor = Colors.GetHatching(task.FillStyle, task.Color);
-					taskColor = $"{taskColor};color:{task.ForeColor}";
+					taskColor = $"{taskColor}color:{task.ForeColor}";
 
 					classPin = string.IsNullOrWhiteSpace(task.Comment) ? null : " pin";
 					classPointer = " cursor-pointer";
@@ -127,6 +128,12 @@
 						 @onclick="e => ClickInternal(e, effectiveStart, task.ID)"
 						 @ondragstart="() => HandleDragStart(effectiveStart, task.ID)"
 						 draggable="@(draggable ? "true" : "false")">
+						@if (TaskWithHours(task))
+						{
+								<span class="task-time top">@task.DateStart.GetFormatedHour()</span>
+								<span class="task-time bottom">@task.DateEnd.GetFormatedHour()</span>
+						}
+
 						<span class="task-content">@taskContent</span>
 					</div>
 				}

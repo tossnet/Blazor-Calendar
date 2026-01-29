@@ -38,7 +38,13 @@ https://github.com/tossnet/Blazor-Calendar/wiki
 
 ## <a name="ReleaseNotes"></a>Release Notes
 
-<details open="open"><summary>Version 3.1.0</summary>
+<details open="open"><summary>Version 3.1.1</summary>
+
+>- **AnnualView improvement** : display the start and end times of the task if space is available graphically
+ - **AnnualView** : fix : if drag and drop is disabled, the Drop event does not check the boolean
+</details>
+
+<details><summary>Version 3.1.0</summary>
 
 >- **AnnualView improvement** : Non-overlapping tasks now span the full available width instead of being restricted to a single column, improving calendar readability
 </details>

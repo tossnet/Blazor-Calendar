@@ -1,6 +1,7 @@
 ﻿@page "/"
 @using BlazorCalendar
 @using BlazorCalendar.Models
+@using BlazorWebAssembly.Extensions
 
 <PageTitle>Blazor Calendar Samples</PageTitle>
 
@@ -204,8 +205,8 @@
 		Tasks taskDropped = TasksList.FirstOrDefault(t => t.ID == dragDropParameter.taskID);
 
 		var TotalDay = (taskDropped.DateEnd - taskDropped.DateStart).TotalDays;
-		taskDropped.DateEnd = dragDropParameter.Day.AddDays(TotalDay);
-		taskDropped.DateStart = dragDropParameter.Day;
+		taskDropped.DateEnd = taskDropped.DateEnd.KeepTime(dragDropParameter.Day.AddDays(TotalDay));
+		taskDropped.DateStart = taskDropped.DateStart.KeepTime(dragDropParameter.Day);
 	}
 
 	private void AddRandomTask()
@@ -217,14 +218,27 @@
 		string[] codes = new string[] { "VAC", "DEV", "FORM", "MEETING", "TEST" };
 		string code = codes[rnd.Next(0, codes.Length)];
 		string color = String.Format("#{0:X6}", rnd.Next(0x1000000));
+
+		DateTime dateStart = today.AddDays(startOffset);
+		DateTime dateEnd = today.AddDays(startOffset + duration);
+
+		bool withHours = rnd.Next(0, 2) == 1;
+		if (withHours)
+		{
+			int startHour = rnd.Next(8, 18);
+			int endHour = duration == 0 ? rnd.Next(startHour + 1, 19) : rnd.Next(8, 19);
+			dateStart = dateStart.AddHours(startHour);
+			dateEnd = dateEnd.AddHours(endHour);
+		}
+
 		Tasks newTask = new Tasks
 		{
 			ID = id,
-			DateStart = today.AddDays(startOffset),
-			DateEnd = today.AddDays(startOffset + duration),
+			DateStart = dateStart,
+			DateEnd = dateEnd,
 			Code = code,
 			Color = color,
-			Caption = "New random task"
+			Caption = withHours ? "New random task with hours" : "New random task"
 		};
 		TasksList.Add(newTask);
 	}

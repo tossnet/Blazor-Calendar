@@ -1,4 +1,5 @@
 ﻿using BlazorCalendar.Models;
+using BlazorCalendar.Helpers;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
@@ -372,6 +373,8 @@ partial class AnnualView : CalendarBase
 
     private async Task HandleDayOnDrop(DateTime day)
     {
+        if (!Draggable) return;
+
         if (TaskDragged is null) 
             return;
 
@@ -404,4 +407,15 @@ partial class AnnualView : CalendarBase
 
         return $"background: linear-gradient(-45deg, {DisabledDayColor} 25%, transparent 25%, transparent 50%, {DisabledDayColor} 50%, {DisabledDayColor} 75%, transparent 75%, transparent); background-size: 8px 8px;";
     }
+
+    private static bool TaskWithHours(Tasks task)
+    {
+        if (task.DateStart.HasTime() || task.DateEnd.HasTime())
+        {
+            return true;
+        }
+
+        return false;
+    }
+
 }

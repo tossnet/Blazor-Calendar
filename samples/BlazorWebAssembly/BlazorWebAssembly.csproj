@@ -22,7 +22,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="BlazorWinOld" Version="1.2.7" />
+	  <PackageReference Include="BlazorWinOld" Version="1.2.8" />
 	</ItemGroup>
 
 	<ItemGroup>
