@@ -7,7 +7,7 @@
 
 		<!-- Package metadata -->
 		<PackageId>BlazorCalendar</PackageId>
-		<Version>3.1.2</Version>
+		<Version>3.1.3</Version>
 		<Authors>Christophe Peugnet</Authors>
 		<Copyright>Copyright 2026</Copyright>
 		<Description>Yearly, monthly and weekly calendar Blazor Component. For use with .NET 10, 9 and 8 Blazor applications</Description>

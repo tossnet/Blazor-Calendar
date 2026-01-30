@@ -137,12 +137,12 @@
     container-type: size;
 }
 
-.task-span .task-content {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 0.75em;
-}
+    .task-span .task-content {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: clamp(0.65em, 7cqw, 0.75em);
+    }
 
 /* Day-only cells in AnnualView (without inline task) */
 .day-only {

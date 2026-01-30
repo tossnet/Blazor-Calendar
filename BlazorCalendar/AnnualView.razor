@@ -122,7 +122,7 @@
 					int gridColumn = column + 1;
 
 					<div id="task-@task.ID"
-						 class="@($"task-span{classPin}{classPointer} {borderStyle}")"
+						 class="@($"task-span noselect{classPin}{classPointer} {borderStyle}")"
 						 style="grid-row: @startRow / span @span; grid-column: @gridColumn / span @colSpan; @taskColor"
 						 title="@task.Comment"
 						 @onclick="e => ClickInternal(e, effectiveStart, task.ID)"
@@ -130,8 +130,8 @@
 						 draggable="@(draggable ? "true" : "false")">
 						@if (TaskWithHours(task))
 						{
-								<span class="task-time top">@task.DateStart.GetFormatedHour()</span>
-								<span class="task-time bottom">@task.DateEnd.GetFormatedHour()</span>
+							<span class="task-time top">@task.DateStart.GetFormatedHour()</span>
+							<span class="task-time bottom">@task.DateEnd.GetFormatedHour()</span>
 						}
 
 						<span class="task-content">@taskContent</span>

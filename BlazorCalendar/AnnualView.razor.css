@@ -8,16 +8,16 @@
     }
 
 
-@container ((max-width: 80px) and (max-height: 15px)) {
+@container ((max-width: 100px) and (max-height: 15px)) {
     .task-time {
         display: none;
     }
 }
 
 .task-time {
-    font-size: 10px;
     position: absolute;
     font-weight: lighter;
+    font-size: clamp(8px, 35cqh, 10px);
     left: 1px;
     line-height: 1;
     margin: 0;

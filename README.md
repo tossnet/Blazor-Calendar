@@ -5,7 +5,7 @@
 For Blazor Server or Blazor WebAssembly
 
 ## Live demo
-Blazor webassembly : https://tossnet.github.io/Blazor-Calendar/monthlyview
+Blazor webassembly : https://tossnet.github.io/Blazor-Calendar
 
 ![peek_5](https://github.com/user-attachments/assets/a3e3dda4-ecc6-465a-af8f-68cd5a6dfb5b)
 
@@ -37,6 +37,11 @@ https://github.com/tossnet/Blazor-Calendar/wiki
 
 
 ## <a name="ReleaseNotes"></a>Release Notes
+
+<details open="open"><summary>Version 3.1.3</summary>
+
+>- **AnnualView** : improve font-size of task hours 
+</details>
 
 <details open="open"><summary>Version 3.1.2</summary>
 

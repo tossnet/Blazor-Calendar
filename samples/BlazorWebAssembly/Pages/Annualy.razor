@@ -218,6 +218,7 @@
 		string[] codes = new string[] { "VAC", "DEV", "FORM", "MEETING", "TEST" };
 		string code = codes[rnd.Next(0, codes.Length)];
 		string color = String.Format("#{0:X6}", rnd.Next(0x1000000));
+		string forecolor = Helpers.Colors.IsLighter(color) ? "#000" : "#FFF";
 
 		DateTime dateStart = today.AddDays(startOffset);
 		DateTime dateEnd = today.AddDays(startOffset + duration);
@@ -238,6 +239,7 @@
 			DateEnd = dateEnd,
 			Code = code,
 			Color = color,
+			ForeColor = forecolor,
 			Caption = withHours ? "New random task with hours" : "New random task"
 		};
 		TasksList.Add(newTask);
