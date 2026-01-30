@@ -1,0 +1,80 @@
+﻿@font-face {
+    font-family: "Pixelated MS Sans Serif";
+    src: url(../fonts/ms_sans_serif.woff) format("woff");
+    src: url(../fonts/ms_sans_serif.woff2) format("woff2");
+    font-weight: 400;
+    font-style: normal
+}
+
+@font-face {
+    font-family: "Pixelated MS Sans Serif";
+    src: url(../fonts/ms_sans_serif_bold.woff) format("woff");
+    src: url(../fonts/ms_sans_serif_bold.woff2) format("woff2");
+    font-weight: 700;
+    font-style: normal
+}
+
+:root {
+    --font-family: "Pixelated MS Sans Serif", sans-serif;
+    --font: "Segoe UI","SegoeUI","Noto Sans",sans-serif;
+    --win98-background: silver;
+    --surface: #f0f0f0;
+    --btn-win7-highlight: #fff;
+    --btn-win7-face: #f2f2f2;
+    --btn-win7-face-hover: #eaf6fd;
+    --btn-win7-face-active: #c4e5f6;
+    --btn-win7-face-disabled: #f4f4f4;
+    --btn-win7-shade-light: #ebebeb;
+    --btn-win7-shade-light-default: #c3dcea;
+    --btn-win7-shade-light-hovered: #bee6fd;
+    --btn-win7-shade-light-active: #98d1ef;
+    --btn-win7-shade-dark: #cfcfcf;
+    --btn-win7-shadow: inset 0 0 0 1px #fffc;
+    --btn-win7-shadow-active: inset 1px 1px 0 #0003,inset -1px 1px 0 #0001;
+    --btn-win7-border: 1px solid;
+    --btn-win7-border-color: #8e8f8f;
+    --btn-win7-border-color-default: #5586a3;
+    --btn-win7-border-color-hovered: #3c7fb1;
+    --btn-win7-border-color-active: #6d91ab;
+    --btn-win7-border-color-disabled: #aeb2b5;
+    --btn-win7-text-color-disabled: #838383;
+    --btn-win7-gradient: linear-gradient(to bottom,var(--btn-win7-face) 45%,var(--btn-win7-shade-light) 45%,var(--btn-win7-shade-dark));
+    --btn-win7-gradient-hovered: linear-gradient(to bottom,var(--btn-win7-face-hover) 45%,var(--btn-win7-shade-light-hovered) 45%,#a7d9f5);
+    --btn-win7-gradient-active: linear-gradient(to bottom,#e5f4fc,var(--btn-win7-face-active) 30% 50%,var(--btn-win7-shade-light-active) 50%,#68b3db);
+    --element-spacing: 8px;
+    --grouped-element-spacing: 6px;
+    --border-radius: 3px;
+    --border-width: 1px;
+
+    --chk-win7-width: 14px;
+    --chk-win7-label-spacing: 6px;
+    --chk-win7-total-width-precalc: 0;
+    --chk-win7-total-width: calc(var(--checkbox-total-width-precalc));
+    --checkmark-top: 0;
+    --checkmark-left: 2px;
+
+    --tab-border: 1px solid #888;
+    --tab-border-color: #888;
+    --tab-bg: #fff;
+
+    --scrollbar-y: linear-gradient(to right,#e5e5e5,var(--surface) 20%);
+    --scrollbar-x: linear-gradient(to bottom,#e5e5e5,var(--surface) 20%);
+
+    --win7-background-color: #4580c4;
+    --win7-background-glass-stripes: linear-gradient(135deg, #fff5 70px, transparent 100px), linear-gradient(225deg, #fff5 70px, transparent 100px), linear-gradient(54deg, #0002 0 4%, #6661 6% 6%, #0002 8% 10%, #0002 15% 16%, #aaa1 17% 18%, #0002 23% 24%, #bbb2 25% 26%, #0002 31% 33%, #0002 34% 34.5%, #bbb2 36% 40%, #0002 41% 41.5%, #bbb2 44% 45%, #bbb2 46% 47%, #0002 48% 49%, #0002 50% 50.5%, #0002 56% 56.5%, #bbb2 57% 63%, #0002 67% 69%, #bbb2 69.5% 70%, #0002 73.5% 74%, #bbb2 74.5% 79%, #0002 80% 84%, #aaa2 85% 86%, #0002 87%, #bbb1 90%) left center / 100vw 100vh no-repeat fixed;
+    --win7-background: linear-gradient(to right, #ffffff66, #0000001a, #ffffff33), var(--win7-background-color);
+
+    --control-border-color: rgba(0, 0, 0, .3);
+    --control-border-radius: 5px;
+    --control-inset-shadow: inset 0 0 0 1px #fffa;
+    --control-background: linear-gradient(hsla(0, 0%, 100%, .5), hsla(0, 0%, 100%, .3) 45%, rgba(0, 0, 0, .1) 50%, rgba(0, 0, 0, .1) 75%, hsla(0, 0%, 100%, .5));
+    --control-background-hovered: radial-gradient(circle at bottom, #2aceda, transparent 65%), linear-gradient(#b6d9ee 50%, #1a6ca1 0);
+    --control-background-active: radial-gradient(circle at bottom, #0bfdfa, transparent 65%), linear-gradient(#86a7bc 50%, #092747 0);
+    --control-background-close: radial-gradient(circle at -60% 50%, #0007 5% 10%, #0000 50%), radial-gradient(circle at 160% 50%, #0007 5% 10%, #0000 50%), linear-gradient(#e0a197e5, #cf796a 25% 50%, #d54f36 50%);
+    --control-background-close-hovered: radial-gradient(circle at 50% 170%, #f4e676 10% 20%, #0000 60%), radial-gradient(circle at -60% 50%, #000a 5% 10%, #0000 50%), radial-gradient(circle at 160% 50%, #000a 5% 10%, #0000 50%), linear-gradient(#fb9d8b, #ee6d56 25% 50%, #d42809 50%);
+    --control-background-close-active: radial-gradient(circle at 50% 170%, #dcc03f 10% 20%, #0000 60%), radial-gradient(circle at -60% 50%, #000 5% 10%, #0000 50%), radial-gradient(circle at 160% 50%, #000 5% 10%, #0000 50%), linear-gradient(#d1a894, #b67562 25% 50%, #7d0d01 50%);
+}
+
+body {
+    line-height:1.1em;
+}
