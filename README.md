@@ -38,7 +38,12 @@ https://github.com/tossnet/Blazor-Calendar/wiki
 
 ## <a name="ReleaseNotes"></a>Release Notes
 
-<details open="open"><summary>Version 3.1.3</summary>
+<details open="open"><summary>Version 3.1.4</summary>
+
+>	- **AnnualView** : change css unit border (px instead of vw) to avoid big border on large screen
+</details>
+
+<details><summary>Version 3.1.3</summary>
 
 >- **AnnualView** : improve font-size of task hours 
 </details>

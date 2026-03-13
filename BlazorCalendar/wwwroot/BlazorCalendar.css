@@ -81,7 +81,7 @@
 
 .cellule {
     border: solid #d6d8db;
-    border-width: 0.00vw 0.05vw 0.05vw 0.05vw;
+    border-width: 0 0.5px 0.5px 0.5px;
 }
 
 .month {
