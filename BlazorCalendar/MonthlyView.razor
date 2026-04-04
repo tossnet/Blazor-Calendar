@@ -50,11 +50,18 @@
                      ondragover="event.preventDefault();"
                      @onclick="e => ClickDayInternal(e, dayClick)" 
                      @ondrop="() => HandleDayOnDrop(dayClick)">
+                    @if (!string.IsNullOrEmpty(GetHighlightLabel(dayClick)))
+                    {
+                        var period = GetHighlightPeriod(dayClick);
+                        <span class="highlight-icon" title="@period.Label">
+                            @period.Icon
+                        </span>
+                    }
                      @(DayCounter.Day.ToString())
                 </div>
                 DayCounter = DayCounter.AddDays(1);
                 OffsetCell = i;
-            } 
+            }
             else
             {
                 // Still empty cells
@@ -88,6 +95,13 @@
                      ondragover="event.preventDefault();"
                      @onclick="e => ClickDayInternal(e, _dayClick)" 
                      @ondrop="() => HandleDayOnDrop(_dayClick)">
+                    @if (!string.IsNullOrEmpty(GetHighlightLabel(_dayClick)))
+                    {
+                        var period = GetHighlightPeriod(_dayClick);
+                        <span class="highlight-icon" title="@period.Label">
+                            @period.Icon
+                        </span>
+                    }
                      @(DayCounter.Day.ToString())
                 </div>
                 DayCounter = DayCounter.AddDays(1);

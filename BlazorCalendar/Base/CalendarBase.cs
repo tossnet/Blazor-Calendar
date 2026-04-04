@@ -9,19 +9,19 @@ public abstract class CalendarBase : ComponentBase
     /// User class names, separated by space. Applied on top of the component's own classes
     /// </summary>
     [Parameter]
-    public string Class { get; set; }
+    public string? Class { get; set; }
 
     /// <summary>
     /// User styles, applied on top of the component's own styles.
     /// </summary>
     [Parameter]
-    public string Style { get; set; }
+    public string? Style { get; set; }
 
     /// <summary>
     /// User styles of column headers, applied on top of the component's own  styles.
     /// </summary>
     [Parameter]
-    public string HeaderStyle { get; set; }
+    public string? HeaderStyle { get; set; }
 
     /// <summary>
     /// Allows the user to move the tasks
@@ -100,4 +100,16 @@ public abstract class CalendarBase : ComponentBase
         return GetBackground(day);
     }
 
+    public HighlightedPeriod? GetHighlightPeriod(DateTime day)
+    {
+        if (HighlightedPeriods == null)
+            return null;
+
+        return HighlightedPeriods.FirstOrDefault(h => h.ContainsDate(day));
+    }
+
+    public string? GetHighlightLabel(DateTime day)
+    {
+        return GetHighlightPeriod(day)?.Label;
+    }
 }

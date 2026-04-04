@@ -73,8 +73,16 @@
 							 @ondrop="() => HandleDayOnDrop(j)"
 							 @ondrop:preventDefault="true"
 							 @onclick="e => ClickInternal(e, j)">
-							<div class="day" style="@CSSbackground">
-								@labelDay
+							<div class="day" 
+								 title="@GetHighlightLabel(j)">
+								<span class="day-label">@labelDay</span>
+								@if (!string.IsNullOrEmpty(GetHighlightLabel(j)))
+								{
+									var period = GetHighlightPeriod(j);
+									<span class="highlight-icon" title="@period.Label">
+										@period.Icon
+									</span>
+								}
 							</div>
 						</div>
 					}

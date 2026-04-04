@@ -29,6 +29,11 @@
 						Label="highlight Today"
 						@bind-Value="highlightToday" />
 	</div>
+	<div style="margin-left:8px">
+		<WinOldCheckBox Appearance="Appearance.Win10"
+						Label="Add Fake Hightlighted Days"
+						@bind-Value="AddFakeHightlightedDays" />
+	</div>
 	<div class="command" style="position:relative;">
 		<label for="favdisabledcolor" class="color-picker-wrapper">
 			<WinOldButton Appearance="Appearance.Win10"
@@ -126,7 +131,8 @@
 				 SundayColor="@sundayColor"
 				 SaturdayColor="@saturdayColor"
 				 WeekDaysColor="@weekDaysColor"
-				 FontColor="@fontColor" />
+				 FontColor="@fontColor"
+				 HighlightedPeriods="@highlightedPeriods.ToArray()" />
 </CalendarContainer>
 
 <br />
@@ -140,11 +146,67 @@
 	private BlazorCalendar.PriorityLabel PriorityDisplay = PriorityLabel.Code;
 	private bool draggable = true;
 	private bool highlightToday = true;
+	private bool addFakeHightlightedDays = false;
 	private string disabledDayColor = "#f4f6f7";
 	private string sundayColor = "#DBE7F8";
 	private string saturdayColor = "#ECF4FD";
 	private string weekDaysColor = "#FFFFFF";
 	private string fontColor = "#6d7377";
+
+	private bool AddFakeHightlightedDays
+	{
+		get => addFakeHightlightedDays;
+		set
+		{
+			addFakeHightlightedDays = value;
+			highlightedPeriods = value ? fakeHighlightedPeriods : Array.Empty<HighlightedPeriod>();
+		}
+	}
+
+	private HighlightedPeriod[] highlightedPeriods = Array.Empty<HighlightedPeriod>();
+
+	private static readonly HighlightedPeriod[] fakeHighlightedPeriods = new[]
+	{
+		new HighlightedPeriod
+		{
+			DateStart = new DateTime(2026, 12, 25),
+			RecurrenceType = RecurrenceType.Yearly,
+			BackgroundColor = "#ff6565",
+			Label = "Christmas",
+			Icon = "🎄"
+		},
+		new HighlightedPeriod
+		{
+			DateStart = new DateTime(2026, 04, 14),
+			RecurrenceType = RecurrenceType.Yearly,
+			RecurrenceEndDate = new DateTime(2035, 12, 31),
+			BackgroundColor = "#FFD700",
+			Label = "Birthday",
+			Icon = "🎂"
+		},
+		new HighlightedPeriod
+		{
+			DateStart = new DateTime(2026, 05, 01),
+			DateEnd = new DateTime(2026, 05, 05),
+			BackgroundColor = "#87CEEB",
+			Label = "Holidays",
+			Icon = "🧳"
+		},
+		new HighlightedPeriod
+		{
+			DateStart = new DateTime(2026, 01, 06),
+			RecurrenceType = RecurrenceType.Weekly,
+			BackgroundColor = "rgba(200, 200, 255, 0.3)",
+			Label = "Team Meeting"
+		},
+		new HighlightedPeriod
+		{
+			DateStart = new DateTime(2026, 01, 25),
+			RecurrenceType = RecurrenceType.Monthly,
+			BackgroundColor = "#90EE90",
+			Label = "Payday"
+		}
+	};
 
 	protected override void OnInitialized()
 	{

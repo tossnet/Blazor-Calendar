@@ -104,9 +104,25 @@
     white-space: nowrap;
 }
 
-.day {
-    width: 30%;
-    max-width: 2.5vw;
+.day span {
+    display: block;
+    line-height: 0.9;
+    margin: 0;
+}
+    .day span + span {
+        margin-top: 2px; /* espace très fin entre les deux */
+    }
+
+.day-label {
+    font-size: 0.8rem;
+}
+
+.highlight-icon {
+    display: inline-block;
+    font-size: 0.7rem;
+    margin-left: 2px;
+    cursor: help;
+    opacity: 0.9;
 }
 
 .task {

@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BlazorWinOld" Version="1.2.5" />
+    <PackageReference Include="BlazorWinOld" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>

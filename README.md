@@ -38,7 +38,16 @@ https://github.com/tossnet/Blazor-Calendar/wiki
 
 ## <a name="ReleaseNotes"></a>Release Notes
 
-<details open="open"><summary>Version 3.1.4</summary>
+<details open="open"><summary>Version 3.2.0</summary>
+
+> - **New Feature** : Add `HighlightedPeriods` support for marking date ranges with custom background colors (vacations, holidays, projects, etc.)
+> - Supports both single days (DateEnd optional) and date periods
+> - Customizable background and text colors with optional labels
+> - Applied to all calendar views (AnnualView, MonthlyView, WeekView)
+
+</details>
+
+<details><summary>Version 3.1.4</summary>
 
 >	- **AnnualView** : change css unit border (px instead of vw) to avoid big border on large screen
 </details>
