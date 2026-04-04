@@ -46,7 +46,7 @@
                          @ondrop:preventDefault="true" 
                          @ondrop="() => HandleDayOnDrop(hours)"
                          @onclick="e => ClickDayInternal(e, hours)"
-                         style="grid-row: @row; @GetBackground(day)">
+                         style="grid-row: @row; @GetBackgroundWithHighlight(day)">
                         @hours.ToString("HH:mm")
                     </div>
 

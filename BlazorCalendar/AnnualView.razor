@@ -56,7 +56,7 @@
 					}
 					else
 					{
-						CSSbackground = GetBackground(j);
+						CSSbackground = GetBackgroundWithHighlight(j);
 						string jour = j.ToString("ddd").Substring(0, 1).ToUpper();
 						labelDay = $"{jour} {j.Day}";
 						ondragover = "event.preventDefault();";
