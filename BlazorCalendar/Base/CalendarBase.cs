@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using BlazorCalendar.Models;
+using Microsoft.AspNetCore.Components;
 
 namespace BlazorCalendar;
 
@@ -55,6 +56,12 @@ public abstract class CalendarBase : ComponentBase
     [Parameter]
     public string FontColor { get; set; } = "#6d7377";
 
+    /// <summary>
+    /// List of periods or single days with custom background colors (vacations, holidays, special events, etc.)
+    /// </summary>
+    [Parameter]
+    public HighlightedPeriod[]? HighlightedPeriods { get; set; }
+
     public string GetBackground(DateTime day)
     {
         int d = (int)day.DayOfWeek;
@@ -69,6 +76,28 @@ public abstract class CalendarBase : ComponentBase
         }
 
         return $"background:{WeekDaysColor};color:{FontColor}";
+    }
+
+    /// <summary>
+    /// Gets the background style for a specific day, applying highlighted period styling if the day
+    /// falls within any of the <see cref="HighlightedPeriods"/>. Falls back to the default day background.
+    /// The first matching period wins when periods overlap.
+    /// </summary>
+    public string GetBackgroundWithHighlight(DateTime day)
+    {
+        if (HighlightedPeriods != null)
+        {
+            foreach (var period in HighlightedPeriods)
+            {
+                if (period.ContainsDate(day))
+                {
+                    string color = period.FontColor ?? FontColor;
+                    return $"background:{period.BackgroundColor};color:{color}";
+                }
+            }
+        }
+
+        return GetBackground(day);
     }
 
 }
