@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/Benchmarks/">
+    <Project Path="BlazorCalendar.Benchmarks/BlazorCalendar.Benchmarks.csproj" />
+  </Folder>
+  <Folder Name="/Samples/">
+    <Project Path="samples/BlazorServer/BlazorServer.csproj" />
+    <Project Path="samples/BlazorWebAssembly/BlazorWebAssembly.csproj" />
+  </Folder>
+  <Project Path="BlazorCalendar/BlazorCalendar.csproj" />
+</Solution>

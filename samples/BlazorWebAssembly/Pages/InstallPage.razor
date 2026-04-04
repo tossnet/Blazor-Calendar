@@ -1,0 +1,29 @@
+﻿@page "/install"
+
+<PageTitle>Installation</PageTitle>
+
+<h1>Installation</h1>
+
+<CodeBlock Language="CodeLanguage.Bash"  
+		   Code=@(@"
+	dotnet add package BlazorCalendar
+			 ") />
+
+<p>For client-side (<b>index.html</b>) and server-side Blazor (<b>App.razor</b>) - add script section (head section)</p>
+
+<CodeBlock Language="CodeLanguage.Html" 
+		   Code=@(@"
+	 <link href=""_content/BlazorCalendar/BlazorCalendar.css"" rel=""stylesheet"" />
+			") />
+
+<hr />
+
+<div style="margin-top: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 5px; background-color: #f9f9f9;">
+	<h3>🎨 WinOld - Retro Windows UI Components</h3>
+	<p>
+		This demo uses <b>WinOld</b>, a Blazor library with classic Windows styles (98, XP, 7, Windows 10).
+		<a href="https://github.com/tossnet/Blazor-WinOld" target="_blank" style="color: #0066cc; margin-left: 0.5rem;">
+			Check it out on GitHub →
+		</a>
+	</p>
+</div>

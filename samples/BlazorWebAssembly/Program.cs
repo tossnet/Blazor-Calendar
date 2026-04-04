@@ -1,5 +1,6 @@
 using Blazor.WinOld;
 using BlazorWebAssembly;
+using Brism;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using System.Globalization;
@@ -12,5 +13,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 
 // Add WinOld Blazor components services
 builder.Services.AddWinOldComponents();
+
+builder.Services.AddBrism();
 
 await builder.Build().RunAsync();

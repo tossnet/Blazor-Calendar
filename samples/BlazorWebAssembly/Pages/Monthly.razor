@@ -3,35 +3,35 @@
 @using BlazorCalendar.Models
 @using System.Globalization
 
-<div class="scrollhor-toolbar mb-2" style="max-height: 35px;">
+<div class="scrollhor-toolbar mb-2" style="max-height: 40px; align-items: center;">
 	<button type="button" @onclick="GoToday" class="btn">📅 Go Today</button>
 	<WinOldButton OnClick="@(m => ClicMonthNavigate(-1))"
-				  Appearance="Appearance.Win7"
-				  Style="min-width: unset;">◄</WinOldButton>
+				  Appearance="Appearance.Win10"
+				  Style="min-width: 27px;">@("<")</WinOldButton>
 	<WinOldButton OnClick="@(m => ClicMonthNavigate(1))"
-				  Appearance="Appearance.Win7"
-				  Style="min-width: unset;">►</WinOldButton>
+				  Appearance="Appearance.Win10"
+				  Style="min-width: 27px;">></WinOldButton>
 
 	<input type="date" class="me-2" value="@(today.ToString("yyyy-MM-dd"))" @onchange="@(e => ChangeFirstDate(e.Value.ToString()))" />
-	<WinOldSelect Appearance="Appearance.Win7"
+	<WinOldSelect Appearance="Appearance.Win10"
 				  T="BlazorCalendar.PriorityLabel"
 				  @bind-Value="PriorityDisplay">
 		<WinOldOption Value="PriorityLabel.Code">Label: Code</WinOldOption>
 		<WinOldOption Value="PriorityLabel.Caption">Label: Caption</WinOldOption>
 	</WinOldSelect>
 	<div>
-		<WinOldCheckBox Appearance="Appearance.Win7"
+		<WinOldCheckBox Appearance="Appearance.Win10"
 						Label="Draggable"
 						@bind-Value="draggable" />
 	</div>
 	<div style="margin-left:8px">
-		<WinOldCheckBox Appearance="Appearance.Win7"
+		<WinOldCheckBox Appearance="Appearance.Win10"
 						Label="highlight Today"
 						@bind-Value="highlightToday" />
 	</div>
 	<div class="command" style="position:relative;">
 		<label for="favdisabledcolor" class="color-picker-wrapper">
-			<WinOldButton Appearance="Appearance.Win7"
+			<WinOldButton Appearance="Appearance.Win10"
 						  Style="min-width: unset; pointer-events: none;">
 				<div class="button-color-container">
 					<div class="square" style="background:@disabledDayColor;"></div>
@@ -47,7 +47,7 @@
 	</div>
 	<div class="command">
 		<label for="favsundaycolor" class="color-picker-wrapper">
-			<WinOldButton Appearance="Appearance.Win7"
+			<WinOldButton Appearance="Appearance.Win10"
 						  Style="min-width: unset; pointer-events: none;">
 				<div class="button-color-container">
 					<div class="square" style="background:@sundayColor;"></div>
@@ -63,7 +63,7 @@
 	</div>
 	<div class="command">
 		<label for="favsaturdayColor" class="color-picker-wrapper">
-			<WinOldButton Appearance="Appearance.Win7"
+			<WinOldButton Appearance="Appearance.Win10"
 						  Style="min-width: unset; pointer-events: none;">
 				<div class="button-color-container">
 					<div class="square" style="background:@saturdayColor;"></div>
@@ -79,7 +79,7 @@
 	</div>
 	<div class="command">
 		<label for="favweekDaysColor" class="color-picker-wrapper">
-			<WinOldButton Appearance="Appearance.Win7"
+			<WinOldButton Appearance="Appearance.Win10"
 						  Style="min-width: unset; pointer-events: none;">
 				<div class="button-color-container">
 					<div class="square" style="background:@weekDaysColor;"></div>
@@ -95,7 +95,7 @@
 	</div>
 	<div class="command">
 		<label for="favfontColor" class="color-picker-wrapper">
-			<WinOldButton Appearance="Appearance.Win7"
+			<WinOldButton Appearance="Appearance.Win10"
 						  Style="min-width: unset; pointer-events: none;">
 				<div class="button-color-container">
 					<div class="square" style="background:@fontColor;"></div>

@@ -5,243 +5,243 @@
 
 <PageTitle>Blazor Calendar Samples</PageTitle>
 
-<div class="scrollhor-toolbar mb-2" style="max-height: 35px;">
-	<WinOldButton OnClick="@(m => ClicMonthNavigate(-1))"
-				  Appearance="Appearance.Win7"
-				  Style="min-width: unset;">◄</WinOldButton>
-	<WinOldButton OnClick="@(m => ClicMonthNavigate(1))"
-				  Appearance="Appearance.Win7"
-				  Style="min-width: unset;">►</WinOldButton>
+<div class="scrollhor-toolbar mb-2" style="max-height: 40px; align-items: center;">
+    <WinOldButton OnClick="@(m => ClicMonthNavigate(-1))"
+                  Appearance="Appearance.Win10"
+                  Style="min-width: 27px;">@("<")</WinOldButton>
+    <WinOldButton OnClick="@(m => ClicMonthNavigate(1))"
+                  Appearance="Appearance.Win10"
+                  Style="min-width: 27px;">></WinOldButton>
 
-	<input type="date" class="me-2" value="@(today.ToString("yyyy-MM-dd"))" @onchange="@(e => ChangeFirstDate(e.Value.ToString()))" />
-	<input type="number" min="1" class="me-2" style="max-width:55px" @bind-value="months">
+    <input type="date" class="me-2" value="@(today.ToString("yyyy-MM-dd"))" @onchange="@(e => ChangeFirstDate(e.Value.ToString()))" />
+    <input type="number" min="1" class="me-2" style="max-width:55px" @bind-value="months">
 
-	<WinOldSelect Appearance="Appearance.Win7"
-				  T="BlazorCalendar.PriorityLabel"
-				  @bind-Value="PriorityDisplay">
-		<WinOldOption Value="PriorityLabel.Code">Label: Code</WinOldOption>
-		<WinOldOption Value="PriorityLabel.Caption">Label: Caption</WinOldOption>
-	</WinOldSelect>
-	<div>
-		<WinOldCheckBox Appearance="Appearance.Win7"
-						Label="Draggable"
-						@bind-Value="draggable" />
-	</div>
-	<div style="margin-left:8px">
-		<WinOldCheckBox Appearance="Appearance.Win7"
-						Label="highlight Today"
-						@bind-Value="highlightToday" />
-	</div>
-	<div class="command">
-		<WinOldButton OnClick="AddRandomTask"
-					  Appearance="Appearance.Win7">➕ Random Task</WinOldButton>
-	</div>
-	<div class="command" style="position:relative;">
-		<label for="favdisabledcolor" class="color-picker-wrapper">
-			<WinOldButton Appearance="Appearance.Win7"
-						  Style="min-width: unset; pointer-events: none;">
-				<div class="button-color-container">
-					<div class="square" style="background:@disabledDayColor;"></div>
-					<span class="label">Disabled Days Color</span>
-				</div>
-			</WinOldButton>
-		</label>
-		<input type="color"
-			   id="favdisabledcolor"
-			   @bind="@disabledDayColor"
-			   @bind:after="@StateHasChanged"
-			   class="input-button-color-hidden">
-	</div>
-	<div class="command">
-		<label for="favsundaycolor" class="color-picker-wrapper">
-			<WinOldButton Appearance="Appearance.Win7"
-						  Style="min-width: unset; pointer-events: none;">
-				<div class="button-color-container">
-					<div class="square" style="background:@sundayColor;"></div>
-					<span class="label">Sunday Color</span>
-				</div>
-			</WinOldButton>
-		</label>
-		<input type="color"
-			   id="favsundaycolor"
-			   @bind="@sundayColor"
-			   @bind:after="@StateHasChanged"
-			   class="input-button-color-hidden">
-	</div>
-	<div class="command">
-		<label for="favsaturdayColor" class="color-picker-wrapper">
-			<WinOldButton Appearance="Appearance.Win7"
-						  Style="min-width: unset; pointer-events: none;">
-				<div class="button-color-container">
-					<div class="square" style="background:@saturdayColor;"></div>
-					<span class="label">Saturday Color</span>
-				</div>
-			</WinOldButton>
-		</label>
-		<input type="color"
-			   id="favsaturdayColor"
-			   @bind="@saturdayColor"
-			   @bind:after="@StateHasChanged"
-			   class="input-button-color-hidden">
-	</div>
-	<div class="command">
-		<label for="favweekDaysColor" class="color-picker-wrapper">
-			<WinOldButton Appearance="Appearance.Win7"
-						  Style="min-width: unset; pointer-events: none;">
-				<div class="button-color-container">
-					<div class="square" style="background:@weekDaysColor;"></div>
-					<span class="label">Other days Color</span>
-				</div>
-			</WinOldButton>
-		</label>
-		<input type="color"
-			   id="favweekDaysColor"
-			   @bind="@weekDaysColor"
-			   @bind:after="@StateHasChanged"
-			   class="input-button-color-hidden">
-	</div>
-	<div class="command">
-		<label for="favfontColor" class="color-picker-wrapper">
-			<WinOldButton Appearance="Appearance.Win7"
-						  Style="min-width: unset; pointer-events: none;">
-				<div class="button-color-container">
-					<div class="square" style="background:@fontColor;"></div>
-					<span class="label">Font Color</span>
-				</div>
-			</WinOldButton>
-		</label>
-		<input type="color"
-			   id="favfontColor"
-			   @bind="@fontColor"
-			   @bind:after="@StateHasChanged"
-			   class="input-button-color-hidden">
-	</div>
-</div>
+        <WinOldSelect Appearance="Appearance.Win10"
+                      T="BlazorCalendar.PriorityLabel"
+                      @bind-Value="PriorityDisplay">
+            <WinOldOption Value="PriorityLabel.Code">Label: Code</WinOldOption>
+            <WinOldOption Value="PriorityLabel.Caption">Label: Caption</WinOldOption>
+        </WinOldSelect>
+        <div>
+            <WinOldCheckBox Appearance="Appearance.Win10"
+                            Label="Draggable"
+                            @bind-Value="draggable" />
+        </div>
+        <div style="margin-left:8px">
+            <WinOldCheckBox Appearance="Appearance.Win10"
+                            Label="highlight Today"
+                            @bind-Value="highlightToday" />
+        </div>
+        <div class="command">
+            <WinOldButton OnClick="AddRandomTask"
+                          Appearance="Appearance.Win10">➕ Random Task</WinOldButton>
+        </div>
+        <div class="command" style="position:relative;">
+            <label for="favdisabledcolor" class="color-picker-wrapper">
+                <WinOldButton Appearance="Appearance.Win10"
+                              Style="min-width: unset; pointer-events: none; max-height: 21px;">
+                    <div class="button-color-container">
+                        <div class="square" style="background:@disabledDayColor;"></div>
+                        <span class="label">Disabled Days Color</span>
+                    </div>
+                </WinOldButton>
+            </label>
+            <input type="color"
+                   id="favdisabledcolor"
+                   @bind="@disabledDayColor"
+                   @bind:after="@StateHasChanged"
+                   class="input-button-color-hidden">
+            </div>
+            <div class="command">
+                <label for="favsundaycolor" class="color-picker-wrapper">
+                    <WinOldButton Appearance="Appearance.Win10"
+                                  Style="min-width: unset; pointer-events: none;">
+                        <div class="button-color-container">
+                            <div class="square" style="background:@sundayColor;"></div>
+                            <span class="label">Sunday Color</span>
+                        </div>
+                    </WinOldButton>
+                </label>
+                <input type="color"
+                       id="favsundaycolor"
+                       @bind="@sundayColor"
+                       @bind:after="@StateHasChanged"
+                       class="input-button-color-hidden">
+                </div>
+                <div class="command">
+                    <label for="favsaturdayColor" class="color-picker-wrapper">
+                        <WinOldButton Appearance="Appearance.Win10"
+                                      Style="min-width: unset; pointer-events: none;">
+                            <div class="button-color-container">
+                                <div class="square" style="background:@saturdayColor;"></div>
+                                <span class="label">Saturday Color</span>
+                            </div>
+                        </WinOldButton>
+                    </label>
+                    <input type="color"
+                           id="favsaturdayColor"
+                           @bind="@saturdayColor"
+                           @bind:after="@StateHasChanged"
+                           class="input-button-color-hidden">
+                    </div>
+                    <div class="command">
+                        <label for="favweekDaysColor" class="color-picker-wrapper">
+                            <WinOldButton Appearance="Appearance.Win10"
+                                          Style="min-width: unset; pointer-events: none;">
+                                <div class="button-color-container">
+                                    <div class="square" style="background:@weekDaysColor;"></div>
+                                    <span class="label">Other days Color</span>
+                                </div>
+                            </WinOldButton>
+                        </label>
+                        <input type="color"
+                               id="favweekDaysColor"
+                               @bind="@weekDaysColor"
+                               @bind:after="@StateHasChanged"
+                               class="input-button-color-hidden">
+                        </div>
+                        <div class="command">
+                            <label for="favfontColor" class="color-picker-wrapper">
+                                <WinOldButton Appearance="Appearance.Win10"
+                                              Style="min-width: unset; pointer-events: none;">
+                                    <div class="button-color-container">
+                                        <div class="square" style="background:@fontColor;"></div>
+                                        <span class="label">Font Color</span>
+                                    </div>
+                                </WinOldButton>
+                            </label>
+                            <input type="color"
+                                   id="favfontColor"
+                                   @bind="@fontColor"
+                                   @bind:after="@StateHasChanged"
+                                   class="input-button-color-hidden">
+                            </div>
+                        </div>
 
 
-<CalendarContainer FirstDate="today" TasksList="TasksList.ToArray()" DisplayedView="DisplayedView.Annual">
-	<AnnualView Months="months" Style="height:80vh"
-				PriorityDisplay="@PriorityDisplay"
-				HeaderClick="HeaderClick"
-				TaskClick="TaskClick"
-				EmptyDayClick="EmptyDayClick"
-				Draggable="@draggable"
-				DragStart="DragStart"
-				DropTask="DropTask"
-				HighlightToday="@highlightToday"
-				DisabledDayColor="@disabledDayColor"
-				SundayColor="@sundayColor"
-				SaturdayColor="@saturdayColor"
-				WeekDaysColor="@weekDaysColor"
-				FontColor="@fontColor" />
-</CalendarContainer>
+                        <CalendarContainer FirstDate="today" TasksList="TasksList.ToArray()" DisplayedView="DisplayedView.Annual">
+                            <AnnualView Months="months" Style="height:80vh"
+                                        PriorityDisplay="@PriorityDisplay"
+                                        HeaderClick="HeaderClick"
+                                        TaskClick="TaskClick"
+                                        EmptyDayClick="EmptyDayClick"
+                                        Draggable="@draggable"
+                                        DragStart="DragStart"
+                                        DropTask="DropTask"
+                                        HighlightToday="@highlightToday"
+                                        DisabledDayColor="@disabledDayColor"
+                                        SundayColor="@sundayColor"
+                                        SaturdayColor="@saturdayColor"
+                                        WeekDaysColor="@weekDaysColor"
+                                        FontColor="@fontColor" />
+                        </CalendarContainer>
 
 
 <br />
 <div class="console">@fakeConsole</div>
 
 @code {
-	private DateTime today = DateTime.Today;
-	private int months = 8;
-	private List<Tasks> TasksList;
-	private string fakeConsole = string.Empty;
-	private BlazorCalendar.PriorityLabel PriorityDisplay = PriorityLabel.Code;
-	private bool draggable = true;
-	private bool highlightToday = true;
-	private string disabledDayColor = "#f4f6f7";
-	private string sundayColor = "#DBE7F8";
-	private string saturdayColor = "#ECF4FD";
-	private string weekDaysColor = "#FFFFFF";
-	private string fontColor = "#6d7377";
+    private DateTime today = DateTime.Today;
+    private int months = 8;
+    private List<Tasks> TasksList;
+    private string fakeConsole = string.Empty;
+    private BlazorCalendar.PriorityLabel PriorityDisplay = PriorityLabel.Code;
+    private bool draggable = true;
+    private bool highlightToday = true;
+    private string disabledDayColor = "#f4f6f7";
+    private string sundayColor = "#DBE7F8";
+    private string saturdayColor = "#ECF4FD";
+    private string weekDaysColor = "#FFFFFF";
+    private string fontColor = "#6d7377";
 
-	protected override void OnInitialized()
-	{
-		TasksList = new()
-		{
-			new Tasks { ID = 1, DateStart = today.AddDays(8), DateEnd = today.AddDays(8), Code = "CP", Color = "#19C319", Caption = "Lorem ipsum dolor sit amet", FillStyle=BlazorCalendar.FillStyleEnum.CrossDots },
-			new Tasks { ID = 2, DateStart = today.AddDays(50), DateEnd = today.AddDays(52), Code = "DEV", Color = "#FFD800", Comment="on Teams template", Caption = "Fusce quis purus eu ante", FillStyle=BlazorCalendar.FillStyleEnum.ZigZag },
-			new Tasks { ID = 3, DateStart = today.AddDays(40), DateEnd = today.AddDays(41), Code = "FORM", Color = "#FFC3FF", ForeColor = "#FF0000", Caption = "Lorem ipsum dolor sit amet" },
-			new Tasks { ID = 4, DateStart = today.AddDays(62), DateEnd = today.AddDays(62), Code = "DEV", Color = "#FFD800" },
-			new Tasks { ID = 5, DateStart = today.AddDays(62), DateEnd = today.AddDays(62), Code = "FORM", Color = "#FFC3FF", Caption = "Ut sit amet turpis eget" } ,
-			new Tasks { ID = 6, DateStart = today.AddDays(73).AddHours(8), DateEnd = today.AddDays(73).AddHours(9), Code = "MEETING", Color = "#2DD7D7", Comment="Julien's test" }
-		};
-	}
+    protected override void OnInitialized()
+    {
+        TasksList = new()
+        {
+            new Tasks { ID = 1, DateStart = today.AddDays(8), DateEnd = today.AddDays(8), Code = "CP", Color = "#19C319", Caption = "Lorem ipsum dolor sit amet", FillStyle=BlazorCalendar.FillStyleEnum.CrossDots },
+            new Tasks { ID = 2, DateStart = today.AddDays(50), DateEnd = today.AddDays(52), Code = "DEV", Color = "#FFD800", Comment="on Teams template", Caption = "Fusce quis purus eu ante", FillStyle=BlazorCalendar.FillStyleEnum.ZigZag },
+            new Tasks { ID = 3, DateStart = today.AddDays(40), DateEnd = today.AddDays(41), Code = "FORM", Color = "#FFC3FF", ForeColor = "#FF0000", Caption = "Lorem ipsum dolor sit amet" },
+            new Tasks { ID = 4, DateStart = today.AddDays(62), DateEnd = today.AddDays(62), Code = "DEV", Color = "#FFD800" },
+            new Tasks { ID = 5, DateStart = today.AddDays(62), DateEnd = today.AddDays(62), Code = "FORM", Color = "#FFC3FF", Caption = "Ut sit amet turpis eget" } ,
+            new Tasks { ID = 6, DateStart = today.AddDays(73).AddHours(8), DateEnd = today.AddDays(73).AddHours(9), Code = "MEETING", Color = "#2DD7D7", Comment="Julien's test" }
+        };
+    }
 
-	private void ChangeFirstDate(string value)
-	{
-		if (string.IsNullOrEmpty(value)) return;
-		today = DateTime.Parse(value.ToString());
-	}
+    private void ChangeFirstDate(string value)
+    {
+        if (string.IsNullOrEmpty(value)) return;
+        today = DateTime.Parse(value.ToString());
+    }
 
-	private void HeaderClick(DateTime month)
-	{
-		fakeConsole = "HeaderClick :" + month.ToString("MMM yyyy");
-	}
+    private void HeaderClick(DateTime month)
+    {
+        fakeConsole = "HeaderClick :" + month.ToString("MMM yyyy");
+    }
 
-	private void ClicMonthNavigate(int monthToAdd)
-	{
-		today = today.AddMonths(monthToAdd);
-	}
+    private void ClicMonthNavigate(int monthToAdd)
+    {
+        today = today.AddMonths(monthToAdd);
+    }
 
-	private void TaskClick(ClickTaskParameter clickTaskParameter)
-	{
-		fakeConsole = "ID task(s) :" + string.Join(", ", clickTaskParameter.IDList);
-	}
+    private void TaskClick(ClickTaskParameter clickTaskParameter)
+    {
+        fakeConsole = "ID task(s) :" + string.Join(", ", clickTaskParameter.IDList);
+    }
 
-	private void EmptyDayClick(ClickEmptyDayParameter clickEmptyDayParameter)
-	{
-		fakeConsole = "Empty day :" + clickEmptyDayParameter.Day.ToShortDateString();
-	}
+    private void EmptyDayClick(ClickEmptyDayParameter clickEmptyDayParameter)
+    {
+        fakeConsole = "Empty day :" + clickEmptyDayParameter.Day.ToShortDateString();
+    }
 
-	private void DragStart(DragDropParameter dragDropParameter)
-	{
-		fakeConsole = $"DragStart event :{dragDropParameter.Day.ToShortDateString()} {dragDropParameter.taskID}";
-	}
+    private void DragStart(DragDropParameter dragDropParameter)
+    {
+        fakeConsole = $"DragStart event :{dragDropParameter.Day.ToShortDateString()} {dragDropParameter.taskID}";
+    }
 
-	private void DropTask(DragDropParameter dragDropParameter)
-	{
-		fakeConsole = $"DropTask event :{dragDropParameter.Day.ToShortDateString()} {dragDropParameter.taskID}";
+    private void DropTask(DragDropParameter dragDropParameter)
+    {
+        fakeConsole = $"DropTask event :{dragDropParameter.Day.ToShortDateString()} {dragDropParameter.taskID}";
 
-		Tasks taskDropped = TasksList.FirstOrDefault(t => t.ID == dragDropParameter.taskID);
+        Tasks taskDropped = TasksList.FirstOrDefault(t => t.ID == dragDropParameter.taskID);
 
-		var TotalDay = (taskDropped.DateEnd - taskDropped.DateStart).TotalDays;
-		taskDropped.DateEnd = taskDropped.DateEnd.KeepTime(dragDropParameter.Day.AddDays(TotalDay));
-		taskDropped.DateStart = taskDropped.DateStart.KeepTime(dragDropParameter.Day);
-	}
+        var TotalDay = (taskDropped.DateEnd - taskDropped.DateStart).TotalDays;
+        taskDropped.DateEnd = taskDropped.DateEnd.KeepTime(dragDropParameter.Day.AddDays(TotalDay));
+        taskDropped.DateStart = taskDropped.DateStart.KeepTime(dragDropParameter.Day);
+    }
 
-	private void AddRandomTask()
-	{
-		Random rnd = new Random();
-		int id = TasksList.Count > 0 ? TasksList.Max(t => t.ID) + 1 : 1;
-		int startOffset = rnd.Next(0, months * 30);
-		int duration = rnd.Next(0, 5);
-		string[] codes = new string[] { "VAC", "DEV", "FORM", "MEETING", "TEST" };
-		string code = codes[rnd.Next(0, codes.Length)];
-		string color = String.Format("#{0:X6}", rnd.Next(0x1000000));
-		string forecolor = Helpers.Colors.IsLighter(color) ? "#000" : "#FFF";
+    private void AddRandomTask()
+    {
+        Random rnd = new Random();
+        int id = TasksList.Count > 0 ? TasksList.Max(t => t.ID) + 1 : 1;
+        int startOffset = rnd.Next(0, months * 30);
+        int duration = rnd.Next(0, 5);
+        string[] codes = new string[] { "VAC", "DEV", "FORM", "MEETING", "TEST" };
+        string code = codes[rnd.Next(0, codes.Length)];
+        string color = String.Format("#{0:X6}", rnd.Next(0x1000000));
+        string forecolor = Helpers.Colors.IsLighter(color) ? "#000" : "#FFF";
 
-		DateTime dateStart = today.AddDays(startOffset);
-		DateTime dateEnd = today.AddDays(startOffset + duration);
+        DateTime dateStart = today.AddDays(startOffset);
+        DateTime dateEnd = today.AddDays(startOffset + duration);
 
-		bool withHours = rnd.Next(0, 2) == 1;
-		if (withHours)
-		{
-			int startHour = rnd.Next(8, 18);
-			int endHour = duration == 0 ? rnd.Next(startHour + 1, 19) : rnd.Next(8, 19);
-			dateStart = dateStart.AddHours(startHour);
-			dateEnd = dateEnd.AddHours(endHour);
-		}
+        bool withHours = rnd.Next(0, 2) == 1;
+        if (withHours)
+        {
+            int startHour = rnd.Next(8, 18);
+            int endHour = duration == 0 ? rnd.Next(startHour + 1, 19) : rnd.Next(8, 19);
+            dateStart = dateStart.AddHours(startHour);
+            dateEnd = dateEnd.AddHours(endHour);
+        }
 
-		Tasks newTask = new Tasks
-		{
-			ID = id,
-			DateStart = dateStart,
-			DateEnd = dateEnd,
-			Code = code,
-			Color = color,
-			ForeColor = forecolor,
-			Caption = withHours ? "New random task with hours" : "New random task"
-		};
-		TasksList.Add(newTask);
-	}
+        Tasks newTask = new Tasks
+        {
+            ID = id,
+            DateStart = dateStart,
+            DateEnd = dateEnd,
+            Code = code,
+            Color = color,
+            ForeColor = forecolor,
+            Caption = withHours ? "New random task with hours" : "New random task"
+        };
+        TasksList.Add(newTask);
+    }
 }
