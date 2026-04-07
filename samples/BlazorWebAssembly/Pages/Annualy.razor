@@ -137,7 +137,9 @@
 
 
                     <CalendarContainer FirstDate="today" TasksList="TasksList.ToArray()" DisplayedView="DisplayedView.Annual">
-                        <AnnualView Months="months" Style="height:80vh"
+                        <AnnualView Months="months"
+                                    Style="height:80vh;"
+                                    MonthStyle="min-width: 150px;"
                                     PriorityDisplay="@PriorityDisplay"
                                     HeaderClick="HeaderClick"
                                     TaskClick="TaskClick"

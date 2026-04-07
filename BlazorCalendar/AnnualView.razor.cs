@@ -45,6 +45,10 @@ partial class AnnualView : CalendarBase
 
 
     [Parameter]
+    public string? MonthStyle { get; set; } 
+
+
+    [Parameter]
     public PriorityLabel PriorityDisplay { get; set; } = PriorityLabel.Code;
 
     [Parameter]

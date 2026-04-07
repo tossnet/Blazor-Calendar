@@ -39,6 +39,11 @@ For client-side and server-side Blazor - add script section to _Layout.cshtml (h
 
 ## <a name="ReleaseNotes"></a>Release Notes
 
+<details open="open"><summary>Version 3.2.1</summary>
+
+> - Add MonthStyle Parameter to customize by example widht of the month column in the AnnualView (min-width, max-width, width)
+</details>
+
 <details open="open"><summary>Version 3.2.0</summary>
 
 > - **New Feature** : Add `HighlightedPeriods` support for marking date ranges with custom background colors (vacations, holidays, projects, etc.)

@@ -7,11 +7,19 @@
 	<button type="button" @onclick="GoToday" class="btn">📅 Go Today</button>
 	<WinOldButton OnClick="@(m => ClicMonthNavigate(-7))"
 				  Appearance="Appearance.Win10"
-				  Style="min-width: unset;">▲</WinOldButton>
+				  Style="min-width: 27px;">▲</WinOldButton>
 	<WinOldButton OnClick="@(m => ClicMonthNavigate(7))"
 				  Appearance="Appearance.Win10"
-				  Style="min-width: unset;">▼</WinOldButton>
-	<input type="date" class="me-2" value="@(today.ToString("yyyy-MM-dd"))" @onchange="@(e => ChangeFirstDate(e.Value.ToString()))" />
+				  Style="min-width: 27px;">▼</WinOldButton>
+
+	<WinOldTextBox Appearance="Appearance.Win10"
+				   Label="From :"
+				   Value="@(today.ToString("yyyy-MM-dd"))"
+				   InputStyle=" min-height: 24px;"
+				   type="date"
+				   Class="me-2"
+				   @onchange="@(e => ChangeFirstDate(e.Value.ToString()))" />
+
 	<WinOldSelect Appearance="Appearance.Win10"
 				  T="BlazorCalendar.PriorityLabel"
 				  @bind-Value="PriorityDisplay">

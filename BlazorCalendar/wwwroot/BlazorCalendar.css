@@ -114,12 +114,12 @@
     }
 
 .day-label {
-    font-size: 0.8rem;
+    font-size: 1.1vh;
 }
 
 .highlight-icon {
     display: inline-block;
-    font-size: 0.7rem;
+    font-size: 1.0vh;
     margin-left: 2px;
     cursor: help;
     opacity: 0.9;

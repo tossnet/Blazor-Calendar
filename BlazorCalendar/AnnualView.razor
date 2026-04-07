@@ -36,7 +36,7 @@
 			// Generate grid-template-columns dynamically: day-label + task columns
 			string gridColumns = $"auto repeat({maxColumns}, 1fr)";
 
-			<div class="month-column" style="grid-template-columns: @gridColumns;">
+			<div class="month-column" style="grid-template-columns: @gridColumns; @MonthStyle">
 				<div class="header-name noselect" style="@HeaderStyle" @onclick="() => HandleHeaderClick(monthStart)">
 					@labelMonth
 				</div>
