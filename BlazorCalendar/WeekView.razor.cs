@@ -52,6 +52,9 @@ partial class WeekView : CalendarBase
     [Parameter]
     public EventCallback<DragDropParameter> DropTask { get; set; }
 
+    /// <summary>Explicit week start; null retains the current culture convention.</summary>
+    [Parameter] public DayOfWeek? WeekStartsOn { get; set; }
+
     /// <summary>Optional weekday header format. The default preserves the existing abbreviated date header.</summary>
     [Parameter] public string DayHeaderFormat { get; set; } = "ddd dd.MM";
 

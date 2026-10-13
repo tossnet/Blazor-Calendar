@@ -234,7 +234,8 @@ For client-side and server-side Blazor - add script section to _Layout.cshtml (h
 ```razor
 <WeekView EnableRangeSelection="true"
           RangeSelected="OnRangeSelected"
-          DayHeaderFormat="dddd" />
+          DayHeaderFormat="dddd"
+          WeekStartsOn="DayOfWeek.Monday" />
 
 @code {
     private void OnRangeSelected(TimeRangeSelectedParameter range)
@@ -249,4 +250,4 @@ Press the primary mouse button on a 15-minute slot, drag within the same day, an
 
 Escape (with the grid focused), leaving the grid, pointer cancellation or crossing into another day cancels the selection. Releasing outside a selectable slot also cancels it. Existing task click/drag callbacks are retained; selecting a range never inserts, modifies or persists tasks. The host decides what the callback means. Desktop mouse interaction is tested; touch-specific capture/gesture handling is not included.
 
-The feature defaults to disabled and requires a `RangeSelected` delegate. `DayHeaderFormat` defaults to `ddd dd.MM`, preserving the existing dated header; `dddd` shows full localized weekday names without dates. Times are wall-clock `DateTime` values, with no timezone conversion performed by the component.
+The feature defaults to disabled and requires a `RangeSelected` delegate. `DayHeaderFormat` defaults to `ddd dd.MM`, preserving the existing dated header; `dddd` shows full localized weekday names without dates. `WeekStartsOn` can explicitly select Monday (or another weekday), independent of the operating system culture; its default is null and retains the culture convention. Times are wall-clock `DateTime` values, with no timezone conversion performed by the component.

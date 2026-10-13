@@ -5,7 +5,7 @@
 @inherits CalendarBase
 
 @{
-    DateTime firstDateWeek = FirstDate.AddDays(-(int)(FirstDate.DayOfWeek - System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek + 7) % 7);
+    DateTime firstDateWeek = FirstDate.AddDays(-((7 + (int)FirstDate.DayOfWeek - (int)(WeekStartsOn ?? CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek)) % 7));
 
     string? isHidden = DisplayedView == DisplayedView.Weekly ? null : "hidden-element";
     string? classPin;
