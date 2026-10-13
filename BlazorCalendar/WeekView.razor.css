@@ -1,4 +1,4 @@
-﻿.weekly-calendar {
+.weekly-calendar {
     display: grid;
     width: 100%;
     overflow: auto;
@@ -59,3 +59,11 @@
         line-height:3vh;
     }
 }
+.range-enabled .hour, .range-enabled .hour-dropzone {
+    display: grid;
+    grid-template-rows: repeat(4, minmax(0, 1fr));
+    padding: 0;
+}
+.range-slot { min-height: 0; user-select: none; touch-action: none; cursor: crosshair; }
+.range-label { padding-left: 0.5em; }
+.range-selected { background: rgba(0, 120, 215, 0.28); outline: 1px solid #0078d7; outline-offset: -1px; }

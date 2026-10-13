@@ -1,4 +1,4 @@
-﻿namespace BlazorCalendar.Models;
+namespace BlazorCalendar.Models;
 
 public class ClickTaskParameter
 {
@@ -19,4 +19,10 @@ public class DragDropParameter
 {
     public DateTime Day { get; set; }
     public int taskID { get; set; }
+}
+/// <summary>Weekly pointer selection; Start is inclusive and End is exclusive, in the calendar's wall-clock time.</summary>
+public class TimeRangeSelectedParameter
+{
+    public DateTime Start { get; set; }
+    public DateTime End { get; set; }
 }
