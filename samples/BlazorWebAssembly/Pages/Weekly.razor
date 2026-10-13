@@ -1,4 +1,4 @@
-﻿@page "/weeklyview"
+@page "/weeklyview"
 @using BlazorCalendar
 @using BlazorCalendar.Models
 @using System.Globalization
@@ -41,7 +41,9 @@
 <CalendarContainer FirstDate="today"
 				   TasksList="TasksList.ToArray()"
 				   DisplayedView="DisplayedView.Weekly">
-	<WeekView PriorityDisplay="@PriorityDisplay"
+	<WeekView EnableHourScrolling="true" VisibleStartHour="6" VisibleEndHour="17"
+              HeaderBackgroundColor="#d2e4f7" HeaderBorderColor="#9fb3c4"
+              PriorityDisplay="@PriorityDisplay"
 			  OutsideCurrentMonthClick="OutsideCurrentMonthClick"
 			  TaskClick="TaskClick"
 			  DayClick="DayClick"

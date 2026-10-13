@@ -19,7 +19,7 @@
     }
 }
 
-<div class=@($"{isHidden} weekly-calendar") style="@Style" tabindex="@(CanSelectRange ? 0 : -1)"
+<div class=@($"{isHidden} weekly-calendar {(EnableHourScrolling ? "week-scrollable" : "")}") @ref="weekElement" style="@WeekStyle" tabindex="@(CanSelectRange ? 0 : -1)"
      @onpointerleave="CancelRange" @onpointercancel="CancelRange" @onpointerup="CancelRange" @onkeydown="RangeKeyDown">
 
     @for (var i = 0; i < 7; i++)
@@ -28,8 +28,14 @@
 
         <div class="day-column" style="grid-column-start: @(i+1)">
             
-            <div class="day-header header-name noselect" style="@HeaderStyle">
-                @day.ToString(DayHeaderFormat, CultureInfo.CurrentCulture)
+            <div class="day-header header-name noselect" style="@WeekHeaderStyle">
+                @if(EnableHourScrolling && ShowOverflowIndicators) {
+                    <button type="button" class="week-overflow week-up" hidden aria-label="Earlier events" @onclick:stopPropagation="true"></button>
+                }
+                <span class="week-day-title">@day.ToString(DayHeaderFormat, CultureInfo.CurrentCulture)</span>
+                @if(EnableHourScrolling && ShowOverflowIndicators) {
+                    <button type="button" class="week-overflow week-down" hidden aria-label="Later events" @onclick:stopPropagation="true"></button>
+                }
             </div>
 
 
