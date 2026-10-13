@@ -1,4 +1,4 @@
-﻿@page "/weeklyview"
+@page "/weeklyview"
 @using BlazorCalendar
 @using BlazorCalendar.Models
 @using System.Globalization
@@ -48,7 +48,7 @@
 			  Draggable="@draggable"
 			  DragStart="DragStart"
 			  DropTask="DropTask"
-			  HighlightToday="true"
+			  HighlightToday="true" TodayBackgroundColor="#f5f5f5" TodayBorderColor="#ff5b60"
 			  HighlightedPeriods="@highlightedPeriods.ToArray()" />
 </CalendarContainer>
 

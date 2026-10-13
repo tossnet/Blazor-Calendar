@@ -251,3 +251,13 @@ Press the primary mouse button on a 15-minute slot, drag within the same day, an
 Escape (with the grid focused), leaving the grid, pointer cancellation or crossing into another day cancels the selection. Releasing outside a selectable slot also cancels it. Existing task click/drag callbacks are retained; selecting a range never inserts, modifies or persists tasks. The host decides what the callback means. Desktop mouse interaction is tested; touch-specific capture/gesture handling is not included.
 
 The feature defaults to disabled and requires a `RangeSelected` delegate. `DayHeaderFormat` defaults to `ddd dd.MM`, preserving the existing dated header; `dddd` shows full localized weekday names without dates. `WeekStartsOn` can explicitly select Monday (or another weekday), independent of the operating system culture; its default is null and retains the culture convention. Times are wall-clock `DateTime` values, with no timezone conversion performed by the component.
+
+### WeekView: configurable current-day appearance
+
+```razor
+<WeekView HighlightToday="true"
+          TodayBackgroundColor="#f5f5f5"
+          TodayBorderColor="#ff5b60" />
+```
+
+Both new colors are optional and apply only when `HighlightToday` is enabled and today's date is in the rendered week. The background covers the full hour grid, including the time scale and empty overlap columns; task colors and header styles remain unchanged. The border is a 3px inset outline around the whole day column and does not change layout dimensions. Leaving either parameter unset preserves the previous appearance for that part. An explicit today background takes precedence over weekend and highlighted-period backgrounds only for today.
