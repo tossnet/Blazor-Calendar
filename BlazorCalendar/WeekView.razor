@@ -1,13 +1,12 @@
-﻿@using System.Globalization
+@using System.Globalization
 @using BlazorCalendar.Models
 @using BlazorCalendar.Styles
 
 @inherits CalendarBase
 
 @{
-    DateTime firstDateWeek = FirstDate.AddDays(-(int)(FirstDate.DayOfWeek - System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek + 7) % 7);
+    DateTime firstDateWeek = FirstDate.AddDays(-((7 + (int)FirstDate.DayOfWeek - (int)(WeekStartsOn ?? CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek)) % 7));
 
-    string[] dayNames = CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedDayNames;
     string? isHidden = DisplayedView == DisplayedView.Weekly ? null : "hidden-element";
     string? classPin;
 
@@ -20,21 +19,21 @@
     }
 }
 
-<div class=@($"{isHidden} weekly-calendar") style="@Style">
+<div class=@($"{isHidden} weekly-calendar") style="@Style" tabindex="@(CanSelectRange ? 0 : -1)"
+     @onpointerleave="CancelRange" @onpointercancel="CancelRange" @onpointerup="CancelRange" @onkeydown="RangeKeyDown">
 
     @for (var i = 0; i < 7; i++)
     {
-        int d = Dates.GetNumOfDay(i);
         DateTime day = firstDateWeek.AddDays(i);
 
         <div class="day-column" style="grid-column-start: @(i+1)">
             
             <div class="day-header header-name noselect" style="@HeaderStyle">
-                @dayNames[d] @day.ToString("dd.MM")
+                @day.ToString(DayHeaderFormat, CultureInfo.CurrentCulture)
             </div>
 
 
-            <div class="hours">
+            <div class="@(CanSelectRange ? "hours range-enabled" : "hours")">
                 @for (int hour = 0; hour < 24; hour++)
                 {
                     DateTime hours = day.AddHours(hour);
@@ -47,7 +46,16 @@
                          @ondrop="() => HandleDayOnDrop(hours)"
                          @onclick="e => ClickDayInternal(e, hours)"
                          style="grid-row: @row; @GetBackgroundWithHighlight(day)">
-                        @hours.ToString("HH:mm")
+                        @if(CanSelectRange) {
+                            @for(int quarter=0;quarter<4;quarter++) {
+                                var slot=hours.AddMinutes(quarter*15);
+                                <div class="@($"range-slot range-label {(IsRangeSlot(slot) ? "range-selected" : "")}")" data-range-slot="@slot.ToString("yyyy-MM-ddTHH:mm")"
+                                     @onpointerdown="e => StartRange(e, slot)" @onpointerenter="e => ExtendRange(e, slot)"
+                                     @onpointerup="e => FinishRange(e, slot)" @onpointerup:stopPropagation="true">
+                                    @if(quarter==0){@hours.ToString("HH:mm")}
+                                </div>
+                            }
+                        } else { @hours.ToString("HH:mm") }
                     </div>
 
                     <div class="hour-dropzone"
@@ -58,6 +66,14 @@
                          @ondrop:stopPropagation="true"
                          @onclick="e => ClickDayInternal(e, hours)"
                          style="grid-row: @row;">
+                        @if(CanSelectRange) {
+                            @for(int quarter=0;quarter<4;quarter++) {
+                                var slot=hours.AddMinutes(quarter*15);
+                                <div class="@($"range-slot {(IsRangeSlot(slot) ? "range-selected" : "")}")" data-range-slot="@slot.ToString("yyyy-MM-ddTHH:mm")"
+                                     @onpointerdown="e => StartRange(e, slot)" @onpointerenter="e => ExtendRange(e, slot)"
+                                     @onpointerup="e => FinishRange(e, slot)" @onpointerup:stopPropagation="true"></div>
+                            }
+                        }
                     </div>
                 }
 

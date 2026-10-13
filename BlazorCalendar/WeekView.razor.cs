@@ -1,4 +1,4 @@
-﻿using BlazorCalendar.Models;
+using BlazorCalendar.Models;
 using BlazorCalendar.Styles;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -52,6 +52,63 @@ partial class WeekView : CalendarBase
     [Parameter]
     public EventCallback<DragDropParameter> DropTask { get; set; }
 
+    /// <summary>Explicit week start; null retains the current culture convention.</summary>
+    [Parameter] public DayOfWeek? WeekStartsOn { get; set; }
+
+    /// <summary>Optional weekday header format. The default preserves the existing abbreviated date header.</summary>
+    [Parameter] public string DayHeaderFormat { get; set; } = "ddd dd.MM";
+
+    /// <summary>Enables pointer selection on the empty weekly grid. Disabled by default.</summary>
+    [Parameter] public bool EnableRangeSelection { get; set; }
+
+    /// <summary>A normalized same-day range with an exclusive end. Does not create or mutate tasks.</summary>
+    [Parameter] public EventCallback<TimeRangeSelectedParameter> RangeSelected { get; set; }
+
+    private DateTime? selectionAnchor;
+    private DateTime? selectionLast;
+    private long selectionPointer;
+    private bool suppressRangeClick;
+    private bool CanSelectRange => EnableRangeSelection && RangeSelected.HasDelegate;
+
+    protected override void OnParametersSet()
+    {
+        if (!CanSelectRange || DisplayedView != DisplayedView.Weekly ||
+            (selectionAnchor is DateTime anchor && (anchor.Date < FirstDate.AddDays(-6) || anchor.Date > FirstDate.AddDays(6))))
+            CancelRange();
+    }
+
+    private void StartRange(PointerEventArgs e, DateTime slot)
+    {
+        if (!CanSelectRange || e.Button != 0 || !e.IsPrimary) return;
+        selectionAnchor = selectionLast = slot;
+        selectionPointer = e.PointerId;
+        suppressRangeClick = false;
+    }
+
+    private void ExtendRange(PointerEventArgs e, DateTime slot)
+    {
+        if (selectionAnchor is not DateTime anchor || e.PointerId != selectionPointer) return;
+        if ((e.Buttons & 1) == 0 || slot.Date != anchor.Date) { CancelRange(); return; }
+        selectionLast = slot;
+    }
+
+    private async Task FinishRange(PointerEventArgs e, DateTime slot)
+    {
+        if (!CanSelectRange || selectionAnchor is not DateTime anchor || e.PointerId != selectionPointer) return;
+        if (slot.Date != anchor.Date) { CancelRange(); return; }
+        var start = anchor < slot ? anchor : slot;
+        var end = (anchor > slot ? anchor : slot).AddMinutes(15);
+        CancelRange();
+        suppressRangeClick = true;
+        await RangeSelected.InvokeAsync(new TimeRangeSelectedParameter { Start = start, End = end });
+    }
+
+    private bool IsRangeSlot(DateTime slot) => selectionAnchor is DateTime a && selectionLast is DateTime b &&
+        slot.Date == a.Date && slot >= (a < b ? a : b) && slot <= (a > b ? a : b);
+
+    private void CancelRange() { selectionAnchor = selectionLast = null; }
+    private void RangeKeyDown(KeyboardEventArgs e) { if (e.Key == "Escape") CancelRange(); }
+
     private Tasks? TaskDragged;
     private async Task HandleDragStart(int taskID)
     {
@@ -89,6 +146,7 @@ partial class WeekView : CalendarBase
 
     private async Task ClickDayInternal(MouseEventArgs e, DateTime day)
     {
+        if (suppressRangeClick) { suppressRangeClick = false; return; }
         if (!DayClick.HasDelegate)
             return;
         

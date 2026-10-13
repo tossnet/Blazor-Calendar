@@ -226,3 +226,28 @@ For client-side and server-side Blazor - add script section to _Layout.cshtml (h
 
 * set a customizable background color for the current day
 * Add a list of remarkable days (specific background). The user could send the holidays for example
+
+## Weekly time-range selection
+
+`WeekView` can optionally select a time range on the empty grid or hour scale. Enable the interaction and handle `RangeSelected` in the host application:
+
+```razor
+<WeekView EnableRangeSelection="true"
+          RangeSelected="OnRangeSelected"
+          DayHeaderFormat="dddd"
+          WeekStartsOn="DayOfWeek.Monday" />
+
+@code {
+    private void OnRangeSelected(TimeRangeSelectedParameter range)
+    {
+        // Open an event editor or update a recurring weekday work-plan draft.
+        // range.Start is inclusive; range.End is exclusive.
+    }
+}
+```
+
+Press the primary mouse button on a 15-minute slot, drag within the same day, and release on the last included slot. Dragging upward normalizes the range. For example, selecting 09:00 through the 10:45 slot returns `[09:00, 11:00)`. A single slot returns 15 minutes. The final 23:45 slot ends at midnight on the following day. The selected range is highlighted while dragging.
+
+Escape (with the grid focused), leaving the grid, pointer cancellation or crossing into another day cancels the selection. Releasing outside a selectable slot also cancels it. Existing task click/drag callbacks are retained; selecting a range never inserts, modifies or persists tasks. The host decides what the callback means. Desktop mouse interaction is tested; touch-specific capture/gesture handling is not included.
+
+The feature defaults to disabled and requires a `RangeSelected` delegate. `DayHeaderFormat` defaults to `ddd dd.MM`, preserving the existing dated header; `dddd` shows full localized weekday names without dates. `WeekStartsOn` can explicitly select Monday (or another weekday), independent of the operating system culture; its default is null and retains the culture convention. Times are wall-clock `DateTime` values, with no timezone conversion performed by the component.
