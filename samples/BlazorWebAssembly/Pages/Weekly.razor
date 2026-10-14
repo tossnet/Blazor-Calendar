@@ -81,8 +81,13 @@
     <p class="mb-0" role="status" aria-live="polite">@rangeStatus Demo events are stored only in memory; reloading the page removes them.</p>
 </section>
 
+<section class="border rounded p-2 mb-2" aria-label="Overlapping events demo">
+    <label><input type="checkbox" @bind="ShowGridlineDemo" /> Show overlapping events to check hourly gridlines</label>
+    <p class="mb-0">Adds three overlapping tasks on each day of the displayed week. Scroll above or below them: hourly lines continue across all task columns. Toggle off to restore the original fixtures.</p>
+</section>
+
 <CalendarContainer FirstDate="today"
-				   TasksList="TasksList.ToArray()"
+				   TasksList="DisplayedTasks"
 				   DisplayedView="DisplayedView.Weekly">
 	<WeekView EnableHourScrolling="@enableHourScrolling"
 			  VisibleStartHour="@visibleStartHour"
@@ -95,7 +100,7 @@
 			  OutsideCurrentMonthClick="OutsideCurrentMonthClick"
 			  TaskClick="TaskClick"
 			  DayClick="DayClick"
-			  Draggable="@(!EnableDemoRangeSelection && draggable)"
+			  Draggable="@(!EnableDemoRangeSelection && !ShowGridlineDemo && draggable)"
 			  DragStart="DragStart"
 			  DropTask="DropTask"
 			  HighlightToday="true" TodayBackgroundColor="#f5f5f5" TodayBorderColor="#ff5b60"
@@ -106,6 +111,15 @@
 <div class="console">@fakeConsole</div>
 
 @code {
+    private bool ShowGridlineDemo { get; set; }
+    private Tasks[] DisplayedTasks => !ShowGridlineDemo ? TasksList.ToArray() :
+        Enumerable.Range(0, 7).SelectMany(day => Enumerable.Range(0, 3).Select(column =>
+        {
+            var date = today.Date.AddDays(-((7 + (int)today.DayOfWeek - (int)DayOfWeek.Monday) % 7)).AddDays(day);
+            return new Tasks { ID = 2000 + day * 3 + column, Code = $"Overlap {column + 1}",
+                Caption = $"Overlap {column + 1}", DateStart = date.AddHours(7 + column),
+                DateEnd = date.AddHours(13 + column), Color = "#cfe8ff", ForeColor = "#172b4d", NotBeDraggable = true };
+        })).Concat(TasksList.Where(t => demoTaskIds.Contains(t.ID))).ToArray();
     private bool enableDemoRangeSelection = true;
     private TimeRangeSelectedParameter? selectedRange;
     private readonly HashSet<int> demoTaskIds = new();
