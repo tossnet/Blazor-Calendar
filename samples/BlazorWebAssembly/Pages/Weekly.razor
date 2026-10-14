@@ -36,6 +36,39 @@
 						Label="Add Fake Hightlighted Days"
 						@bind-Value="AddFakeHightlightedDays" />
 	</div>
+	<div style="margin-left:8px">
+		<WinOldCheckBox Appearance="Appearance.Win10" Label="Hour scrolling" @bind-Value="enableHourScrolling" />
+	</div>
+	<div style="margin-left:8px">
+		<WinOldCheckBox Appearance="Appearance.Win10" Label="Overflow indicators" @bind-Value="showOverflowIndicators" />
+	</div>
+	<label style="margin-left:8px">
+		From
+		<WinOldSelect Appearance="Appearance.Win10"
+					  T="int"
+		              @bind-Value="visibleStartHour">
+			@for (var h = 0; h < 24; h++)
+			{
+				var hour = h;
+				<WinOldOption  value="@hour">@hour:00</WinOldOption>
+			}
+		</WinOldSelect>
+	</label>
+	<label style="margin-left:8px">
+		To
+		<WinOldSelect Appearance="Appearance.Win10"
+					  T="int"
+		              @bind-Value="visibleEndHour">
+			@for (var h = 1; h <= 24; h++)
+			{
+				var hour = h;
+				<WinOldOption  value="@(hour)">@hour:00</WinOldOption>
+			}
+		</WinOldSelect>
+	</label>
+	<div style="margin-left:8px">
+		<WinOldCheckBox Appearance="Appearance.Win10" Label="Header colors" @bind-Value="customHeaderColors" />
+	</div>
 </div>
 
 <section class="border rounded p-2 mb-2" aria-label="Time range selection demo">
@@ -57,15 +90,18 @@
             <option value="220">Wide (220px)</option>
         </select>
     </label>
-    <label class="ms-3"><input type="checkbox" @bind="useHourScrolling" /> Scrollable hour viewport</label>
     <p class="mb-0">Columns share available space equally, but never shrink below the selected minimum. When necessary, use the calendar's horizontal scrollbar. This also works in the full-day layout.</p>
 </section>
 
 <CalendarContainer FirstDate="today"
 				   TasksList="TasksList.ToArray()"
 				   DisplayedView="DisplayedView.Weekly">
-	<WeekView MinimumDayWidth="@(minimumDayWidth == 0 ? (int?)null : minimumDayWidth)" EnableHourScrolling="useHourScrolling" VisibleStartHour="6" VisibleEndHour="17"
-			  HeaderBackgroundColor="#d2e4f7" HeaderBorderColor="#9fb3c4"
+	<WeekView MinimumDayWidth="@(minimumDayWidth == 0 ? (int?)null : minimumDayWidth)" EnableHourScrolling="@enableHourScrolling"
+			  VisibleStartHour="@visibleStartHour"
+			  VisibleEndHour="@Math.Max(visibleEndHour, visibleStartHour + 1)"
+			  ShowOverflowIndicators="@showOverflowIndicators"
+			  HeaderBackgroundColor="@(customHeaderColors ? "#d2e4f7" : null)"
+			  HeaderBorderColor="@(customHeaderColors ? "#9fb3c4" : null)"
 			  EnableRangeSelection="@EnableDemoRangeSelection" RangeSelected="DemoRangeSelected"
 			  WeekStartsOn="DayOfWeek.Monday" PriorityDisplay="@PriorityDisplay"
 			  OutsideCurrentMonthClick="OutsideCurrentMonthClick"
@@ -83,7 +119,6 @@
 
 @code {
     private int minimumDayWidth;
-    private bool useHourScrolling = true;
     private bool enableDemoRangeSelection = true;
     private TimeRangeSelectedParameter? selectedRange;
     private readonly HashSet<int> demoTaskIds = new();
@@ -94,6 +129,11 @@
         get => enableDemoRangeSelection;
         set { enableDemoRangeSelection = value; ResetDemoRange(); }
     }
+	private bool enableHourScrolling = true;
+	private bool showOverflowIndicators = true;
+	private int visibleStartHour = 6;
+	private int visibleEndHour = 17;
+	private bool customHeaderColors = true;
 
     private void DemoRangeSelected(TimeRangeSelectedParameter range)
     {
