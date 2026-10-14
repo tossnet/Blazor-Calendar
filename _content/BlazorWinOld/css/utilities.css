@@ -1,0 +1,273 @@
+/* ============================================
+   BLAZOR WINOLD — CSS UTILITIES
+   - Imported automatically by blazorwinold.css
+   - All classes are prefixed with "wo-" to avoid
+     conflicts with other frameworks (Bootstrap, Tailwind...)
+   - Responsive variants (sm:, md:, lg:, xl:) are declared
+     at the END of the file so they override base classes.
+   - wo-row, wo-col and wo-grid-cols-* include their
+     display (flex / grid): no need to add wo-flex / wo-grid.
+   ============================================ */
+
+/* ===============
+   FLEX
+   =============== */
+
+.wo-flex { display: flex; }
+
+/* wo-row / wo-col include display: flex (no need to add wo-flex) */
+.wo-row { display: flex; flex-direction: row; }
+.wo-col { display: flex; flex-direction: column; }
+
+/* must stay after wo-row / wo-col so "wo-inline-flex wo-col" stays inline */
+.wo-inline-flex { display: inline-flex; }
+
+.wo-wrap { flex-wrap: wrap; }
+.wo-nowrap { flex-wrap: nowrap; }
+
+.wo-flex-1 { flex: 1 1 0; min-width: 0; }
+.wo-flex-auto { flex: 1 1 auto; }
+.wo-flex-none { flex: none; }
+
+.wo-items-start { align-items: flex-start; }
+.wo-items-center { align-items: center; }
+.wo-items-end { align-items: flex-end; }
+.wo-items-stretch { align-items: stretch; }
+
+.wo-justify-start { justify-content: flex-start; }
+.wo-justify-center { justify-content: center; }
+.wo-justify-end { justify-content: flex-end; }
+.wo-justify-between { justify-content: space-between; }
+.wo-justify-around { justify-content: space-around; }
+.wo-justify-evenly { justify-content: space-evenly; }
+
+.wo-self-start { align-self: flex-start; }
+.wo-self-center { align-self: center; }
+.wo-self-end { align-self: flex-end; }
+
+/* ============================================
+   FLEX BASIS (gap compensation calibrated for wo-gap-20)
+   ============================================ */
+
+.wo-flex-25 { flex: 0 0 calc(25% - 20px); }
+.wo-flex-33 { flex: 0 0 calc(33.333% - 20px); }
+.wo-flex-50 { flex: 0 0 calc(50% - 20px); }
+.wo-flex-100 { flex: 0 0 100%; }
+
+/* ===============
+   GRID
+   =============== */
+
+.wo-grid { display: grid; }
+
+.wo-grid-center {
+    display: grid;
+    place-items: center;
+}
+
+.wo-grid-cols-1 { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); }
+.wo-grid-cols-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.wo-grid-cols-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.wo-grid-cols-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* must stay after wo-grid-cols-* so "wo-inline-grid wo-grid-cols-2" stays inline */
+.wo-inline-grid { display: inline-grid; }
+
+/* ===============
+   GAP
+   =============== */
+
+.wo-gap-0 { gap: 0; }
+.wo-gap-4 { gap: 4px; }
+.wo-gap-8 { gap: 8px; }
+.wo-gap-12 { gap: 12px; }
+.wo-gap-16 { gap: 16px; }
+.wo-gap-20 { gap: 20px; }
+.wo-gap-24 { gap: 24px; }
+.wo-gap-32 { gap: 32px; }
+.wo-gap-48 { gap: 48px; }
+
+/* ===============
+   TEXT ALIGN
+   =============== */
+
+.wo-text-left { text-align: left; }
+.wo-text-center { text-align: center; }
+.wo-text-right { text-align: right; }
+
+/* ===============
+   WIDTH / HEIGHT
+   =============== */
+
+.wo-w-full { width: 100%; }
+.wo-h-full { height: 100%; }
+
+.wo-min-w-0 { min-width: 0; }
+.wo-min-h-0 { min-height: 0; }
+
+/* ===============
+   DISPLAY
+   =============== */
+
+.wo-block { display: block; }
+.wo-inline-block { display: inline-block; }
+.wo-hidden { display: none; }
+
+/* ===============
+   POSITION
+   =============== */
+
+.wo-relative { position: relative; }
+.wo-absolute { position: absolute; }
+.wo-fixed { position: fixed; }
+.wo-sticky { position: sticky; }
+
+/* ===============
+   CENTER SHORTCUT
+   =============== */
+
+.wo-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ============================================
+   RESPONSIVE (must stay at the end of the file)
+   ============================================ */
+
+@media (min-width: 640px) { /* sm */
+    .sm\:wo-flex { display: flex; }
+    .sm\:wo-grid { display: grid; }
+    .sm\:wo-row { display: flex; flex-direction: row; }
+    .sm\:wo-col { display: flex; flex-direction: column; }
+    .sm\:wo-wrap { flex-wrap: wrap; }
+    .sm\:wo-nowrap { flex-wrap: nowrap; }
+    .sm\:wo-items-start { align-items: flex-start; }
+    .sm\:wo-items-center { align-items: center; }
+    .sm\:wo-justify-center { justify-content: center; }
+    .sm\:wo-justify-between { justify-content: space-between; }
+    .sm\:wo-gap-0 { gap: 0; }
+    .sm\:wo-gap-4 { gap: 4px; }
+    .sm\:wo-gap-8 { gap: 8px; }
+    .sm\:wo-gap-12 { gap: 12px; }
+    .sm\:wo-gap-16 { gap: 16px; }
+    .sm\:wo-gap-20 { gap: 20px; }
+    .sm\:wo-gap-24 { gap: 24px; }
+    .sm\:wo-gap-32 { gap: 32px; }
+    .sm\:wo-gap-48 { gap: 48px; }
+    .sm\:wo-flex-1 { flex: 1 1 0; min-width: 0; }
+    .sm\:wo-flex-25 { flex: 0 0 calc(25% - 20px); }
+    .sm\:wo-flex-33 { flex: 0 0 calc(33.333% - 20px); }
+    .sm\:wo-flex-50 { flex: 0 0 calc(50% - 20px); }
+    .sm\:wo-flex-100 { flex: 0 0 100%; }
+    .sm\:wo-grid-cols-1 { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); }
+    .sm\:wo-grid-cols-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .sm\:wo-grid-cols-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .sm\:wo-grid-cols-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    /* keep last: must override display set by wo-row / wo-col / wo-grid-cols-* */
+    .sm\:wo-block { display: block; }
+    .sm\:wo-hidden { display: none; }
+}
+
+@media (min-width: 768px) { /* md */
+    .md\:wo-flex { display: flex; }
+    .md\:wo-grid { display: grid; }
+    .md\:wo-row { display: flex; flex-direction: row; }
+    .md\:wo-col { display: flex; flex-direction: column; }
+    .md\:wo-wrap { flex-wrap: wrap; }
+    .md\:wo-nowrap { flex-wrap: nowrap; }
+    .md\:wo-items-start { align-items: flex-start; }
+    .md\:wo-items-center { align-items: center; }
+    .md\:wo-justify-center { justify-content: center; }
+    .md\:wo-justify-between { justify-content: space-between; }
+    .md\:wo-gap-0 { gap: 0; }
+    .md\:wo-gap-4 { gap: 4px; }
+    .md\:wo-gap-8 { gap: 8px; }
+    .md\:wo-gap-12 { gap: 12px; }
+    .md\:wo-gap-16 { gap: 16px; }
+    .md\:wo-gap-20 { gap: 20px; }
+    .md\:wo-gap-24 { gap: 24px; }
+    .md\:wo-gap-32 { gap: 32px; }
+    .md\:wo-gap-48 { gap: 48px; }
+    .md\:wo-flex-1 { flex: 1 1 0; min-width: 0; }
+    .md\:wo-flex-25 { flex: 0 0 calc(25% - 20px); }
+    .md\:wo-flex-33 { flex: 0 0 calc(33.333% - 20px); }
+    .md\:wo-flex-50 { flex: 0 0 calc(50% - 20px); }
+    .md\:wo-flex-100 { flex: 0 0 100%; }
+    .md\:wo-grid-cols-1 { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); }
+    .md\:wo-grid-cols-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .md\:wo-grid-cols-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .md\:wo-grid-cols-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    /* keep last: must override display set by wo-row / wo-col / wo-grid-cols-* */
+    .md\:wo-block { display: block; }
+    .md\:wo-hidden { display: none; }
+}
+
+@media (min-width: 1024px) { /* lg */
+    .lg\:wo-flex { display: flex; }
+    .lg\:wo-grid { display: grid; }
+    .lg\:wo-row { display: flex; flex-direction: row; }
+    .lg\:wo-col { display: flex; flex-direction: column; }
+    .lg\:wo-wrap { flex-wrap: wrap; }
+    .lg\:wo-nowrap { flex-wrap: nowrap; }
+    .lg\:wo-items-start { align-items: flex-start; }
+    .lg\:wo-items-center { align-items: center; }
+    .lg\:wo-justify-center { justify-content: center; }
+    .lg\:wo-justify-between { justify-content: space-between; }
+    .lg\:wo-gap-0 { gap: 0; }
+    .lg\:wo-gap-4 { gap: 4px; }
+    .lg\:wo-gap-8 { gap: 8px; }
+    .lg\:wo-gap-12 { gap: 12px; }
+    .lg\:wo-gap-16 { gap: 16px; }
+    .lg\:wo-gap-20 { gap: 20px; }
+    .lg\:wo-gap-24 { gap: 24px; }
+    .lg\:wo-gap-32 { gap: 32px; }
+    .lg\:wo-gap-48 { gap: 48px; }
+    .lg\:wo-flex-1 { flex: 1 1 0; min-width: 0; }
+    .lg\:wo-flex-25 { flex: 0 0 calc(25% - 20px); }
+    .lg\:wo-flex-33 { flex: 0 0 calc(33.333% - 20px); }
+    .lg\:wo-flex-50 { flex: 0 0 calc(50% - 20px); }
+    .lg\:wo-flex-100 { flex: 0 0 100%; }
+    .lg\:wo-grid-cols-1 { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); }
+    .lg\:wo-grid-cols-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .lg\:wo-grid-cols-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .lg\:wo-grid-cols-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    /* keep last: must override display set by wo-row / wo-col / wo-grid-cols-* */
+    .lg\:wo-block { display: block; }
+    .lg\:wo-hidden { display: none; }
+}
+
+@media (min-width: 1280px) { /* xl */
+    .xl\:wo-flex { display: flex; }
+    .xl\:wo-grid { display: grid; }
+    .xl\:wo-row { display: flex; flex-direction: row; }
+    .xl\:wo-col { display: flex; flex-direction: column; }
+    .xl\:wo-wrap { flex-wrap: wrap; }
+    .xl\:wo-nowrap { flex-wrap: nowrap; }
+    .xl\:wo-items-start { align-items: flex-start; }
+    .xl\:wo-items-center { align-items: center; }
+    .xl\:wo-justify-center { justify-content: center; }
+    .xl\:wo-justify-between { justify-content: space-between; }
+    .xl\:wo-gap-0 { gap: 0; }
+    .xl\:wo-gap-4 { gap: 4px; }
+    .xl\:wo-gap-8 { gap: 8px; }
+    .xl\:wo-gap-12 { gap: 12px; }
+    .xl\:wo-gap-16 { gap: 16px; }
+    .xl\:wo-gap-20 { gap: 20px; }
+    .xl\:wo-gap-24 { gap: 24px; }
+    .xl\:wo-gap-32 { gap: 32px; }
+    .xl\:wo-gap-48 { gap: 48px; }
+    .xl\:wo-flex-1 { flex: 1 1 0; min-width: 0; }
+    .xl\:wo-flex-25 { flex: 0 0 calc(25% - 20px); }
+    .xl\:wo-flex-33 { flex: 0 0 calc(33.333% - 20px); }
+    .xl\:wo-flex-50 { flex: 0 0 calc(50% - 20px); }
+    .xl\:wo-flex-100 { flex: 0 0 100%; }
+    .xl\:wo-grid-cols-1 { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); }
+    .xl\:wo-grid-cols-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .xl\:wo-grid-cols-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .xl\:wo-grid-cols-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    /* keep last: must override display set by wo-row / wo-col / wo-grid-cols-* */
+    .xl\:wo-block { display: block; }
+    .xl\:wo-hidden { display: none; }
+}
