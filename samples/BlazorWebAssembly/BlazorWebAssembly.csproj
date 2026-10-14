@@ -23,7 +23,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Brism" Version="1.0.1" />
-		<PackageReference Include="BlazorWinOld" Version="2.1.0" />
+		<PackageReference Include="BlazorWinOld" Version="2.22.0" />
 	</ItemGroup>
 
 	<ItemGroup>
