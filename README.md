@@ -265,3 +265,13 @@ dotnet run --project samples/BlazorWebAssembly/BlazorWebAssembly.csproj --framew
 ```
 
 Open the local URL printed by the development server and navigate to Weekly view.
+
+### WeekView: configurable current-day appearance
+
+```razor
+<WeekView HighlightToday="true"
+          TodayBackgroundColor="#f5f5f5"
+          TodayBorderColor="#ff5b60" />
+```
+
+Both new colors are optional and apply only when `HighlightToday` is enabled and today's date is in the rendered week. The background covers the full hour grid, including the time scale and empty overlap columns; task colors and header styles remain unchanged. The border is a 3px inset outline around the whole day column and does not change layout dimensions. Leaving either parameter unset preserves the previous appearance for that part. An explicit today background takes precedence over weekend and highlighted-period backgrounds only for today.

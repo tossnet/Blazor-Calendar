@@ -26,14 +26,14 @@
     {
         DateTime day = firstDateWeek.AddDays(i);
 
-        <div class="day-column" style="grid-column-start: @(i+1)">
+        <div class="day-column" style="grid-column-start: @(i+1); @TodayColumnStyle(day)">
             
             <div class="day-header header-name noselect" style="@HeaderStyle">
                 @day.ToString(DayHeaderFormat, CultureInfo.CurrentCulture)
             </div>
 
 
-            <div class="@(CanSelectRange ? "hours range-enabled" : "hours")">
+            <div class="@(CanSelectRange ? "hours range-enabled" : "hours")" style="@WeekBackground(day)">
                 @for (int hour = 0; hour < 24; hour++)
                 {
                     DateTime hours = day.AddHours(hour);
@@ -45,7 +45,7 @@
                          @ondrop:preventDefault="true" 
                          @ondrop="() => HandleDayOnDrop(hours)"
                          @onclick="e => ClickDayInternal(e, hours)"
-                         style="grid-row: @row; @GetBackgroundWithHighlight(day)">
+                         style="grid-row: @row; @WeekBackground(day)">
                         @if(CanSelectRange) {
                             @for(int quarter=0;quarter<4;quarter++) {
                                 var slot=hours.AddMinutes(quarter*15);
