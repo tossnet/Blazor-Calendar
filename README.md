@@ -252,6 +252,18 @@ Escape (with the grid focused), leaving the grid, pointer cancellation or crossi
 
 The feature defaults to disabled and requires a `RangeSelected` delegate. `DayHeaderFormat` defaults to `ddd dd.MM`, preserving the existing dated header; `dddd` shows full localized weekday names without dates. `WeekStartsOn` can explicitly select Monday (or another weekday), independent of the operating system culture; its default is null and retains the culture convention. Times are wall-clock `DateTime` values, with no timezone conversion performed by the component.
 
+### WeekView: sticky headers and off-screen event counts
+
+```razor
+<WeekView EnableHourScrolling="true" VisibleStartHour="6" VisibleEndHour="17"
+          HeaderBackgroundColor="#d2e4f7" HeaderBorderColor="#9fb3c4"
+          ShowOverflowIndicators="true" />
+```
+
+Scrolling is opt-in, preserving the previous full-day layout by default. The initial viewport shows 06:00–17:00; all 24 hours remain in the grid and can be reached by scrolling. Headers stay visible. Each day shows `▲ count` on the left and `▼ count` on the right only for nonzero counts; its title stays centered. Counts include events partially clipped at either boundary (a long/all-day event may count in both directions), update after scrolling, resizing and task changes, and are based on rendered event bounds. Click or keyboard-activate a button to scroll to the nearest hidden event edge. A single shared viewport keeps all weekdays aligned.
+
+Optional header colors augment the existing `HeaderStyle`; unset colors retain prior styling. The visible range must satisfy `0 <= VisibleStartHour < VisibleEndHour <= 24`. JS interop runs after rendering, supports independent calendar instances, and disconnects listeners/observers on disposal. The WebAssembly weekly example enables these options. If the host limits the component height, the visible interval shrinks; counters still reflect the actual viewport.
+
 ### WebAssembly time-range selection demo
 
 The existing `samples/BlazorWebAssembly` project demonstrates weekly range selection at `/weeklyview` (`Pages/Weekly.razor`). Range mode starts enabled; drag over 15-minute slots in the time scale or empty grid within one weekday. The status area shows the selected date, start, exclusive end and duration. Click **Add demo event** to append a sample task in memory. Repeated selections can create multiple sample events. **Clear demo events** removes only events created by this demo, preserving the original fixtures; reload clears the in-memory changes.

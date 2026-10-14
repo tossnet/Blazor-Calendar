@@ -51,8 +51,10 @@
 <CalendarContainer FirstDate="today"
 				   TasksList="TasksList.ToArray()"
 				   DisplayedView="DisplayedView.Weekly">
-	<WeekView EnableRangeSelection="@EnableDemoRangeSelection" RangeSelected="DemoRangeSelected"
-              WeekStartsOn="DayOfWeek.Monday" PriorityDisplay="@PriorityDisplay"
+	<WeekView EnableHourScrolling="true" VisibleStartHour="6" VisibleEndHour="17"
+			  HeaderBackgroundColor="#d2e4f7" HeaderBorderColor="#9fb3c4"
+			  EnableRangeSelection="@EnableDemoRangeSelection" RangeSelected="DemoRangeSelected"
+			  WeekStartsOn="DayOfWeek.Monday" PriorityDisplay="@PriorityDisplay"
 			  OutsideCurrentMonthClick="OutsideCurrentMonthClick"
 			  TaskClick="TaskClick"
 			  DayClick="DayClick"

@@ -2,10 +2,11 @@ using BlazorCalendar.Models;
 using BlazorCalendar.Styles;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.JSInterop;
 
 namespace BlazorCalendar;
 
-partial class WeekView : CalendarBase
+partial class WeekView : CalendarBase, IAsyncDisposable
 {
     [CascadingParameter(Name = "SelectedView")]
     public DisplayedView DisplayedView { get; set; } = DisplayedView.Weekly;
@@ -78,6 +79,41 @@ partial class WeekView : CalendarBase
     /// <summary>A normalized same-day range with an exclusive end. Does not create or mutate tasks.</summary>
     [Parameter] public EventCallback<TimeRangeSelectedParameter> RangeSelected { get; set; }
 
+    /// <summary>Optional background and border colors for each weekday header.</summary>
+    [Parameter] public string? HeaderBackgroundColor { get; set; }
+    [Parameter] public string? HeaderBorderColor { get; set; }
+    /// <summary>Opt-in fixed-height scrolling week with sticky day headers.</summary>
+    [Parameter] public bool EnableHourScrolling { get; set; }
+    [Parameter] public int VisibleStartHour { get; set; } = 6;
+    [Parameter] public int VisibleEndHour { get; set; } = 17;
+    /// <summary>Show nonzero counts of events extending above/below the visible viewport.</summary>
+    [Parameter] public bool ShowOverflowIndicators { get; set; } = true;
+    [Inject] private IJSRuntime JS { get; set; } = default!;
+    private ElementReference weekElement;
+    private IJSObjectReference? scrollModule;
+    private bool disposed;
+    private string WeekHeaderStyle => $"{HeaderStyle};" +
+        (string.IsNullOrWhiteSpace(HeaderBackgroundColor) ? "" : $"background:{HeaderBackgroundColor};") +
+        (string.IsNullOrWhiteSpace(HeaderBorderColor) ? "" : $"box-shadow:inset 0 0 0 1px {HeaderBorderColor};");
+    private string WeekStyle => $"{Style};--week-visible-hours:{VisibleEndHour-VisibleStartHour};";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (disposed || (!EnableHourScrolling && scrollModule is null)) return;
+        scrollModule ??= await JS.InvokeAsync<IJSObjectReference>("import", "./_content/BlazorCalendar/weekView.js");
+        if (disposed) return;
+        await scrollModule.InvokeVoidAsync("configure", weekElement, EnableHourScrolling,
+            VisibleStartHour, ShowOverflowIndicators, FirstDate.ToString("yyyy-MM-dd"));
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        disposed = true;
+        if (scrollModule is null) return;
+        try { await scrollModule.InvokeVoidAsync("dispose", weekElement); await scrollModule.DisposeAsync(); }
+        catch (JSDisconnectedException) { }
+    }
+
     private DateTime? selectionAnchor;
     private DateTime? selectionLast;
     private long selectionPointer;
@@ -86,6 +122,8 @@ partial class WeekView : CalendarBase
 
     protected override void OnParametersSet()
     {
+        if (EnableHourScrolling && (VisibleStartHour < 0 || VisibleEndHour > 24 || VisibleEndHour <= VisibleStartHour))
+            throw new ArgumentOutOfRangeException(nameof(VisibleStartHour), "The visible interval must be inside 00:00–24:00 and have a positive duration.");
         if (!CanSelectRange || DisplayedView != DisplayedView.Weekly ||
             (selectionAnchor is DateTime anchor && (anchor.Date < FirstDate.AddDays(-6) || anchor.Date > FirstDate.AddDays(6))))
             CancelRange();

@@ -67,3 +67,48 @@
 .range-slot { min-height: 0; user-select: none; touch-action: none; cursor: crosshair; }
 .range-label { padding-left: 0.5em; }
 .range-selected { background: rgba(0, 120, 215, 0.28); outline: 1px solid #0078d7; outline-offset: -1px; }
+
+/* Optional scrolling viewport: all 24 hours remain available. */
+.week-scrollable {
+    height: calc(40px + var(--week-visible-hours) * 42px + 2px);
+    max-height: 100%;
+    grid-template-columns: repeat(7, minmax(100px, 1fr));
+    grid-template-rows: max-content;
+    overscroll-behavior: contain;
+}
+.week-scrollable .hours {
+    height: 1010px;
+    min-height: 1010px;
+    flex: none;
+    box-sizing: border-box;
+    grid-template-rows: repeat(24, 42px);
+}
+.week-scrollable .day-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    height: 40px;
+    flex: none;
+    box-sizing: border-box;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.week-scrollable .week-day-title { min-width: 0; text-align: center; padding: 0 30px; }
+.week-overflow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 2px 3px;
+    background: transparent;
+    color: inherit;
+    border: 1px solid currentColor;
+    border-radius: 3px;
+    font: inherit;
+    cursor: pointer;
+}
+.week-overflow[hidden] { display: none; }
+.week-up { left: 3px; }
+.week-down { right: 3px; }
+.week-overflow:focus-visible { outline: 2px solid #0078d7; outline-offset: 1px; }
