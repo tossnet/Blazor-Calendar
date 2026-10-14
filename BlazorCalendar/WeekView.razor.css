@@ -26,12 +26,17 @@
     grid-auto-columns: 1fr;
     grid-template-rows: repeat(24, 1fr);
     grid-auto-flow: column;
+    /* Cover implicit task columns created by overlapping events as well. */
+    background-image: linear-gradient(to bottom, transparent calc(100% - 1px), #d6d8db 0);
+    background-size: 100% calc(100% / 24);
+    background-repeat: repeat-y;
 }
 
 .hour {
     grid-column: 1;
     font-size: 0.8em;
     padding-left: 0.5em;
+    box-shadow: inset 0 -1px #d6d8db;
 }
 
 .hour-task {
@@ -82,6 +87,7 @@
     flex: none;
     box-sizing: border-box;
     grid-template-rows: repeat(24, 42px);
+    background-size: 100% 42px;
 }
 .week-scrollable .day-header {
     position: sticky;

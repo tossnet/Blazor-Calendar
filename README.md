@@ -287,3 +287,9 @@ Open the local URL printed by the development server and navigate to Weekly view
 ```
 
 Both new colors are optional and apply only when `HighlightToday` is enabled and today's date is in the rendered week. The background covers the full hour grid, including the time scale and empty overlap columns; task colors and header styles remain unchanged. The border is a 3px inset outline around the whole day column and does not change layout dimensions. Leaving either parameter unset preserves the previous appearance for that part. An explicit today background takes precedence over weekend and highlighted-period backgrounds only for today.
+
+### Weekly gridlines with overlapping events
+
+Hourly rules span the entire day grid, including implicit columns created by overlapping tasks. They remain aligned in both the full-day layout and the optional fixed-hour scrolling viewport, with weekday, weekend, highlighted-period and today backgrounds preserved. Tasks retain their own backgrounds and positioning; rules appear on uncovered parts of the grid.
+
+In the WebAssembly `/weeklyview` sample, enable **Show overlapping events to check hourly gridlines**. Three overlapping tasks appear on every day of the displayed week. Scroll above/below them and compare the time scale with the empty task columns. Disabling the option restores the original fixtures; range-created demo events are retained in memory. This simulation uses no database or external calendar API.
