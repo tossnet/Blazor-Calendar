@@ -36,6 +36,39 @@
 						Label="Add Fake Hightlighted Days"
 						@bind-Value="AddFakeHightlightedDays" />
 	</div>
+	<div style="margin-left:8px">
+		<WinOldCheckBox Appearance="Appearance.Win10" Label="Hour scrolling" @bind-Value="enableHourScrolling" />
+	</div>
+	<div style="margin-left:8px">
+		<WinOldCheckBox Appearance="Appearance.Win10" Label="Overflow indicators" @bind-Value="showOverflowIndicators" />
+	</div>
+	<label style="margin-left:8px">
+		From
+		<WinOldSelect Appearance="Appearance.Win10"
+					  T="int"
+		              @bind-Value="visibleStartHour">
+			@for (var h = 0; h < 24; h++)
+			{
+				var hour = h;
+				<WinOldOption  value="@hour">@hour:00</WinOldOption>
+			}
+		</WinOldSelect>
+	</label>
+	<label style="margin-left:8px">
+		To
+		<WinOldSelect Appearance="Appearance.Win10"
+					  T="int"
+		              @bind-Value="visibleEndHour">
+			@for (var h = 1; h <= 24; h++)
+			{
+				var hour = h;
+				<WinOldOption  value="@(hour)">@hour:00</WinOldOption>
+			}
+		</WinOldSelect>
+	</label>
+	<div style="margin-left:8px">
+		<WinOldCheckBox Appearance="Appearance.Win10" Label="Header colors" @bind-Value="customHeaderColors" />
+	</div>
 </div>
 
 <section class="border rounded p-2 mb-2" aria-label="Time range selection demo">
@@ -50,15 +83,18 @@
 
 <section class="border rounded p-2 mb-2" aria-label="Overlapping events demo">
     <label><input type="checkbox" @bind="ShowGridlineDemo" /> Show overlapping events to check hourly gridlines</label>
-    <label class="ms-3"><input type="checkbox" @bind="UseHourScrolling" /> Scrollable hour viewport</label>
     <p class="mb-0">Adds three overlapping tasks on each day of the displayed week. Scroll above or below them: hourly lines continue across all task columns. Toggle off to restore the original fixtures.</p>
 </section>
 
 <CalendarContainer FirstDate="today"
 				   TasksList="DisplayedTasks"
 				   DisplayedView="DisplayedView.Weekly">
-	<WeekView EnableHourScrolling="UseHourScrolling" VisibleStartHour="6" VisibleEndHour="17"
-			  HeaderBackgroundColor="#d2e4f7" HeaderBorderColor="#9fb3c4"
+	<WeekView EnableHourScrolling="@enableHourScrolling"
+			  VisibleStartHour="@visibleStartHour"
+			  VisibleEndHour="@Math.Max(visibleEndHour, visibleStartHour + 1)"
+			  ShowOverflowIndicators="@showOverflowIndicators"
+			  HeaderBackgroundColor="@(customHeaderColors ? "#d2e4f7" : null)"
+			  HeaderBorderColor="@(customHeaderColors ? "#9fb3c4" : null)"
 			  EnableRangeSelection="@EnableDemoRangeSelection" RangeSelected="DemoRangeSelected"
 			  WeekStartsOn="DayOfWeek.Monday" PriorityDisplay="@PriorityDisplay"
 			  OutsideCurrentMonthClick="OutsideCurrentMonthClick"
@@ -76,7 +112,6 @@
 
 @code {
     private bool ShowGridlineDemo { get; set; }
-    private bool UseHourScrolling { get; set; } = true;
     private Tasks[] DisplayedTasks => !ShowGridlineDemo ? TasksList.ToArray() :
         Enumerable.Range(0, 7).SelectMany(day => Enumerable.Range(0, 3).Select(column =>
         {
@@ -95,6 +130,11 @@
         get => enableDemoRangeSelection;
         set { enableDemoRangeSelection = value; ResetDemoRange(); }
     }
+	private bool enableHourScrolling = true;
+	private bool showOverflowIndicators = true;
+	private int visibleStartHour = 6;
+	private int visibleEndHour = 17;
+	private bool customHeaderColors = true;
 
     private void DemoRangeSelected(TimeRangeSelectedParameter range)
     {

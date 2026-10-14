@@ -224,7 +224,6 @@ For client-side and server-side Blazor - add script section to _Layout.cshtml (h
 
 ### [RoadMap]
 
-* set a customizable background color for the current day
 * Add a list of remarkable days (specific background). The user could send the holidays for example
 
 ## Weekly time-range selection
