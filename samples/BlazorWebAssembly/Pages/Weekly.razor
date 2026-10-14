@@ -38,14 +38,25 @@
 	</div>
 </div>
 
+<section class="border rounded p-2 mb-2" aria-label="Time range selection demo">
+    <label class="me-3">
+        <input type="checkbox" @bind="EnableDemoRangeSelection" /> Select a time range
+    </label>
+    <button type="button" class="btn btn-primary btn-sm me-2" disabled="@(selectedRange is null)" @onclick="AddSelectedRange">Add demo event</button>
+    <button type="button" class="btn btn-secondary btn-sm" disabled="@(demoTaskIds.Count == 0)" @onclick="ClearDemoEvents">Clear demo events</button>
+    <p class="mb-1 mt-2">Drag on the time scale or empty grid within one day to select 15-minute slots, then click Add demo event. Disable range selection to drag existing tasks.</p>
+    <p class="mb-0" role="status" aria-live="polite">@rangeStatus Demo events are stored only in memory; reloading the page removes them.</p>
+</section>
+
 <CalendarContainer FirstDate="today"
 				   TasksList="TasksList.ToArray()"
 				   DisplayedView="DisplayedView.Weekly">
-	<WeekView PriorityDisplay="@PriorityDisplay"
+	<WeekView EnableRangeSelection="@EnableDemoRangeSelection" RangeSelected="DemoRangeSelected"
+              WeekStartsOn="DayOfWeek.Monday" PriorityDisplay="@PriorityDisplay"
 			  OutsideCurrentMonthClick="OutsideCurrentMonthClick"
 			  TaskClick="TaskClick"
 			  DayClick="DayClick"
-			  Draggable="@draggable"
+			  Draggable="@(!EnableDemoRangeSelection && draggable)"
 			  DragStart="DragStart"
 			  DropTask="DropTask"
 			  HighlightToday="true" TodayBackgroundColor="#f5f5f5" TodayBorderColor="#ff5b60"
@@ -56,6 +67,45 @@
 <div class="console">@fakeConsole</div>
 
 @code {
+    private bool enableDemoRangeSelection = true;
+    private TimeRangeSelectedParameter? selectedRange;
+    private readonly HashSet<int> demoTaskIds = new();
+    private int nextDemoTaskId = 1000;
+    private string rangeStatus = "No time range selected.";
+    private bool EnableDemoRangeSelection
+    {
+        get => enableDemoRangeSelection;
+        set { enableDemoRangeSelection = value; ResetDemoRange(); }
+    }
+
+    private void DemoRangeSelected(TimeRangeSelectedParameter range)
+    {
+        if (!enableDemoRangeSelection || range.End <= range.Start || range.Start.Date != range.End.AddTicks(-1).Date) return;
+        selectedRange = range;
+        rangeStatus = $"Selected: {range.Start:yyyy-MM-dd HH:mm} – {range.End:HH:mm} ({(range.End-range.Start).TotalMinutes:0} minutes; end exclusive).";
+    }
+
+    private void AddSelectedRange()
+    {
+        if (selectedRange is not { } range) return;
+        int id = nextDemoTaskId++;
+        string title = $"DEMO {range.Start:HH:mm}–{range.End:HH:mm}";
+        TasksList.Add(new Tasks { ID=id, Key=id.ToString(), Code=title, Caption=title,
+            DateStart=range.Start, DateEnd=range.End, Color="#cfe8ff", ForeColor="#172b4d" });
+        demoTaskIds.Add(id);
+        selectedRange = null;
+        rangeStatus = $"Added {title} on {range.Start:yyyy-MM-dd}. Demo events: {demoTaskIds.Count}.";
+    }
+
+    private void ClearDemoEvents()
+    {
+        TasksList.RemoveAll(t => demoTaskIds.Contains(t.ID));
+        demoTaskIds.Clear();
+        ResetDemoRange();
+    }
+
+    private void ResetDemoRange() { selectedRange = null; rangeStatus = "No time range selected."; }
+
 	private DateTime today = DateTime.Today;
 	private int months = 12;
 	private List<Tasks> TasksList;
@@ -142,21 +192,25 @@
 	private void ChangeFirstDate(string value)
 	{
 		if (string.IsNullOrEmpty(value)) return;
+		ResetDemoRange();
 		today = DateTime.Parse(value.ToString());
 	}
 
 	private void GoToday()
 	{
+		ResetDemoRange();
 		today = DateTime.Today;
 	}
 
 	private void ClicMonthNavigate(int daysToAdd)
 	{
+		ResetDemoRange();
 		today = today.AddDays(daysToAdd);
 	}
 
 	private void OutsideCurrentMonthClick(int MonthAdded)
 	{
+		ResetDemoRange();
 		today = today.AddMonths(MonthAdded);
 	}
 

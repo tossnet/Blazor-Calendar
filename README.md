@@ -252,6 +252,20 @@ Escape (with the grid focused), leaving the grid, pointer cancellation or crossi
 
 The feature defaults to disabled and requires a `RangeSelected` delegate. `DayHeaderFormat` defaults to `ddd dd.MM`, preserving the existing dated header; `dddd` shows full localized weekday names without dates. `WeekStartsOn` can explicitly select Monday (or another weekday), independent of the operating system culture; its default is null and retains the culture convention. Times are wall-clock `DateTime` values, with no timezone conversion performed by the component.
 
+### WebAssembly time-range selection demo
+
+The existing `samples/BlazorWebAssembly` project demonstrates weekly range selection at `/weeklyview` (`Pages/Weekly.razor`). Range mode starts enabled; drag over 15-minute slots in the time scale or empty grid within one weekday. The status area shows the selected date, start, exclusive end and duration. Click **Add demo event** to append a sample task in memory. Repeated selections can create multiple sample events. **Clear demo events** removes only events created by this demo, preserving the original fixtures; reload clears the in-memory changes.
+
+Disable **Select a time range** to use the existing task dragging demo. Changing the displayed week/date or toggling range mode clears the pending range so an old selection cannot be added accidentally. The example wires `EnableRangeSelection`, `RangeSelected` and `WeekStartsOn=Monday`; it does not change the library, use a database or call an external calendar API. It uses the existing component's hour-based task positioning; the exact selected quarter-hour times are retained in the task data and caption.
+
+Run locally from the repository root:
+
+```sh
+dotnet run --project samples/BlazorWebAssembly/BlazorWebAssembly.csproj --framework net8.0
+```
+
+Open the local URL printed by the development server and navigate to Weekly view.
+
 ### WeekView: configurable current-day appearance
 
 ```razor
