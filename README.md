@@ -286,3 +286,13 @@ Open the local URL printed by the development server and navigate to Weekly view
 ```
 
 Both new colors are optional and apply only when `HighlightToday` is enabled and today's date is in the rendered week. The background covers the full hour grid, including the time scale and empty overlap columns; task colors and header styles remain unchanged. The border is a 3px inset outline around the whole day column and does not change layout dimensions. Leaving either parameter unset preserves the previous appearance for that part. An explicit today background takes precedence over weekend and highlighted-period backgrounds only for today.
+
+### WeekView: minimum weekday width
+
+```razor
+<WeekView MinimumDayWidth="90" EnableHourScrolling="true" />
+```
+
+`MinimumDayWidth` is an optional positive integer in CSS pixels. Columns use equal fractions of available width and stop shrinking at this minimum; the shared calendar gains horizontal overflow when seven columns no longer fit. This applies to both the scrolling and full-day layouts. Leaving it null preserves the existing layout, including the 100px minimum of the scrolling view. The explicit parameter takes precedence over a grid-template-columns declaration in `Style`; unrelated styles remain intact.
+
+The WASM weekly sample provides Default, Compact (90px), Standard (150px) and Wide (220px) choices plus a scrolling/full-day switch. Change the minimum at runtime and use horizontal scrolling to reach later weekdays. Headers, hour labels, event placement and vertical scrolling stay aligned.

@@ -88,6 +88,8 @@ partial class WeekView : CalendarBase, IAsyncDisposable
     [Parameter] public int VisibleEndHour { get; set; } = 17;
     /// <summary>Show nonzero counts of events extending above/below the visible viewport.</summary>
     [Parameter] public bool ShowOverflowIndicators { get; set; } = true;
+    /// <summary>Optional minimum weekday column width in CSS pixels. Unset retains the existing layout.</summary>
+    [Parameter] public int? MinimumDayWidth { get; set; }
     [Inject] private IJSRuntime JS { get; set; } = default!;
     private ElementReference weekElement;
     private IJSObjectReference? scrollModule;
@@ -95,7 +97,8 @@ partial class WeekView : CalendarBase, IAsyncDisposable
     private string WeekHeaderStyle => $"{HeaderStyle};" +
         (string.IsNullOrWhiteSpace(HeaderBackgroundColor) ? "" : $"background:{HeaderBackgroundColor};") +
         (string.IsNullOrWhiteSpace(HeaderBorderColor) ? "" : $"box-shadow:inset 0 0 0 1px {HeaderBorderColor};");
-    private string WeekStyle => $"{Style};--week-visible-hours:{VisibleEndHour-VisibleStartHour};";
+    private string WeekStyle => $"{Style};--week-visible-hours:{VisibleEndHour-VisibleStartHour};" +
+        (MinimumDayWidth is int width ? $"grid-template-columns:repeat(7,minmax({width}px,1fr));" : "");
     private static readonly string JsPath =
        $"./_content/BlazorCalendar/weekView.js?v={typeof(WeekView).Assembly.GetName().Version}";
 
@@ -124,6 +127,8 @@ partial class WeekView : CalendarBase, IAsyncDisposable
 
     protected override void OnParametersSet()
     {
+        if (MinimumDayWidth is <= 0)
+            throw new ArgumentOutOfRangeException(nameof(MinimumDayWidth), "The minimum weekday width must be positive.");
         if (EnableHourScrolling && (VisibleStartHour < 0 || VisibleEndHour > 24 || VisibleEndHour <= VisibleStartHour))
             throw new ArgumentOutOfRangeException(nameof(VisibleStartHour), "The visible interval must be inside 00:00–24:00 and have a positive duration.");
         if (!CanSelectRange || DisplayedView != DisplayedView.Weekly ||
