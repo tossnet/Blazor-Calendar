@@ -263,3 +263,27 @@ The feature defaults to disabled and requires a `RangeSelected` delegate. `DayHe
 Scrolling is opt-in, preserving the previous full-day layout by default. The initial viewport shows 06:00–17:00; all 24 hours remain in the grid and can be reached by scrolling. Headers stay visible. Each day shows `▲ count` on the left and `▼ count` on the right only for nonzero counts; its title stays centered. Counts include events partially clipped at either boundary (a long/all-day event may count in both directions), update after scrolling, resizing and task changes, and are based on rendered event bounds. Click or keyboard-activate a button to scroll to the nearest hidden event edge. A single shared viewport keeps all weekdays aligned.
 
 Optional header colors augment the existing `HeaderStyle`; unset colors retain prior styling. The visible range must satisfy `0 <= VisibleStartHour < VisibleEndHour <= 24`. JS interop runs after rendering, supports independent calendar instances, and disconnects listeners/observers on disposal. The WebAssembly weekly example enables these options. If the host limits the component height, the visible interval shrinks; counters still reflect the actual viewport.
+
+### WebAssembly time-range selection demo
+
+The existing `samples/BlazorWebAssembly` project demonstrates weekly range selection at `/weeklyview` (`Pages/Weekly.razor`). Range mode starts enabled; drag over 15-minute slots in the time scale or empty grid within one weekday. The status area shows the selected date, start, exclusive end and duration. Click **Add demo event** to append a sample task in memory. Repeated selections can create multiple sample events. **Clear demo events** removes only events created by this demo, preserving the original fixtures; reload clears the in-memory changes.
+
+Disable **Select a time range** to use the existing task dragging demo. Changing the displayed week/date or toggling range mode clears the pending range so an old selection cannot be added accidentally. The example wires `EnableRangeSelection`, `RangeSelected` and `WeekStartsOn=Monday`; it does not change the library, use a database or call an external calendar API. It uses the existing component's hour-based task positioning; the exact selected quarter-hour times are retained in the task data and caption.
+
+Run locally from the repository root:
+
+```sh
+dotnet run --project samples/BlazorWebAssembly/BlazorWebAssembly.csproj --framework net8.0
+```
+
+Open the local URL printed by the development server and navigate to Weekly view.
+
+### WeekView: configurable current-day appearance
+
+```razor
+<WeekView HighlightToday="true"
+          TodayBackgroundColor="#f5f5f5"
+          TodayBorderColor="#ff5b60" />
+```
+
+Both new colors are optional and apply only when `HighlightToday` is enabled and today's date is in the rendered week. The background covers the full hour grid, including the time scale and empty overlap columns; task colors and header styles remain unchanged. The border is a 3px inset outline around the whole day column and does not change layout dimensions. Leaving either parameter unset preserves the previous appearance for that part. An explicit today background takes precedence over weekend and highlighted-period backgrounds only for today.

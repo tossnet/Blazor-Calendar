@@ -35,6 +35,20 @@ partial class WeekView : CalendarBase, IAsyncDisposable
     [Parameter]
     public bool HighlightToday { get; set; } = false;
 
+    /// <summary>Optional background of today's entire hour grid, including the time labels.</summary>
+    [Parameter] public string? TodayBackgroundColor { get; set; }
+
+    /// <summary>Optional 3px inset outline around today's entire day column.</summary>
+    [Parameter] public string? TodayBorderColor { get; set; }
+
+    private string TodayColumnStyle(DateTime day) => HighlightToday && day.Date == DateTime.Today &&
+        !string.IsNullOrWhiteSpace(TodayBorderColor)
+        ? $"outline:3px solid {TodayBorderColor};outline-offset:-3px;border-radius:4px;" : "";
+
+    private string WeekBackground(DateTime day) => HighlightToday && day.Date == DateTime.Today &&
+        !string.IsNullOrWhiteSpace(TodayBackgroundColor)
+        ? $"background:{TodayBackgroundColor};color:{FontColor}" : GetBackgroundWithHighlight(day);
+
     [Parameter]
     public EventCallback<int> OutsideCurrentMonthClick { get; set; }
 
