@@ -103,10 +103,10 @@
     padding: 2px 3px;
     background: transparent;
     color: inherit;
-    border: 1px solid currentColor;
-    border-radius: 3px;
     font: inherit;
     cursor: pointer;
+    border: none !important;
+    outline: none !important;
 }
 .week-overflow[hidden] { display: none; }
 .week-up { left: 3px; }

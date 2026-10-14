@@ -96,11 +96,13 @@ partial class WeekView : CalendarBase, IAsyncDisposable
         (string.IsNullOrWhiteSpace(HeaderBackgroundColor) ? "" : $"background:{HeaderBackgroundColor};") +
         (string.IsNullOrWhiteSpace(HeaderBorderColor) ? "" : $"box-shadow:inset 0 0 0 1px {HeaderBorderColor};");
     private string WeekStyle => $"{Style};--week-visible-hours:{VisibleEndHour-VisibleStartHour};";
+    private static readonly string JsPath =
+       $"./_content/BlazorCalendar/weekView.js?v={typeof(WeekView).Assembly.GetName().Version}";
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (disposed || (!EnableHourScrolling && scrollModule is null)) return;
-        scrollModule ??= await JS.InvokeAsync<IJSObjectReference>("import", "./_content/BlazorCalendar/weekView.js");
+        scrollModule ??= await JS.InvokeAsync<IJSObjectReference>("import", JsPath);
         if (disposed) return;
         await scrollModule.InvokeVoidAsync("configure", weekElement, EnableHourScrolling,
             VisibleStartHour, ShowOverflowIndicators, FirstDate.ToString("yyyy-MM-dd"));
