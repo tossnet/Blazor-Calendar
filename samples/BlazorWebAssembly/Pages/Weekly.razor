@@ -81,10 +81,22 @@
     <p class="mb-0" role="status" aria-live="polite">@rangeStatus Demo events are stored only in memory; reloading the page removes them.</p>
 </section>
 
+<section class="border rounded p-2 mb-2" aria-label="Weekday width demo">
+    <label>Minimum weekday width
+        <select @bind="minimumDayWidth">
+            <option value="0">Default</option>
+            <option value="90">Compact (90px)</option>
+            <option value="150">Standard (150px)</option>
+            <option value="220">Wide (220px)</option>
+        </select>
+    </label>
+    <p class="mb-0">Columns share available space equally, but never shrink below the selected minimum. When necessary, use the calendar's horizontal scrollbar. This also works in the full-day layout.</p>
+</section>
+
 <CalendarContainer FirstDate="today"
 				   TasksList="TasksList.ToArray()"
 				   DisplayedView="DisplayedView.Weekly">
-	<WeekView EnableHourScrolling="@enableHourScrolling"
+	<WeekView MinimumDayWidth="@(minimumDayWidth == 0 ? (int?)null : minimumDayWidth)" EnableHourScrolling="@enableHourScrolling"
 			  VisibleStartHour="@visibleStartHour"
 			  VisibleEndHour="@Math.Max(visibleEndHour, visibleStartHour + 1)"
 			  ShowOverflowIndicators="@showOverflowIndicators"
@@ -106,6 +118,7 @@
 <div class="console">@fakeConsole</div>
 
 @code {
+    private int minimumDayWidth;
     private bool enableDemoRangeSelection = true;
     private TimeRangeSelectedParameter? selectedRange;
     private readonly HashSet<int> demoTaskIds = new();
