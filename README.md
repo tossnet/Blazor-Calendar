@@ -297,4 +297,22 @@ Both new colors are optional and apply only when `HighlightToday` is enabled and
 
 `MinimumDayWidth` is an optional positive integer in CSS pixels. Columns use equal fractions of available width and stop shrinking at this minimum; the shared calendar gains horizontal overflow when seven columns no longer fit. This applies to both the scrolling and full-day layouts. Leaving it null preserves the existing layout, including the 100px minimum of the scrolling view. The explicit parameter takes precedence over a grid-template-columns declaration in `Style`; unrelated styles remain intact.
 
+### Highlight New Year's Day every year
+
+Pass the following entry in the `HighlightedPeriods` array of a `MonthlyView` to mark 1 January, starting in 2027:
+
+```csharp
+new HighlightedPeriod
+{
+    DateStart = new DateTime(2027, 1, 1),
+    RecurrenceType = RecurrenceType.Yearly,
+    BackgroundColor = "#DBEAFE",
+    FontColor = "#1E3A8A",
+    Label = "New Year's Day",
+    Icon = "★"
+}
+```
+
+Omit `DateEnd` to highlight a single day. In the WASM `/monthlyview` sample, enable **Add Fake Hightlighted Days** and select January 2027 or a later January. The sample highlights the date and leaves it available for events.
+
 The WASM weekly sample provides Default, Compact (90px), Standard (150px) and Wide (220px) choices plus a scrolling/full-day switch. Change the minimum at runtime and use horizontal scrolling to reach later weekdays. Headers, hour labels, event placement and vertical scrolling stay aligned.
