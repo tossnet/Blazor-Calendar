@@ -1,11 +1,14 @@
 ﻿.monthly-calendar {
+    /* Task lanes: tune these from your own CSS. --monthly-lanes is set from MaxTasksPerDay. */
+    --monthly-task-height: 2vh;
+    --monthly-task-gap: 2px;
+    --monthly-task-top: 22px; /* room for the day number */
     display: grid;
     width: 100%;
     grid-template-rows: 6vh;
-    /*grid-template-columns: repeat(7, minmax(120px, 1fr));
-    grid-auto-rows: 120px;*/
     grid-template-columns: repeat(7, minmax(8vw, 1fr));
-    grid-auto-rows: 12vh;
+    /* 12vh by default, taller when the lanes need more room */
+    grid-auto-rows: max(12vh, calc(var(--monthly-task-top) + var(--monthly-lanes, 4) * (var(--monthly-task-height) + var(--monthly-task-gap)) + 4px));
     overflow: auto;
 }
 
@@ -78,49 +81,44 @@
 }
 
 .monthly-task {
+    align-self: start;
+    box-sizing: border-box;
     border-radius: 3px;
-    padding: 2px 8px 2px 6px;
-    margin: 3px 11px 0 9px;
+    padding: 0 8px 0 6px;
+    margin: calc(var(--monthly-task-top) + var(--lane, 0) * (var(--monthly-task-height) + var(--monthly-task-gap))) 11px 0 9px;
     font-size: 0.8em;
     font-weight: 600;
     position: relative;
     z-index: 1;
     color: #000;
     overflow: hidden;
+    white-space: nowrap;
     text-overflow: ellipsis;
-    height: 2vh;
+    height: var(--monthly-task-height);
+    line-height: var(--monthly-task-height);
 }
 
 @media (max-width: 767.98px) {
     .monthly-task {
-        padding: 0px 8px 0px 4px;
-        margin: 3px 2px 0 4px;
+        padding: 0 8px 0 4px;
+        margin-left: 4px;
+        margin-right: 2px;
     }
 }
 
-.monthly-task-first {
-    align-self: start;
-    margin-top: 22px;
-}
-
-.monthly-task-second {
-    align-self: center;
-    margin-top: 8px;
-}
-
-.monthly-task-bottom {
-    align-self: end;
-    margin-bottom: 14px;
-}
-
+/* "+N" badge, top-left of the cell (the day number is right-aligned) */
 .monthly-more-tasks {
     position: relative;
+    z-index: 1;
+    align-self: start;
+    justify-self: start;
+    margin: 0.4vh 0 0 6px;
+    padding: 0 5px;
+    border-radius: 8px;
+    background: rgba(0, 0, 139, 0.08);
     cursor: zoom-in;
-    align-self: end;
-    margin-top: 40px;
-    font-size: 0.6em;
+    font-size: 0.65em;
     font-weight: 600;
+    line-height: 1.6;
     color: darkblue;
-    align-self: end;
-    margin-left: 10px;
 }

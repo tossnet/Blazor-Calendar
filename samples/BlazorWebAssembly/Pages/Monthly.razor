@@ -34,6 +34,18 @@
 						Label="Add Fake Hightlighted Days"
 						@bind-Value="AddFakeHightlightedDays" />
 	</div>
+	<div class="command">
+		<WinOldButton OnClick="AddRandomTask"
+					  Appearance="Appearance.Win10">➕ Random Task</WinOldButton>
+	</div>
+	<WinOldSelect Appearance="Appearance.Win10"
+				  T="int"
+				  @bind-Value="maxTasksPerDay">
+		@foreach (int n in maxTasksChoices)
+		{
+			<WinOldOption Value="@n">Max tasks/day: @n</WinOldOption>
+		}
+	</WinOldSelect>
 	<div class="command" style="position:relative;">
 		<label for="favdisabledcolor" class="color-picker-wrapper">
 			<WinOldButton Appearance="Appearance.Win10"
@@ -127,6 +139,7 @@
 				 DragStart="DragStart"
 				 DropTask="DropTask"
 				 HighlightToday="@highlightToday"
+				 MaxTasksPerDay="@maxTasksPerDay"
 				 DisabledDayColor="@disabledDayColor"
 				 SundayColor="@sundayColor"
 				 SaturdayColor="@saturdayColor"
@@ -146,6 +159,8 @@
 	private BlazorCalendar.PriorityLabel PriorityDisplay = PriorityLabel.Code;
 	private bool draggable = true;
 	private bool highlightToday = true;
+	private int maxTasksPerDay = 4;
+	private static readonly int[] maxTasksChoices = { 2, 3, 4, 5, 6 };
 	private bool addFakeHightlightedDays = false;
 	private string disabledDayColor = "#f4f6f7";
 	private string sundayColor = "#DBE7F8";
@@ -274,4 +289,42 @@
 		taskDropped.DateEnd = dragDropParameter.Day.AddDays(TotalDay);
 		taskDropped.DateStart = dragDropParameter.Day;
 	}
+
+	private void AddRandomTask()
+	{
+		// Spread over the displayed month so the new task is visible right away
+		DateTime firstOfMonth = new DateTime(today.Year, today.Month, 1);
+		int daysInMonth = DateTime.DaysInMonth(today.Year, today.Month);
+		int id = TasksList.Count > 0 ? TasksList.Max(t => t.ID) + 1 : 1;
+		int startOffset = Random.Shared.Next(0, daysInMonth);
+		int duration = Random.Shared.Next(0, 3);
+		string code = randomCodes[Random.Shared.Next(randomCodes.Length)];
+		string color = $"#{Random.Shared.Next(0x1000000):X6}";
+		string forecolor = Helpers.Colors.IsLighter(color) ? "#000" : "#FFF";
+
+		DateTime dateStart = firstOfMonth.AddDays(startOffset);
+		DateTime dateEnd = dateStart.AddDays(duration);
+
+		bool withHours = Random.Shared.Next(0, 2) == 1;
+		if (withHours)
+		{
+			int startHour = Random.Shared.Next(8, 18);
+			int endHour = duration == 0 ? Random.Shared.Next(startHour + 1, 19) : Random.Shared.Next(8, 19);
+			dateStart = dateStart.AddHours(startHour);
+			dateEnd = dateEnd.AddHours(endHour);
+		}
+
+		TasksList.Add(new Tasks
+		{
+			ID = id,
+			DateStart = dateStart,
+			DateEnd = dateEnd,
+			Code = code,
+			Color = color,
+			ForeColor = forecolor,
+			Caption = withHours ? "New random task with hours" : "New random task"
+		});
+	}
+
+	private static readonly string[] randomCodes = { "VAC", "DEV", "FORM", "MEETING", "TEST" };
 }

@@ -77,7 +77,7 @@
     </label>
     <button type="button" class="btn btn-primary btn-sm me-2" disabled="@(selectedRange is null)" @onclick="AddSelectedRange">Add demo event</button>
     <button type="button" class="btn btn-secondary btn-sm" disabled="@(demoTaskIds.Count == 0)" @onclick="ClearDemoEvents">Clear demo events</button>
-    <p class="mb-1 mt-2">Drag on the time scale or empty grid within one day to select 15-minute slots, then click Add demo event. Disable range selection to drag existing tasks.</p>
+    <p class="mb-1 mt-2">Drag on the time scale or empty grid within one day to select 15-minute slots, then click Add demo event. Existing events can still be dragged to another hour.</p>
     <p class="mb-0" role="status" aria-live="polite">@rangeStatus Demo events are stored only in memory; reloading the page removes them.</p>
 </section>
 
@@ -107,7 +107,7 @@
 			  OutsideCurrentMonthClick="OutsideCurrentMonthClick"
 			  TaskClick="TaskClick"
 			  DayClick="DayClick"
-			  Draggable="@(!EnableDemoRangeSelection && draggable)"
+			  Draggable="@draggable"
 			  DragStart="DragStart"
 			  DropTask="DropTask"
 			  HighlightToday="true" TodayBackgroundColor="#f5f5f5" TodayBorderColor="#ff5b60"

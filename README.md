@@ -42,6 +42,8 @@ For client-side and server-side Blazor - add script section to _Layout.cshtml (h
 <details open="open"><summary>Version 3.2.1</summary>
 
 > - Add MonthStyle Parameter to customize by example widht of the month column in the AnnualView (min-width, max-width, width)
+> - MonthlyView : new `MaxTasksPerDay` parameter (default **4**, previously fixed at 3; set `MaxTasksPerDay="3"` to keep the old behavior). Hidden tasks are summarized by a `+N` badge at the top-left of the day. Lanes can be tuned with the CSS variables `--monthly-task-height`, `--monthly-task-gap` and `--monthly-task-top`; day rows grow when the lanes need more room.
+> - MonthlyView : fix overlapping tasks when a multi-day task met a busy slot after its first day, and fix the `+N` count on the following days.
 </details>
 
 <details open="open"><summary>Version 3.2.0</summary>

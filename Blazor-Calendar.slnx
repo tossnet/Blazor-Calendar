@@ -6,5 +6,8 @@
     <Project Path="samples/BlazorServer/BlazorServer.csproj" />
     <Project Path="samples/BlazorWebAssembly/BlazorWebAssembly.csproj" />
   </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="BlazorCalendar.Tests/BlazorCalendar.Tests.csproj" />
+  </Folder>
   <Project Path="BlazorCalendar/BlazorCalendar.csproj" />
 </Solution>

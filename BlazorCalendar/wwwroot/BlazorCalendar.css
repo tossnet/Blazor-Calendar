@@ -115,6 +115,8 @@
 
 .day-label {
     font-size: 1.1vh;
+    margin-top: 1px !important;
+    margin-left: 1px !important;
 }
 
 .highlight-icon {

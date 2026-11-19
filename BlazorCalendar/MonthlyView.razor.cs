@@ -37,6 +37,14 @@ partial class MonthlyView : CalendarBase
     [Parameter]
     public bool HighlightToday { get; set; } = false;
 
+    /// <summary>
+    /// Maximum number of tasks displayed in a day cell (default 4, minimum 1).
+    /// Extra tasks are summarized by a "+N" badge. Day rows grow when the lanes
+    /// do not fit in the default height (see the <c>--monthly-task-height</c> CSS variable).
+    /// </summary>
+    [Parameter]
+    public int MaxTasksPerDay { get; set; } = 4;
+
     [Parameter]
     public EventCallback<int> OutsideCurrentMonthClick { get; set; }
 

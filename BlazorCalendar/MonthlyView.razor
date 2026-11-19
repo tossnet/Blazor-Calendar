@@ -16,6 +16,7 @@
     int OffsetCell = 0;
     string? isHidden = DisplayedView == DisplayedView.Monthly ? null : "hidden-element"; 
     string? CSSToday = null;
+    int lanes = Math.Max(1, MaxTasksPerDay);
 
     // The sorting must be done each time we redraw in case the user moves the spots
     if (TasksList is not null)
@@ -26,7 +27,7 @@
     }
 }
 
-<div class="@isHidden monthly-calendar" style="@Style">
+<div class="@isHidden monthly-calendar" style="--monthly-lanes:@lanes; @Style">
         
     @for (var i = 0; i < 7; i++)
     {
@@ -118,15 +119,9 @@
         
     @if ( TasksList is not null )
     {
-        // occupiedPosition accumulates the number of tasks in a cell
-        var occupiedPosition = new TaskPosition[32]; // If one day, there are 32 days in a month, it will crash :P
-        for (int i = 0; i < 32; ++i)
-        {
-            occupiedPosition[i] = new TaskPosition();
-        }
+        var allocator = new BlazorCalendar.Helpers.MonthlyLaneAllocator(lanes);
 
-        string? classPosition;
-        string taskContent = string.Empty;  
+        string taskContent = string.Empty;
         string? taskComment = null;   
         bool onmMultiLine = false;  
         bool draggable = false;
@@ -151,84 +146,51 @@
                 int y = (Start.Day + OffsetCell - 1) / 7 + 2;
                 int s = (int)(End.Date - Start.Date).TotalDays + 1;
 
-                classPosition = null;
-
-                TaskPosition position = occupiedPosition[Start.Day];
-
-                if ( position.Top == false )
+                int lane = allocator.Allocate(Start.Day, End.Day);
+                if (lane < 0)
                 {
-                    for (int i = Start.Day; i < Start.Day + s; ++i)
-                    {
-                        occupiedPosition[i].Top = true;
-                    }
-                    classPosition = "monthly-task-first";
-                } 
-                else if ( position.Center == false )
-                {
-                    for (int i = Start.Day; i < Start.Day + s; ++i)
-                    {
-                        occupiedPosition[i].Center = true;
-                    }
-                    classPosition = "monthly-task-second";
+                    // No free lane: counted in the "+N" badge of each spanned day
+                    continue;
                 }
-                else if (position.Bottom == false)
+
+                if ( PriorityDisplay == PriorityLabel.Code )
                 {
-                    for (int i = Start.Day; i < Start.Day + s; ++i)
-                    {
-                        occupiedPosition[i].Bottom = true;
-                    }
-                    classPosition = "monthly-task-bottom";
+                    taskContent = string.IsNullOrWhiteSpace(t.Code) ? t.Caption : t.Code;
+                }
+                else
+                {
+                    taskContent = string.IsNullOrWhiteSpace(t.Caption) ? t.Code : t.Caption;
+                }
+
+                // If there is time, add start time at begening
+                if ( t.DateStart.Hour + t.DateStart.Minute > 0 )
+                {
+                    taskContent =  $"{t.DateStart.ToString("t")} {taskContent}" ;
+                }
+
+                taskComment = string.IsNullOrWhiteSpace(t.Comment) ? null : t.Comment;
+
+                string taskColor = Colors.GetHatching(t.FillStyle, t.Color);
+                if (!String.IsNullOrEmpty(t.ForeColor))
+                {
+                    taskColor = taskColor + $"color:{t.ForeColor}";
                 }
 
                 string borderClass = "border-start";
                 do
                 {
-                    string row = $"grid-column:{x} / span {s}; grid-row:{y};";
+                    string row = $"grid-column:{x} / span {s}; grid-row:{y}; --lane:{lane};";
+                    DateTime segmentStart = Start;
 
-                    if ( classPosition is not null )
-                    {   
-                        if ( PriorityDisplay == PriorityLabel.Code )
-                        {   
-                            taskContent = string.IsNullOrWhiteSpace(t.Code) ? t.Caption : t.Code;
-                        }
-                        else
-                        {   
-                            taskContent = string.IsNullOrWhiteSpace(t.Caption) ? t.Code : t.Caption;
-                        }
-
-                        // If there is time, add start time at begening
-                        if ( t.DateStart.Hour + t.DateStart.Minute > 0 )
-                        {
-                            taskContent =  $"{t.DateStart.ToString("t")} {taskContent}" ;
-                        }
-
-                        taskComment = string.IsNullOrWhiteSpace(t.Comment) ? null : t.Comment;
-
-                        string taskColor = Colors.GetHatching(t.FillStyle, t.Color);
-                        if (!String.IsNullOrEmpty(t.ForeColor))
-                        {
-                            taskColor = taskColor + $"color:{t.ForeColor}";
-                        }
-
-                        <div class="fade-in monthly-task @borderClass cursor-pointer @classPosition" 
-                             id="task-@t.ID"
-                             style="@row @taskColor" 
-                             title="@taskComment"
-                             draggable="@(draggable ? "true" : "false")"
-                             @onclick="e => ClickTaskInternal(e, t.ID, Start)"
-                             @ondragstart="() => HandleDragStart(t.ID)">
-                            @taskContent
-                        </div>
-                    }
-                    else
-                    {
-                        // Mode 2 tasks in cell => we display "more..."
-                        <div class="fade-in monthly-more-tasks noselect"
-                             style=@($"grid-column:{x} / span 1; grid-row:{y}; {@GetBackgroundWithHighlight(Start)}") 
-                             @onclick="e => ClickAllDayInternal(e, Start)">
-                            @($"+ {occupiedPosition[Start.Day].Counter - 2} ...")
-                        </div>
-                    }
+                    <div class="fade-in monthly-task @borderClass cursor-pointer"
+                         id="task-@t.ID"
+                         style="@row @taskColor"
+                         title="@taskComment"
+                         draggable="@(draggable ? "true" : "false")"
+                         @onclick="e => ClickTaskInternal(e, t.ID, segmentStart)"
+                         @ondragstart="() => HandleDragStart(t.ID)">
+                        @taskContent
+                    </div>
 
                     onmMultiLine = false;
                     if (x + s > 8) 
@@ -246,17 +208,27 @@
                     }
 
                 } while ( onmMultiLine );
-
-                // Start et End may have been modified, I redefine them for the whole month
-                Start = t.DateStart.Date < FirstDate ? FirstDate : t.DateStart.Date; 
-                End = t.DateEnd.Date >= LastDay ? LastDay.AddDays(-1) : t.DateEnd.Date;
-
-                for (int d = Start.Day; d <= End.Day; d++)
-                {     
-                    occupiedPosition[d].Counter++;
-                }
-
             }
+        }
+
+        // One "+N" badge per day holding tasks that did not fit in the lanes
+        int daysInMonth = DateTime.DaysInMonth(FirstDate.Year, FirstDate.Month);
+        for (int d = 1; d <= daysInMonth; d++)
+        {
+            int hidden = allocator.HiddenOn(d);
+            if (hidden == 0)
+                continue;
+
+            DateTime moreDay = FirstDate.AddDays(d - 1);
+            int mx = (d + OffsetCell - 1) % 7 + 1;
+            int my = (d + OffsetCell - 1) / 7 + 2;
+
+            <div class="fade-in monthly-more-tasks noselect"
+                 style="grid-column:@mx / span 1; grid-row:@my;"
+                 title="+@hidden"
+                 @onclick="e => ClickAllDayInternal(e, moreDay)">
+                +@hidden
+            </div>
         }
     }
 </div>

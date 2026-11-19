@@ -47,6 +47,10 @@
     text-overflow: ellipsis;
 }
 
+.hour-task.dragging {
+    opacity: .4;
+}
+
 .hour-dropzone {
     grid-column-end: -1;
     min-width: 30px;
@@ -100,13 +104,42 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    /* Fixed 40px header: ignore the small-screen 3vh line-height of .header-name. */
+    line-height: 1.2;
+    container: week-day-header / inline-size;
 }
-.week-scrollable .week-day-title { min-width: 0; text-align: center; padding: 0 30px; }
+.week-scrollable .week-day-title { flex: 1 1 0; padding: 0 30px; }
+
+/* Weekday title: the most complete variant that fits the column is shown.
+   The first letter of the weekday is always visible. */
+.week-day-title {
+    display: block;
+    container: week-day-title / inline-size;
+    min-width: 0;
+    white-space: nowrap;
+    text-align: center;
+}
+.wdt { display: none; overflow: hidden; text-overflow: clip; }
+.wdt-full { display: block; }
+
+@container week-day-title (max-width: 5.6em) {
+    .wdt-full { display: none; }
+    .wdt-dm { display: block; }
+}
+@container week-day-title (max-width: 3.6em) {
+    .wdt-dm { display: none; }
+    .wdt-d { display: block; }
+}
+@container week-day-title (max-width: 2.2em) {
+    .wdt-d { display: none; }
+    .wdt-l { display: block; overflow: visible; }
+}
 .week-overflow {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     padding: 2px 3px;
+    white-space: nowrap;
     background: transparent;
     color: inherit;
     font: inherit;
@@ -118,3 +151,12 @@
 .week-up { left: 3px; }
 .week-down { right: 3px; }
 .week-overflow:focus-visible { outline: 2px solid #0078d7; outline-offset: 1px; }
+
+/* Narrow column: the title moves up and the overflow indicators move to the
+   bottom corners, so they never cover the weekday letter. */
+@container week-day-header (max-width: 9em) {
+    .week-scrollable .week-day-title { align-self: flex-start; padding: 2px 2px 0; }
+    .week-overflow { top: auto; bottom: 1px; transform: none; padding: 0 2px; font-size: 0.8em; }
+    .week-up { left: 1px; }
+    .week-down { right: 1px; }
+}

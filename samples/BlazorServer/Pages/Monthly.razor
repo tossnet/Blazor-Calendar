@@ -19,7 +19,17 @@
 	<div class="command">
 		<input type="checkbox" @bind="highlightToday" id="is-highlightToday" />
 		<label for="is-highlightToday">highlight Today</label>
-	</div>											 
+	</div>
+	<div class="command">
+		<button type="button" @onclick="@AddRandomTask" class="btn">➕ Random Task</button>
+	</div>
+	<select @bind="@maxTasksPerDay" class="me-2">
+		@foreach (int n in maxTasksChoices)
+		{
+			<option value="@n">Max tasks/day: @n</option>
+		}
+	</select>
+										 
 	<div class="command">
 		<label for="favdisabledcolor">Disabled Days Color :</label>
 		<input type="color" id="favdisabledcolor" name="favdisabledcolor" @bind-value="@disabledDayColor" @bind:after="@StateHasChanged">
@@ -53,6 +63,7 @@
 				 DragStart="DragStart" 
 				 DropTask="DropTask"
 				 HighlightToday="@highlightToday"
+				 MaxTasksPerDay="@maxTasksPerDay"
 				 DisabledDayColor="@disabledDayColor"
 				 SundayColor="@sundayColor"
 				 SaturdayColor="@saturdayColor"
@@ -64,8 +75,31 @@
 <div class="console">@fakeConsole</div>
 
 @code{
+	private void AddRandomTask()
+	{
+		// Spread over the displayed month so the new task is visible right away
+		DateTime firstOfMonth = new DateTime(today.Year, today.Month, 1);
+		int daysInMonth = DateTime.DaysInMonth(today.Year, today.Month);
+		int id = TasksList.Count > 0 ? TasksList.Max(t => t.ID) + 1 : 1;
+		DateTime dateStart = firstOfMonth.AddDays(Random.Shared.Next(0, daysInMonth));
+
+		TasksList.Add(new Tasks
+		{
+			ID = id,
+			DateStart = dateStart,
+			DateEnd = dateStart.AddDays(Random.Shared.Next(0, 3)),
+			Code = randomCodes[Random.Shared.Next(randomCodes.Length)],
+			Color = $"#{Random.Shared.Next(0x1000000):X6}",
+			Caption = "New random task"
+		});
+	}
+
+	private static readonly string[] randomCodes = { "VAC", "DEV", "FORM", "MEETING", "TEST" };
+
 	private DateTime today = DateTime.Today;  
 	private int months = 12;
+	private int maxTasksPerDay = 4;
+	private static readonly int[] maxTasksChoices = { 2, 3, 4, 5, 6 };
 	private List<Tasks> TasksList;
 	private string fakeConsole = "";
 	private BlazorCalendar.PriorityLabel PriorityDisplay = PriorityLabel.Code;

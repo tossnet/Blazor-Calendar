@@ -1,3 +1,5 @@
+using System.Globalization;
+using BlazorCalendar.Helpers;
 using BlazorCalendar.Models;
 using BlazorCalendar.Styles;
 using Microsoft.AspNetCore.Components;
@@ -100,6 +102,19 @@ partial class WeekView : CalendarBase, IAsyncDisposable
         (string.IsNullOrWhiteSpace(HeaderBorderColor) ? "" : $"box-shadow:inset 0 0 0 1px {HeaderBorderColor};");
     private string WeekStyle => $"{Style};--week-visible-hours:{VisibleEndHour-VisibleStartHour};" +
         (MinimumDayWidth is int width ? $"grid-template-columns:repeat(7,minmax({width}px,1fr));" : "");
+    private const int DaysPerWeek = 7;
+    // Header titles are memoized per column: they only change with the week, format or culture.
+    private readonly WeekDayTitle?[] dayTitles = new WeekDayTitle?[DaysPerWeek];
+
+    private WeekDayTitle TitleFor(int column, DateTime day)
+    {
+        CultureInfo culture = CultureInfo.CurrentCulture;
+        WeekDayTitle? cached = dayTitles[column];
+        if (cached is not null && cached.IsFor(day, DayHeaderFormat, culture)) return cached;
+
+        return dayTitles[column] = WeekDayTitle.Create(day, DayHeaderFormat, culture);
+    }
+
     private static readonly string JsPath =
        $"./_content/BlazorCalendar/weekView.js?v={typeof(WeekView).Assembly.GetName().Version}";
 
@@ -124,7 +139,16 @@ partial class WeekView : CalendarBase, IAsyncDisposable
     private DateTime? selectionLast;
     private long selectionPointer;
     private bool suppressRangeClick;
+    // Pointer handlers fire very often over the 15-minute slots; skip the render when they change nothing.
+    private bool skipNextRender;
     private bool CanSelectRange => EnableRangeSelection && RangeSelected.HasDelegate;
+
+    protected override bool ShouldRender()
+    {
+        if (!skipNextRender) return true;
+        skipNextRender = false;
+        return false;
+    }
 
     protected override void OnParametersSet()
     {
@@ -135,11 +159,13 @@ partial class WeekView : CalendarBase, IAsyncDisposable
         if (!CanSelectRange || DisplayedView != DisplayedView.Weekly ||
             (selectionAnchor is DateTime anchor && (anchor.Date < FirstDate.AddDays(-6) || anchor.Date > FirstDate.AddDays(6))))
             CancelRange();
+        // Parameter changes must always render, whatever CancelRange decided.
+        skipNextRender = false;
     }
 
     private void StartRange(PointerEventArgs e, DateTime slot)
     {
-        if (!CanSelectRange || e.Button != 0 || !e.IsPrimary) return;
+        if (!CanSelectRange || e.Button != 0 || !e.IsPrimary) { skipNextRender = true; return; }
         selectionAnchor = selectionLast = slot;
         selectionPointer = e.PointerId;
         suppressRangeClick = false;
@@ -147,7 +173,11 @@ partial class WeekView : CalendarBase, IAsyncDisposable
 
     private void ExtendRange(PointerEventArgs e, DateTime slot)
     {
-        if (selectionAnchor is not DateTime anchor || e.PointerId != selectionPointer) return;
+        if (selectionAnchor is not DateTime anchor || e.PointerId != selectionPointer || slot == selectionLast)
+        {
+            skipNextRender = true;
+            return;
+        }
         if ((e.Buttons & 1) == 0 || slot.Date != anchor.Date) { CancelRange(); return; }
         selectionLast = slot;
     }
@@ -166,8 +196,17 @@ partial class WeekView : CalendarBase, IAsyncDisposable
     private bool IsRangeSlot(DateTime slot) => selectionAnchor is DateTime a && selectionLast is DateTime b &&
         slot.Date == a.Date && slot >= (a < b ? a : b) && slot <= (a > b ? a : b);
 
-    private void CancelRange() { selectionAnchor = selectionLast = null; }
-    private void RangeKeyDown(KeyboardEventArgs e) { if (e.Key == "Escape") CancelRange(); }
+    private void CancelRange()
+    {
+        if (selectionAnchor is null) { skipNextRender = true; return; }
+        selectionAnchor = selectionLast = null;
+    }
+
+    private void RangeKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Escape") CancelRange();
+        else skipNextRender = true;
+    }
 
     private Tasks? TaskDragged;
     private async Task HandleDragStart(int taskID)
