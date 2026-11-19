@@ -179,7 +179,8 @@
                 string borderClass = "border-start";
                 do
                 {
-                    string row = $"grid-column:{x} / span {s}; grid-row:{y}; --lane:{lane};";
+                    int segmentSpan = Math.Min(s, 8 - x);
+                    string row = $"grid-column:{x} / span {segmentSpan}; grid-row:{y}; --lane:{lane};";
                     DateTime segmentStart = Start;
 
                     <div class="fade-in monthly-task @borderClass cursor-pointer"
@@ -193,11 +194,11 @@
                     </div>
 
                     onmMultiLine = false;
-                    if (x + s > 8) 
+                    if (s > segmentSpan)
                     {
                         onmMultiLine = true;
 
-                        Start = Start.AddDays(8 - x); 
+                        Start = Start.AddDays(segmentSpan);
                         End = t.DateEnd.Date >= LastDay ? LastDay.AddDays(-1) : t.DateEnd.Date;
 
                         x = (Start.Day + OffsetCell - 1) % 7 + 1; 
