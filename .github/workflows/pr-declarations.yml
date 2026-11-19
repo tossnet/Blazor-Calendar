@@ -1,0 +1,45 @@
+name: PR declarations
+
+on:
+  pull_request_target:
+    types: [opened, edited, synchronize, reopened, ready_for_review]
+
+permissions: {}
+
+jobs:
+  declarations:
+    name: PR declarations
+    runs-on: ubuntu-latest
+
+    steps:
+      # Only reads the event payload: no pull request code is checked out or executed.
+      - name: Verify required declarations
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const pr = JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8')).pull_request;
+
+          if (['OWNER', 'MEMBER', 'COLLABORATOR'].includes(pr.author_association)) {
+            console.log(`Author association is ${pr.author_association}; declaration check is exempted.`);
+            process.exit(0);
+          }
+
+          const required = [
+            'I have discussed this change in an issue and received maintainer agreement before implementation, or a documented exception applies.',
+            'I have read and followed the AI contribution policy.',
+            'I have personally reviewed and understood all changes, tested them, and take responsibility for this contribution.',
+          ];
+
+          const body = (pr.body ?? '').replace(/<!--[\s\S]*?-->/g, '');
+          const checked = new Set(body.split(/\r?\n/).map(line => line.trim().match(/^[-*] \[[xX]\] (.+)$/)?.[1]?.trim()));
+          const missing = required.filter(declaration => !checked.has(declaration));
+
+          if (missing.length > 0) {
+            for (const declaration of missing) console.error(`::error::Missing or unchecked declaration: "${declaration}"`);
+            console.error('::error::Complete the declarations in the pull request description. See CONTRIBUTING.md#discuss-before-implementing and CONTRIBUTING.md#ai-contribution-policy.');
+            process.exitCode = 1;
+          } else {
+            console.log('All required declarations are checked.');
+          }
+          NODE
