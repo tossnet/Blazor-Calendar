@@ -1,0 +1,347 @@
+/*
+    Tables: global classes (not scoped CSS) so they style the <th>/<td> written by the page,
+    inside a WinOldTable or on a plain <table class="table-win table-win-98">.
+    - table-win-container : optional scrollable frame around the table
+    - table-win-gridlines / table-win-nogridlines : force or remove the cell grid
+      (grid by default in all styles except DOS, which has its own column separators)
+    - table-win-rownumbers : Excel-like row numbers (CSS counter, nothing to write in the rows)
+    - table-win-row-active : selected row
+*/
+
+.table-win-container {
+    display: block;
+    overflow: auto;
+    box-sizing: border-box;
+    background: #fff;
+}
+
+.table-win {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    cursor: default;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-font-smoothing: auto;
+    counter-reset: table-win-row;
+}
+
+    .table-win th,
+    .table-win td {
+        white-space: nowrap;
+        text-align: left;
+        vertical-align: middle;
+        border: 0 solid transparent;
+    }
+
+    .table-win thead th {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        font-weight: normal;
+    }
+
+/* Check box in a cell: no vertical margin and centered, so the row keeps its height */
+.table-win td > .chk-win + label {
+    margin-top: 0;
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+
+/* DOS: the check box takes the cyan of the table (black on the selected row), not its dark color made for the gray dialogs */
+.table-win-dos td > .chk-dos + label {
+    color: inherit;
+}
+
+/* Row numbers: an extra first cell generated on each row */
+.table-win-rownumbers tr::before {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    min-width: 2.5em;
+    border: 0 solid transparent;
+}
+
+.table-win-rownumbers thead tr::before {
+    content: "";
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.table-win-rownumbers tbody tr {
+    counter-increment: table-win-row;
+}
+
+    .table-win-rownumbers tbody tr::before {
+        content: counter(table-win-row);
+    }
+
+/*--------*\
+    DOS (Norton Commander)
+\*--------*/
+.table-win-container-dos {
+    background: #0000aa;
+    border: 3px double #55ffff;
+    -webkit-font-smoothing: none;
+}
+
+.table-win-dos {
+    --table-win-grid: #55ffff;
+    font-family: 'IBMVGADos', monospace;
+    font-size: 16px;
+    line-height: 1;
+    color: #55ffff;
+    background: #0000aa;
+}
+
+    .table-win-dos th,
+    .table-win-dos.table-win-rownumbers tr::before {
+        color: #ffff55;
+        background: #0000aa;
+        text-align: center;
+        padding: 2px 1ch;
+    }
+
+    .table-win-dos td {
+        padding: 0 1ch;
+    }
+
+        .table-win-dos th + th,
+        .table-win-dos td + td {
+            border-left: 3px double #55ffff;
+        }
+
+    .table-win-dos.table-win-rownumbers tr::before {
+        border-right: 3px double #55ffff;
+    }
+
+    .table-win-dos tr.table-win-row-active > td {
+        background: #00aaaa;
+        color: #000;
+    }
+
+/*--------*\
+    Win 3.1 (Excel 3)
+\*--------*/
+.table-win-container-31 {
+    border: 1px solid #000;
+}
+
+.table-win-31 {
+    --table-win-grid: #c0c0c0;
+    font-family: var(--font-family);
+    font-size: 11px;
+    color: #000;
+    background: #fff;
+}
+
+    .table-win-31 th,
+    .table-win-31.table-win-rownumbers tr::before {
+        background: #c0c0c0;
+        font-weight: bold;
+        text-align: center;
+        padding: 2px 6px;
+        border-right: 1px solid #000;
+        border-bottom: 1px solid #000;
+        box-shadow: inset 1px 1px #fff, inset -1px -1px #808080;
+    }
+
+    .table-win-31 td {
+        padding: 2px 4px;
+        height: 14px;
+        border-right: 1px solid var(--table-win-grid);
+        border-bottom: 1px solid var(--table-win-grid);
+    }
+
+    .table-win-31 tr.table-win-row-active > td {
+        background: #000080;
+        color: #fff;
+    }
+
+/*--------*\
+    Win 98 (Explorer, Details view)
+\*--------*/
+/* Sunken frame drawn as a real 2px border (not a padding + inset box-shadow):
+   the sticky header then sits right under the frame and the scrolled rows can't show above it. */
+.table-win-container-98 {
+    border: 2px solid;
+    border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='5' height='5' shape-rendering='crispEdges'%3E%3Cpath fill='grey' d='M0 0h4v1H1v3H0z'/%3E%3Cpath fill='%230a0a0a' d='M1 1h2v1H2v1H1z'/%3E%3Cpath fill='%23dfdfdf' d='M3 1h1v3H1V3h2z'/%3E%3Cpath fill='white' d='M4 0h1v5H0V4h4z'/%3E%3C/svg%3E") 2;
+}
+
+.table-win-98 {
+    --table-win-grid: #c0c0c0;
+    font-family: var(--font-family);
+    font-size: 11px;
+    color: #000;
+    background: #fff;
+}
+
+    .table-win-98 th,
+    .table-win-98.table-win-rownumbers tr::before {
+        background: var(--win98-background);
+        padding: 2px 6px;
+        box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff, inset -2px -2px grey, inset 2px 2px #dfdfdf;
+    }
+
+        .table-win-98 thead th:active {
+            box-shadow: inset -1px -1px #fff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfdf, inset 2px 2px grey;
+        }
+
+    .table-win-98 td {
+        padding: 1px 6px;
+        border-right: 1px solid var(--table-win-grid);
+        border-bottom: 1px solid var(--table-win-grid);
+    }
+
+    .table-win-98 tr.table-win-row-active > td {
+        background: #000080;
+        color: #fff;
+    }
+
+/*--------*\
+    Win XP (Event Viewer)
+\*--------*/
+.table-win-container-xp {
+    border: 1px solid #7f9db9;
+}
+
+.table-win-xp {
+    --table-win-grid: #dcdcdc;
+    font-family: Tahoma, var(--font-family);
+    font-size: 11px;
+    color: #000;
+    background: #fff;
+}
+
+    .table-win-xp th,
+    .table-win-xp.table-win-rownumbers tr::before {
+        background: linear-gradient(to bottom, #fff, #f1efe2);
+        padding: 4px 6px 2px;
+        border-right: 1px solid #e2e1d5;
+        border-bottom: 1px solid #d6d2c2;
+    }
+
+        .table-win-xp thead th:hover {
+            border-bottom-color: #f9b119;
+            box-shadow: inset 0 -2px #f9b119;
+        }
+
+        .table-win-xp thead th:active {
+            background: #dedfd8;
+        }
+
+    .table-win-xp td {
+        padding: 2px 6px;
+        border-right: 1px solid var(--table-win-grid);
+        border-bottom: 1px solid var(--table-win-grid);
+    }
+
+    .table-win-xp tr.table-win-row-active > td {
+        background: #316ac5;
+        color: #fff;
+    }
+
+/*--------*\
+    Win 7 (Explorer, Details view)
+\*--------*/
+.table-win-container-7 {
+    border: 1px solid #828790;
+}
+
+.table-win-7 {
+    --table-win-grid: #e3e8ee;
+    font-family: var(--font);
+    font-size: 9pt;
+    color: #000;
+    background: #fff;
+}
+
+    .table-win-7 th,
+    .table-win-7.table-win-rownumbers tr::before {
+        color: #4c607a;
+        background: #fff;
+        padding: 4px 6px;
+        border-right: 1px solid #e3e8ee;
+        border-bottom: 1px solid #d5d5d5;
+    }
+
+        .table-win-7 thead th:hover {
+            background: linear-gradient(to bottom, #f3f8fd, #eff3f9);
+            border-right-color: #c0cddb;
+        }
+
+        .table-win-7 thead th:active {
+            background: linear-gradient(to bottom, #c1d3e8, #dbe7f4);
+        }
+
+    .table-win-7 td {
+        padding: 3px 6px;
+        border-top: 1px solid transparent;
+        border-right: 1px solid var(--table-win-grid);
+        border-bottom: 1px solid var(--table-win-grid);
+    }
+
+    .table-win-7 tbody tr:hover > td {
+        background: linear-gradient(to bottom, #fafbfd, #ebf3fd);
+        border-color: #b8d6fb;
+    }
+
+    .table-win-7 tr.table-win-row-active > td,
+    .table-win-7 tbody tr.table-win-row-active:hover > td {
+        background: linear-gradient(to bottom, #dcebfc, #c1dbfc);
+        border-color: #7da2ce;
+    }
+
+/*--------*\
+    Win 10 (Excel 2016)
+\*--------*/
+.table-win-container-10 {
+    border: 1px solid #ababab;
+}
+
+.table-win-10 {
+    --table-win-grid: #d4d4d4;
+    font-family: var(--font);
+    font-size: 12px;
+    color: #000;
+    background: #fff;
+}
+
+    .table-win-10 th,
+    .table-win-10.table-win-rownumbers tr::before {
+        color: #444;
+        background: #f0f0f0;
+        text-align: center;
+        padding: 2px 6px;
+        border-right: 1px solid #ababab;
+        border-bottom: 1px solid #ababab;
+    }
+
+    .table-win-10 td {
+        padding: 2px 6px;
+        border-right: 1px solid var(--table-win-grid);
+        border-bottom: 1px solid var(--table-win-grid);
+    }
+
+    .table-win-10 tbody tr:hover > td {
+        background: #e5f3ff;
+    }
+
+    .table-win-10 tr.table-win-row-active > td,
+    .table-win-10 tbody tr.table-win-row-active:hover > td {
+        background: #cce8ff;
+    }
+
+/*--------*\
+    Grid modifiers (after the styles so they win)
+\*--------*/
+.table-win.table-win-gridlines td {
+    border-right: 1px solid var(--table-win-grid);
+    border-bottom: 1px solid var(--table-win-grid);
+}
+
+.table-win.table-win-nogridlines td {
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+}

@@ -1,0 +1,653 @@
+/*
+    Scrollbars by appearance.
+    Add the class to any scrollable element : scroll-win-dos, scroll-win-31, scroll-win-98,
+    scroll-win-xp, scroll-win-7, scroll-win-10 (or use Appearance.ToScrollbarClass()).
+    Chromium / Safari use ::-webkit-scrollbar. Firefox only gets colors (see the end of the file).
+*/
+
+/*--------*\
+    DOS
+\*--------*/
+.scroll-win-dos {
+    --scroll-dos-width: 9px;
+    --scroll-dos-button: 14px;
+    --scroll-dos-track: #aaaaaa;
+    --scroll-dos-track-dot: #555555;
+    --scroll-dos-thumb: #ffffff;
+    --scroll-dos-button-face: #aaaaaa;
+    --scroll-dos-arrow: #000000;
+    /* Scroll progress, used to place the one-cell thumb like DOS does (it reaches both ends of the track) */
+    animation: scroll-dos-y linear both, scroll-dos-x linear both;
+    animation-timeline: scroll(self block), scroll(self inline);
+}
+
+@property --scroll-dos-y {
+    syntax: '<percentage>';
+    inherits: true;
+    initial-value: 0%;
+}
+
+@property --scroll-dos-x {
+    syntax: '<percentage>';
+    inherits: true;
+    initial-value: 0%;
+}
+
+@keyframes scroll-dos-y {
+    to {
+        --scroll-dos-y: 100%;
+    }
+}
+
+@keyframes scroll-dos-x {
+    to {
+        --scroll-dos-x: 100%;
+    }
+}
+
+    /* Turbo Vision variant : cyan track, blue thumb */
+    .scroll-win-dos.scroll-dos-blue {
+        --scroll-dos-track: #00aaaa;
+        --scroll-dos-track-dot: #0000aa;
+        --scroll-dos-thumb: #0000aa;
+        --scroll-dos-button-face: #00aaaa;
+        --scroll-dos-arrow: #0000aa;
+    }
+
+    .scroll-win-dos::-webkit-scrollbar {
+        width: var(--scroll-dos-width);
+        height: var(--scroll-dos-width);
+    }
+
+    .scroll-win-dos::-webkit-scrollbar-corner {
+        background: var(--scroll-dos-button-face);
+    }
+
+    .scroll-win-dos::-webkit-scrollbar-track {
+        background: repeating-conic-gradient(var(--scroll-dos-track) 0 25%, var(--scroll-dos-track-dot) 0 50%) 0 0 / 2px 2px;
+    }
+
+    /* The DOS thumb is a single character cell, whatever the content length */
+    .scroll-win-dos::-webkit-scrollbar-thumb:vertical {
+        background: linear-gradient(var(--scroll-dos-thumb), var(--scroll-dos-thumb)) 0 var(--scroll-dos-y) / 100% var(--scroll-dos-width) no-repeat, repeating-conic-gradient(var(--scroll-dos-track) 0 25%, var(--scroll-dos-track-dot) 0 50%) 0 0 / 2px 2px;
+    }
+
+    .scroll-win-dos::-webkit-scrollbar-thumb:horizontal {
+        background: linear-gradient(var(--scroll-dos-thumb), var(--scroll-dos-thumb)) var(--scroll-dos-x) 0 / var(--scroll-dos-width) 100% no-repeat, repeating-conic-gradient(var(--scroll-dos-track) 0 25%, var(--scroll-dos-track-dot) 0 50%) 0 0 / 2px 2px;
+    }
+
+    .scroll-win-dos::-webkit-scrollbar-button:horizontal:end:increment,
+    .scroll-win-dos::-webkit-scrollbar-button:horizontal:start:decrement,
+    .scroll-win-dos::-webkit-scrollbar-button:vertical:end:increment,
+    .scroll-win-dos::-webkit-scrollbar-button:vertical:start:decrement {
+        display: block;
+    }
+
+    .scroll-win-dos::-webkit-scrollbar-button:horizontal:end:decrement,
+    .scroll-win-dos::-webkit-scrollbar-button:horizontal:start:increment,
+    .scroll-win-dos::-webkit-scrollbar-button:vertical:end:decrement,
+    .scroll-win-dos::-webkit-scrollbar-button:vertical:start:increment {
+        display: none;
+    }
+
+    /* Arrows are drawn with two half-triangles so their color follows the CSS variables */
+    .scroll-win-dos::-webkit-scrollbar-button {
+        background-color: var(--scroll-dos-button-face);
+        background-repeat: no-repeat;
+    }
+
+        .scroll-win-dos::-webkit-scrollbar-button:vertical {
+            height: var(--scroll-dos-button);
+            background-size: 4px 4px;
+            background-position: calc(50% - 2px) 50%, calc(50% + 2px) 50%;
+        }
+
+        .scroll-win-dos::-webkit-scrollbar-button:horizontal {
+            width: var(--scroll-dos-button);
+            background-size: 4px 4px;
+            background-position: 50% calc(50% - 2px), 50% calc(50% + 2px);
+        }
+
+        .scroll-win-dos::-webkit-scrollbar-button:vertical:start {
+            background-image: linear-gradient(to bottom right, transparent 50%, var(--scroll-dos-arrow) 50%), linear-gradient(to bottom left, transparent 50%, var(--scroll-dos-arrow) 50%);
+        }
+
+        .scroll-win-dos::-webkit-scrollbar-button:vertical:end {
+            background-image: linear-gradient(to top right, transparent 50%, var(--scroll-dos-arrow) 50%), linear-gradient(to top left, transparent 50%, var(--scroll-dos-arrow) 50%);
+        }
+
+        .scroll-win-dos::-webkit-scrollbar-button:horizontal:start {
+            background-image: linear-gradient(to bottom right, transparent 50%, var(--scroll-dos-arrow) 50%), linear-gradient(to top right, transparent 50%, var(--scroll-dos-arrow) 50%);
+        }
+
+        .scroll-win-dos::-webkit-scrollbar-button:horizontal:end {
+            background-image: linear-gradient(to bottom left, transparent 50%, var(--scroll-dos-arrow) 50%), linear-gradient(to top left, transparent 50%, var(--scroll-dos-arrow) 50%);
+        }
+
+/*--------*\
+    Win 3.1
+\*--------*/
+.scroll-win-31::-webkit-scrollbar {
+    width: 17px;
+    height: 17px;
+}
+
+.scroll-win-31::-webkit-scrollbar-corner {
+    background: var(--win31-background);
+}
+
+.scroll-win-31::-webkit-scrollbar-track {
+    background: var(--win31-background);
+}
+
+    .scroll-win-31::-webkit-scrollbar-track:vertical {
+        border-left: 1px solid #000000;
+    }
+
+    .scroll-win-31::-webkit-scrollbar-track:horizontal {
+        border-top: 1px solid #000000;
+    }
+
+.scroll-win-31::-webkit-scrollbar-thumb {
+    background: var(--win31-background);
+    border: solid #000000;
+    box-shadow: inset -1px -1px #808080, inset 1px 1px #FFFFFF;
+}
+
+    .scroll-win-31::-webkit-scrollbar-thumb:vertical {
+        border-width: 1px 0 1px 1px;
+    }
+
+    .scroll-win-31::-webkit-scrollbar-thumb:horizontal {
+        border-width: 1px 1px 0 1px;
+    }
+
+.scroll-win-31::-webkit-scrollbar-button:horizontal:end:increment,
+.scroll-win-31::-webkit-scrollbar-button:horizontal:start:decrement,
+.scroll-win-31::-webkit-scrollbar-button:vertical:end:increment,
+.scroll-win-31::-webkit-scrollbar-button:vertical:start:decrement {
+    display: block;
+}
+
+.scroll-win-31::-webkit-scrollbar-button:horizontal:end:decrement,
+.scroll-win-31::-webkit-scrollbar-button:horizontal:start:increment,
+.scroll-win-31::-webkit-scrollbar-button:vertical:end:decrement,
+.scroll-win-31::-webkit-scrollbar-button:vertical:start:increment {
+    display: none;
+}
+
+.scroll-win-31::-webkit-scrollbar-button {
+    background-color: var(--win31-background);
+    background-repeat: no-repeat;
+    background-position: center;
+    border: solid #000000;
+    box-shadow: inset -1px -1px #808080, inset 1px 1px #FFFFFF;
+}
+
+    .scroll-win-31::-webkit-scrollbar-button:vertical {
+        height: 17px;
+        background-size: 7px 8px;
+    }
+
+    .scroll-win-31::-webkit-scrollbar-button:horizontal {
+        width: 17px;
+        background-size: 8px 7px;
+    }
+
+    .scroll-win-31::-webkit-scrollbar-button:vertical:start {
+        border-width: 0 0 1px 1px;
+        background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 8' shape-rendering='crispEdges'><path d='M3 0h1v1h1v1h1v1h1v1h-2v4h-3v-4h-2v-1h1v-1h1v-1h1z' fill='%23000000'/></svg>");
+    }
+
+    .scroll-win-31::-webkit-scrollbar-button:vertical:end {
+        border-width: 1px 0 0 1px;
+        background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 8' shape-rendering='crispEdges'><path d='M2 0h3v4h2v1h-1v1h-1v1h-1v1h-1v-1h-1v-1h-1v-1h-1v-1h2z' fill='%23000000'/></svg>");
+    }
+
+    .scroll-win-31::-webkit-scrollbar-button:horizontal:start {
+        border-width: 1px 1px 0 0;
+        background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 7' shape-rendering='crispEdges'><path d='M0 3v1h1v1h1v1h1v1h1v-2h4v-3h-4v-2h-1v1h-1v1h-1v1z' fill='%23000000'/></svg>");
+    }
+
+    .scroll-win-31::-webkit-scrollbar-button:horizontal:end {
+        border-width: 1px 0 0 1px;
+        background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 7' shape-rendering='crispEdges'><path d='M8 3v1h-1v1h-1v1h-1v1h-1v-2h-4v-3h4v-2h1v1h1v1h1v1z' fill='%23000000'/></svg>");
+    }
+
+    .scroll-win-31::-webkit-scrollbar-button:active {
+        box-shadow: inset 1px 1px #808080;
+    }
+
+/*--------*\
+    Win 98
+\*--------*/
+.scroll-win-98::-webkit-scrollbar {
+    width: 16px;
+}
+
+    .scroll-win-98::-webkit-scrollbar:horizontal {
+        height: 17px;
+    }
+
+.scroll-win-98::-webkit-scrollbar-corner {
+    background: #dfdfdf;
+}
+
+.scroll-win-98::-webkit-scrollbar-track {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='2' height='2' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M1 0H0v1h1v1h1V1H1V0z' fill='silver'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M2 0H1v1H0v1h1V1h1V0z' fill='%23fff'/%3E%3C/svg%3E");
+}
+
+.scroll-win-98::-webkit-scrollbar-thumb {
+    background-color: silver;
+    box-shadow: inset -1px -1px #0a0a0a,inset 1px 1px #fff,inset -2px -2px grey,inset 2px 2px #dfdfdf;
+}
+
+.scroll-win-98::-webkit-scrollbar-button:horizontal:end:increment,
+.scroll-win-98::-webkit-scrollbar-button:horizontal:start:decrement,
+.scroll-win-98::-webkit-scrollbar-button:vertical:end:increment,
+.scroll-win-98::-webkit-scrollbar-button:vertical:start:decrement {
+    display: block;
+}
+
+.scroll-win-98::-webkit-scrollbar-button:horizontal:end:decrement,
+.scroll-win-98::-webkit-scrollbar-button:horizontal:start:increment,
+.scroll-win-98::-webkit-scrollbar-button:vertical:end:decrement,
+.scroll-win-98::-webkit-scrollbar-button:vertical:start:increment {
+    display: none;
+}
+
+.scroll-win-98::-webkit-scrollbar-button:vertical:start {
+    height: 17px;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='17' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15 0H0v16h1V1h14V0z' fill='%23DFDFDF'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M2 1H1v14h1V2h12V1H2z' fill='%23fff'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M16 17H0v-1h15V0h1v17z' fill='%23000'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15 1h-1v14H1v1h14V1z' fill='gray'/%3E%3Cpath fill='silver' d='M2 2h12v13H2z'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M8 6H7v1H6v1H5v1H4v1h7V9h-1V8H9V7H8V6z' fill='%23000'/%3E%3C/svg%3E");
+}
+
+.scroll-win-98::-webkit-scrollbar-button:vertical:end {
+    height: 17px;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='17' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15 0H0v16h1V1h14V0z' fill='%23DFDFDF'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M2 1H1v14h1V2h12V1H2z' fill='%23fff'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M16 17H0v-1h15V0h1v17z' fill='%23000'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15 1h-1v14H1v1h14V1z' fill='gray'/%3E%3Cpath fill='silver' d='M2 2h12v13H2z'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M11 6H4v1h1v1h1v1h1v1h1V9h1V8h1V7h1V6z' fill='%23000'/%3E%3C/svg%3E");
+}
+
+.scroll-win-98::-webkit-scrollbar-button:horizontal:start {
+    width: 16px;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='17' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15 0H0v16h1V1h14V0z' fill='%23DFDFDF'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M2 1H1v14h1V2h12V1H2z' fill='%23fff'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M16 17H0v-1h15V0h1v17z' fill='%23000'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15 1h-1v14H1v1h14V1z' fill='gray'/%3E%3Cpath fill='silver' d='M2 2h12v13H2z'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M9 4H8v1H7v1H6v1H5v1h1v1h1v1h1v1h1V4z' fill='%23000'/%3E%3C/svg%3E");
+}
+
+.scroll-win-98::-webkit-scrollbar-button:horizontal:end {
+    width: 16px;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='17' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15 0H0v16h1V1h14V0z' fill='%23DFDFDF'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M2 1H1v14h1V2h12V1H2z' fill='%23fff'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M16 17H0v-1h15V0h1v17z' fill='%23000'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15 1h-1v14H1v1h14V1z' fill='gray'/%3E%3Cpath fill='silver' d='M2 2h12v13H2z'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M7 4H6v7h1v-1h1V9h1V8h1V7H9V6H8V5H7V4z' fill='%23000'/%3E%3C/svg%3E");
+}
+
+/*--------*\
+    Win XP
+\*--------*/
+.scroll-win-xp::-webkit-scrollbar {
+    width: 17px;
+    height: 17px;
+}
+
+.scroll-win-xp::-webkit-scrollbar-corner {
+    background: #dfdfdf;
+}
+
+.scroll-win-xp::-webkit-scrollbar-track {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -0.5 17 1' shape-rendering='crispEdges'%3E%3Cpath stroke='%23eeede5' d='M0 0h1m15 0h1'/%3E%3Cpath stroke='%23f3f1ec' d='M1 0h1'/%3E%3Cpath stroke='%23f4f1ec' d='M2 0h1'/%3E%3Cpath stroke='%23f4f3ee' d='M3 0h1'/%3E%3Cpath stroke='%23f5f4ef' d='M4 0h1'/%3E%3Cpath stroke='%23f6f5f0' d='M5 0h1'/%3E%3Cpath stroke='%23f7f7f3' d='M6 0h1'/%3E%3Cpath stroke='%23f9f8f4' d='M7 0h1'/%3E%3Cpath stroke='%23f9f9f7' d='M8 0h1'/%3E%3Cpath stroke='%23fbfbf8' d='M9 0h1'/%3E%3Cpath stroke='%23fbfbf9' d='M10 0h2'/%3E%3Cpath stroke='%23fdfdfa' d='M12 0h1'/%3E%3Cpath stroke='%23fefefb' d='M13 0h3'/%3E%3C/svg%3E");
+}
+
+    .scroll-win-xp::-webkit-scrollbar-track:vertical {
+        background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -0.5 17 1' shape-rendering='crispEdges'%3E%3Cpath stroke='%23eeede5' d='M0 0h1m15 0h1'/%3E%3Cpath stroke='%23f3f1ec' d='M1 0h1'/%3E%3Cpath stroke='%23f4f1ec' d='M2 0h1'/%3E%3Cpath stroke='%23f4f3ee' d='M3 0h1'/%3E%3Cpath stroke='%23f5f4ef' d='M4 0h1'/%3E%3Cpath stroke='%23f6f5f0' d='M5 0h1'/%3E%3Cpath stroke='%23f7f7f3' d='M6 0h1'/%3E%3Cpath stroke='%23f9f8f4' d='M7 0h1'/%3E%3Cpath stroke='%23f9f9f7' d='M8 0h1'/%3E%3Cpath stroke='%23fbfbf8' d='M9 0h1'/%3E%3Cpath stroke='%23fbfbf9' d='M10 0h2'/%3E%3Cpath stroke='%23fdfdfa' d='M12 0h1'/%3E%3Cpath stroke='%23fefefb' d='M13 0h3'/%3E%3C/svg%3E");
+    }
+
+    .scroll-win-xp::-webkit-scrollbar-track:horizontal {
+        background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -0.5 1 17' shape-rendering='crispEdges'%3E%3Cpath stroke='%23eeede5' d='M0 0h1M0 16h1'/%3E%3Cpath stroke='%23f3f1ec' d='M0 1h1'/%3E%3Cpath stroke='%23f4f1ec' d='M0 2h1'/%3E%3Cpath stroke='%23f4f3ee' d='M0 3h1'/%3E%3Cpath stroke='%23f5f4ef' d='M0 4h1'/%3E%3Cpath stroke='%23f6f5f0' d='M0 5h1'/%3E%3Cpath stroke='%23f7f7f3' d='M0 6h1'/%3E%3Cpath stroke='%23f9f8f4' d='M0 7h1'/%3E%3Cpath stroke='%23f9f9f7' d='M0 8h1'/%3E%3Cpath stroke='%23fbfbf8' d='M0 9h1'/%3E%3Cpath stroke='%23fbfbf9' d='M0 10h1m-1 1h1'/%3E%3Cpath stroke='%23fdfdfa' d='M0 12h1'/%3E%3Cpath stroke='%23fefefb' d='M0 13h1m-1 1h1m-1 1h1'/%3E%3C/svg%3E");
+    }
+
+.scroll-win-xp::-webkit-scrollbar-thumb {
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-color: #c8d6fb;
+    background-size: 7px;
+    border: 1px solid #fff;
+    border-radius: 2px;
+    box-shadow: inset -3px 0 #bad1fc,inset 1px 1px #b7caf5;
+}
+
+    .scroll-win-xp::-webkit-scrollbar-thumb:vertical {
+        background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -0.5 7 8' shape-rendering='crispEdges'%3E%3Cpath stroke='%23eef4fe' d='M0 0h6M0 2h6M0 4h6M0 6h6'/%3E%3Cpath stroke='%23bad1fc' d='M6 0h1M6 2h1M6 4h1'/%3E%3Cpath stroke='%23c8d6fb' d='M0 1h1M0 3h1M0 5h1M0 7h1'/%3E%3Cpath stroke='%238cb0f8' d='M1 1h6M1 3h6M1 5h6M1 7h6'/%3E%3Cpath stroke='%23bad3fc' d='M6 6h1'/%3E%3C/svg%3E");
+    }
+
+    .scroll-win-xp::-webkit-scrollbar-thumb:horizontal {
+        background-size: 8px;
+        background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -0.5 8 7' shape-rendering='crispEdges'%3E%3Cpath stroke='%23eef4fe' d='M0 0h1m1 0h1m1 0h1m1 0h1M0 1h1m1 0h1m1 0h1m1 0h1M0 2h1m1 0h1m1 0h1m1 0h1M0 3h1m1 0h1m1 0h1m1 0h1M0 4h1m1 0h1m1 0h1m1 0h1M0 5h1m1 0h1m1 0h1m1 0h1'/%3E%3Cpath stroke='%23c8d6fb' d='M1 0h1m1 0h1m1 0h1m1 0h1'/%3E%3Cpath stroke='%238cb0f8' d='M1 1h1m1 0h1m1 0h1m1 0h1M1 2h1m1 0h1m1 0h1m1 0h1M1 3h1m1 0h1m1 0h1m1 0h1M1 4h1m1 0h1m1 0h1m1 0h1M1 5h1m1 0h1m1 0h1m1 0h1M1 6h1m1 0h1m1 0h1m1 0h1'/%3E%3Cpath stroke='%23bad1fc' d='M0 6h1m1 0h1'/%3E%3Cpath stroke='%23bad3fc' d='M4 6h1m1 0h1'/%3E%3C/svg%3E");
+    }
+
+.scroll-win-xp::-webkit-scrollbar-button:horizontal:end:increment,
+.scroll-win-xp::-webkit-scrollbar-button:horizontal:start:decrement,
+.scroll-win-xp::-webkit-scrollbar-button:vertical:end:increment,
+.scroll-win-xp::-webkit-scrollbar-button:vertical:start:decrement {
+    display: block;
+}
+
+.scroll-win-xp::-webkit-scrollbar-button:horizontal:end:decrement,
+.scroll-win-xp::-webkit-scrollbar-button:horizontal:start:increment,
+.scroll-win-xp::-webkit-scrollbar-button:vertical:end:decrement,
+.scroll-win-xp::-webkit-scrollbar-button:vertical:start:increment {
+    display: none;
+}
+
+.scroll-win-xp::-webkit-scrollbar-button:vertical:start {
+    height: 17px;
+    background-size: contain;
+    image-rendering: pixelated;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAB9ElEQVR42p2Sv05UURDGf3N2FwoM/kkssDGGysLCV/ApfAEsCSHA0isJoJWQ+Ba+gZX2NpZakZWEZC9sgsLuPTOfxbneu2LH3OKenJz5zTffjFXjke7ee0hKA24T59VP+gApDTg9d84mMJs6s1mQAzwgFHgYkohIhIIc4tmTAasrC0x+5QIBOJvA/aXEdDExqwOXIRcRRp6DucOsDn6cTFldWeBiHjKbOtPFRHjgXh7nRkF2IAyHchZYzwCoLn0OkqNVkL1JBORiWhse1vpgBkkC4PKqJnUQI2dwp3gQQiH23h12niiaf5vG1VQdRCE8SmVJWDL23h4C8P5oHyECQ833N7LPQeqmBQ/DMN4cHPwzyuPjQ2QFBBCyBsKcEhX5EcHrg/02eWtzpz1/OCqg4m2npoV4GK6uBYDdrSGWjI2bIESOpjhz7bjKcu1uDwtge9hKdzPW1gtobX2n2ZvO3HbEOdOOdWdzF5eaOgKMQd94tTEkuyjTjf8h7VIBvRR4LiqUKB6EUJRcSeXyJiQi8HBkiYhORURCIXLzJgJM0RprWAd5vjrg+8k1CsPptlMIVw8DEsKaJXz6uKQuL/WgGo/0+dupbhMfv4xUjUeyajyS+st8+lpxNrnm8reovWaWDVO0EzLr1A36iQd3Fnn54hGprvgDtcag78XB2lIAAAAASUVORK5CYII=");
+}
+
+.scroll-win-xp::-webkit-scrollbar-button:vertical:end {
+    height: 17px;
+    background-size: contain;
+    image-rendering: pixelated;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAB/0lEQVR42p2Tv2oUURTGf+fublJE4h+wiI1IKgsLX8Gn8AUsLCKiZhOwERRMgti44Fv4Blba21hqFVYhsBsXo9mdued8FncyO5IudzjMZTjnd7/z3TM2nYx1+cp1UhpwkXU8/UEfIKUBP4+doxlUC6eqghzgAaHAw5BERCIU5BB3bg3Y3Fhh9icXCMDRDK6uJRariaoOXIZcRBi5A3OHqg6+Hy7Y3FjhVxdSLZzFaiI8cC/JuVGQHQjDoewF1jMApifegeRoFWRvCgG5WNSGh7U+mEGSADg5rbsQI2cIKB5ENBW0nghhGCKRmrrThdo9CuFRTn65t4clw5Lxe17MFGI0OkDNc7aydyB108KL1/sAvNrfZ16LlUHgBqPRAbB8h6yB0FEioRDPt4ftKW/eloL37w7abw+3hhRvl2paiIfhKrH7bOcc6AxAA8iNZaLTjqsMF1Zid3vnv8l88GhINkoEhNJ5JTmX/twh3HDBdqNo6+kOg34x2lUODKKF9LuenM1GLwWei3GPnwypVG5PAUTJxTkPiQg8HFkiQk235X9RiNzkRIA1V17GyJaQu5sDvh3OURjOcjqFcPUwICEsyi3evllK19d6MJ2M9enrT11kffg81nQylk0nY6m/zscvU45mc07+itprqmyYgmhUmS3VDfqJa5dWuX/vBqme8g+B8JXwNQBY3wAAAABJRU5ErkJggg==");
+}
+
+.scroll-win-xp::-webkit-scrollbar-button:horizontal:start {
+    width: 17px;
+    background-size: contain;
+    image-rendering: pixelated;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAB/klEQVR42qWSv05UURCHvznsQoEx0Q4bY6gsLHwFn8JnUCSGsEBiY4GGRSQmvodvYKW9jaVWBElIWNjIv73nzPwszuWuWOIkJ7m5d/Ldb35nbHS0L/6zzL1RSv0bA45Hv+il1Ofg2DkcQzNxmiYoAR4QCgA8DElEJEJBCfHoQZ/FhVnGZ4UewOEY7swnJnOJJgcuQy4iDCE8jFDgYbhDk4OfexMWF2Y5OSskqAaTAuGBu+EZmmJkF6/fDslFeK6A4oDAZgyA0am3kBI0OZi4UVxkF5LYHA4B2NoZcp6NSTY8DAwS9T5OL3IdpylGKRBX80fw5t12F97yiw0kIYRhiFT/DlxMVCEK4QFISFwDLC2tdQEH1hlcVfEWkl0UB8PYHG51DasrawCc5as3IlRBIWshVCtJKERE8Gqw1kF2drcp/+yFTNRsp0Y1WDcaN5x6NgbrXcOH3W16s0YxupNDNJ5aN1VIKVXLHcINFwxWp6CP74f0e4al+s0FQVw3kWomxeuWllLBL9tMnq2so6gjE7Ufn47YA4gIPBxZIkKtZF3z58sDohGl7YsAU3SZGFYhjxf7/Ni7RFEzmd5FbXTNYNQFs9bo4f0eALfnZ+DL9wPdtD593dfoaF92NP6tz99GHI4vOT0X2TNNMUxB/GVlNn3u9xJ3b83x9Mk9Uh7xB9D2n1Z1jB14AAAAAElFTkSuQmCC");
+}
+
+.scroll-win-xp::-webkit-scrollbar-button:horizontal:end {
+    width: 17px;
+    background-size: contain;
+    image-rendering: pixelated;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAACAklEQVR42qWSPW4UQRCFv+rdtQMjJMhMgpAjAgKuwCm4AAESXoGBtSUCAgSysSWEQByDGxBBTkIIkWUsWfKaFf7b6a56BD07tlPTE0zPdOnrV6+ejfd3xH8uc2+U0uDSgIPxb/opDdg9cPYm0EydpglKgAeEAgAPQxIRiVBQQty5NWBpcY7JUaEPsDeBawuJ6XyiyYHLkIsIQwgPIxR4GO7Q5ODX9pSlxTn+HBUSVAXTAuGBu+EZmmK8fLNOziIX4bkCigMC6xkA40NvISVocjB1o7jILl6trwPwevMt0wzH2Zhmw8PAIFHncXiSZxCjFHBv+w/x4vmoM+/d+43qiaJ9p+7sZKoKUQgPkAtJWDIsGcPlta74w8cNguqROEtF8RaSXZRWxew5zWJuEDxbOVP0qQUBhKyFUKdTZoadu6GfDAc2tza6fw+XRwhRJIhaK1QhrpqLXu8sRCFjc2u9+34wHFHavRzSOV+qkjJTAoahpAuA5aeruKBE9UACiO68Git1LYWCUuDJ41UAhitruKr5CkHUepyLSiICD0eWiFDbqXg0HOHFURilrYsAU3QTMqxC7i4N+Ll9isLw1v2ZadWzHkYNmLWKbt/sA3B1oQdff+zqsuvztx2N93dk+5O/+vJ9zN7klMNjkT3TFMMUXSYAzM72g37i+pV57t+7Qcpj/gGW66Fiwen2GgAAAABJRU5ErkJggg==");
+}
+
+/*--------*\
+    Win 7
+\*--------*/
+.scroll-win-7::-webkit-scrollbar {
+    width: 16px;
+}
+
+    .scroll-win-7::-webkit-scrollbar:horizontal {
+        height: 17px;
+    }
+
+.scroll-win-7::-webkit-scrollbar-corner {
+    background: var(--btn-win7-face);
+}
+
+.scroll-win-7::-webkit-scrollbar-track {
+    background: var(--scrollbar-y);
+}
+
+    .scroll-win-7::-webkit-scrollbar-track:vertical {
+        background: var(--scrollbar-y);
+    }
+
+    .scroll-win-7::-webkit-scrollbar-track:horizontal {
+        background: var(--scrollbar-x);
+    }
+
+.scroll-win-7::-webkit-scrollbar-thumb {
+    background-color: var(--btn-win7-face);
+    border: var(--btn-win7-border);
+    border-color: var(--btn-win7-border-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--btn-win7-shadow);
+}
+
+    .scroll-win-7::-webkit-scrollbar-thumb:vertical {
+        background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAKCAIAAADpZ+PpAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAADrSURBVChTTc5LboJQGAXguyoCu4ERCzAGlRk7UOwGWIDh0s4M4kxb06RSq/jAB6AxJkJ4lTDrue3AnvyzP+fLId+/yfM8juP7PQmCCOf7B3e+ZD+O40RRVFW12VQUpd3r9U3T2m4OpKoqWZYNwzBZLEqfh0N7NnvfrPcEWlEUWZb9mWF4Ph6D0ylcLbfM5HkeJrhGA2hb15/QXnv+w7RYXsDatjOdvnmrHSnLEizMNE2v11sUXQBCnn98kbquBUGQJAlmq9WB2e3qg4HJdqKkaRql1HGc0WgMcDJ5dd0F24kediZJ8t/ELT69H+8py0CYSIO5AAAAAElFTkSuQmCC") no-repeat 50%,linear-gradient(to right,var(--btn-win7-face) 45%,var(--btn-win7-shade-light) 45%,var(--btn-win7-shade-dark));
+    }
+
+    .scroll-win-7::-webkit-scrollbar-thumb:horizontal {
+        background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAJCAYAAAALpr0TAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAADcSURBVChTNZBLqoUwEEQrURQUxZGCvy24ACfiityJi7tv8GauQoPxk5tquA2RQ9vVVYk6z9NZaxFFEe77htYazjk8z4MwDIVZ+rourOuKaZrwvi+WZcE8z1BKCbPPCjk4DAO2bRP1OI7wLiL6Mbd7J408z1GWpQwWRYGqqiQG+03TgMu0MacfUN4qANmn8UOv9MjW3sKaSm7iIdOSlziOQ3LScd93aPonSYK6riVLlmVo21aYfVqzND9pmqLrOlGT+76XbcxLZkb19/l3fEP+oF0cx8KMEASBsDEGX2/CgZCHkg+8AAAAAElFTkSuQmCC") no-repeat 50%,linear-gradient(to bottom,var(--btn-win7-face) 45%,var(--btn-win7-shade-light) 45%,var(--btn-win7-shade-dark));
+    }
+
+    .scroll-win-7::-webkit-scrollbar-thumb:hover:vertical {
+        background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAKCAIAAADpZ+PpAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAADrSURBVChTTc5LboJQGAXguyoCu4ERCzAGlRk7UOwGWIDh0s4M4kxb06RSq/jAB6AxJkJ4lTDrue3AnvyzP+fLId+/yfM8juP7PQmCCOf7B3e+ZD+O40RRVFW12VQUpd3r9U3T2m4OpKoqWZYNwzBZLEqfh0N7NnvfrPcEWlEUWZb9mWF4Ph6D0ylcLbfM5HkeJrhGA2hb15/QXnv+w7RYXsDatjOdvnmrHSnLEizMNE2v11sUXQBCnn98kbquBUGQJAlmq9WB2e3qg4HJdqKkaRql1HGc0WgMcDJ5dd0F24kediZJ8t/ELT69H+8py0CYSIO5AAAAAElFTkSuQmCC") no-repeat 50%,linear-gradient(to right,var(--btn-win7-face-hover) 45%,var(--btn-win7-shade-light-hovered) 45%);
+        border-color: var(--btn-win7-border-color-hovered);
+    }
+
+    .scroll-win-7::-webkit-scrollbar-thumb:hover:horizontal {
+        background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAJCAYAAAALpr0TAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAADcSURBVChTNZBLqoUwEEQrURQUxZGCvy24ACfiityJi7tv8GauQoPxk5tquA2RQ9vVVYk6z9NZaxFFEe77htYazjk8z4MwDIVZ+rourOuKaZrwvi+WZcE8z1BKCbPPCjk4DAO2bRP1OI7wLiL6Mbd7J408z1GWpQwWRYGqqiQG+03TgMu0MacfUN4qANmn8UOv9MjW3sKaSm7iIdOSlziOQ3LScd93aPonSYK6riVLlmVo21aYfVqzND9pmqLrOlGT+76XbcxLZkb19/l3fEP+oF0cx8KMEASBsDEGX2/CgZCHkg+8AAAAAElFTkSuQmCC") no-repeat 50%,linear-gradient(to bottom,var(--btn-win7-face-hover) 45%,var(--btn-win7-shade-light-hovered) 45%);
+        border-color: var(--btn-win7-border-color-hovered);
+    }
+
+    .scroll-win-7::-webkit-scrollbar-thumb:active:vertical {
+        background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAKCAIAAADpZ+PpAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAADrSURBVChTTc5LboJQGAXguyoCu4ERCzAGlRk7UOwGWIDh0s4M4kxb06RSq/jAB6AxJkJ4lTDrue3AnvyzP+fLId+/yfM8juP7PQmCCOf7B3e+ZD+O40RRVFW12VQUpd3r9U3T2m4OpKoqWZYNwzBZLEqfh0N7NnvfrPcEWlEUWZb9mWF4Ph6D0ylcLbfM5HkeJrhGA2hb15/QXnv+w7RYXsDatjOdvnmrHSnLEizMNE2v11sUXQBCnn98kbquBUGQJAlmq9WB2e3qg4HJdqKkaRql1HGc0WgMcDJ5dd0F24kediZJ8t/ELT69H+8py0CYSIO5AAAAAElFTkSuQmCC") no-repeat 50%,linear-gradient(to right,var(--btn-win7-face-active) 45%,var(--btn-win7-shade-light-active) 45%);
+        border-color: var(--btn-win7-border-color-active);
+    }
+
+    .scroll-win-7::-webkit-scrollbar-thumb:active:horizontal {
+        background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAJCAYAAAALpr0TAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAADcSURBVChTNZBLqoUwEEQrURQUxZGCvy24ACfiityJi7tv8GauQoPxk5tquA2RQ9vVVYk6z9NZaxFFEe77htYazjk8z4MwDIVZ+rourOuKaZrwvi+WZcE8z1BKCbPPCjk4DAO2bRP1OI7wLiL6Mbd7J408z1GWpQwWRYGqqiQG+03TgMu0MacfUN4qANmn8UOv9MjW3sKaSm7iIdOSlziOQ3LScd93aPonSYK6riVLlmVo21aYfVqzND9pmqLrOlGT+76XbcxLZkb19/l3fEP+oF0cx8KMEASBsDEGX2/CgZCHkg+8AAAAAElFTkSuQmCC") no-repeat 50%,linear-gradient(to bottom,var(--btn-win7-face-active) 45%,var(--btn-win7-shade-light-active) 45%);
+        border-color: var(--btn-win7-border-color-active);
+    }
+
+.scroll-win-7::-webkit-scrollbar-button:horizontal:end:increment,
+.scroll-win-7::-webkit-scrollbar-button:horizontal:start:decrement,
+.scroll-win-7::-webkit-scrollbar-button:vertical:end:increment,
+.scroll-win-7::-webkit-scrollbar-button:vertical:start:decrement {
+    display: block;
+}
+
+.scroll-win-7::-webkit-scrollbar-button:horizontal:end:decrement,
+.scroll-win-7::-webkit-scrollbar-button:horizontal:start:increment,
+.scroll-win-7::-webkit-scrollbar-button:vertical:end:decrement,
+.scroll-win-7::-webkit-scrollbar-button:vertical:start:increment {
+    display: none;
+}
+
+.scroll-win-7::-webkit-scrollbar-button {
+    border: var(--btn-win7-border) transparent;
+}
+
+    .scroll-win-7::-webkit-scrollbar-button:vertical {
+        height: 17px;
+    }
+
+        .scroll-win-7::-webkit-scrollbar-button:vertical:start {
+            background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTciIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJhIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzMzMztzdG9wLW9wYWNpdHk6MSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2FhYTtzdG9wLW9wYWNpdHk6MSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxwYXRoIGQ9Ik04IDZIN3YxSDZ2MUg1djFINHYxaDdWOWgtMVY4SDlWN0g4VjZaIiBmaWxsPSJ1cmwoI2EpIi8+PC9zdmc+"),var(--scrollbar-y);
+        }
+
+        .scroll-win-7::-webkit-scrollbar-button:vertical:end {
+            background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTciIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJhIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzMzMztzdG9wLW9wYWNpdHk6MSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2FhYTtzdG9wLW9wYWNpdHk6MSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxwYXRoIGQ9Ik0xMSA2SDR2MWgxdjFoMXYxaDF2MWgxVjloMVY4aDFWN2gxVjZaIiBmaWxsPSJ1cmwoI2EpIi8+PC9zdmc+"),var(--scrollbar-y);
+        }
+
+    .scroll-win-7::-webkit-scrollbar-button:horizontal {
+        width: 16px;
+    }
+
+        .scroll-win-7::-webkit-scrollbar-button:horizontal:start {
+            background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTciIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJhIiB4MT0iMCUiIHkxPSIxMDAlIiB4Mj0iMCUiIHkyPSIwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzMzMztzdG9wLW9wYWNpdHk6MSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2FhYTtzdG9wLW9wYWNpdHk6MSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxwYXRoIGQ9Ik05IDRIOHYxSDd2MUg2djFINXYxaDF2MWgxdjFoMXYxaDFWNFoiIGZpbGw9InVybCgjYSkiLz48L3N2Zz4="),var(--scrollbar-x);
+        }
+
+        .scroll-win-7::-webkit-scrollbar-button:horizontal:end {
+            background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTciIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJhIiB4MT0iMCUiIHkxPSIxMDAlIiB4Mj0iMCUiIHkyPSIwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzMzMztzdG9wLW9wYWNpdHk6MSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2FhYTtzdG9wLW9wYWNpdHk6MSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxwYXRoIGQ9Ik03IDRINnY3aDF2LTFoMVY5aDFWOGgxVjdIOVY2SDhWNUg3VjRaIiBmaWxsPSJ1cmwoI2EpIi8+PC9zdmc+"),var(--scrollbar-x);
+        }
+
+    .scroll-win-7::-webkit-scrollbar-button:hover {
+        background-color: var(--btn-win7-face);
+        border-color: var(--btn-win7-border-color);
+        border-radius: var(--border-radius);
+        box-shadow: var(--btn-win7-shadow);
+    }
+
+        .scroll-win-7::-webkit-scrollbar-button:hover:vertical {
+            height: 17px;
+        }
+
+            .scroll-win-7::-webkit-scrollbar-button:hover:vertical:start {
+                background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTciIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJhIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzMzMztzdG9wLW9wYWNpdHk6MSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2FhYTtzdG9wLW9wYWNpdHk6MSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxwYXRoIGQ9Ik04IDZIN3YxSDZ2MUg1djFINHYxaDdWOWgtMVY4SDlWN0g4VjZaIiBmaWxsPSJ1cmwoI2EpIi8+PC9zdmc+"),linear-gradient(to right,var(--btn-win7-face-hover) 45%,var(--btn-win7-shade-light-hovered) 45%);
+                border-color: var(--btn-win7-border-color-hovered);
+            }
+
+            .scroll-win-7::-webkit-scrollbar-button:hover:vertical:end {
+                background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTciIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJhIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzMzMztzdG9wLW9wYWNpdHk6MSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2FhYTtzdG9wLW9wYWNpdHk6MSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxwYXRoIGQ9Ik0xMSA2SDR2MWgxdjFoMXYxaDF2MWgxVjloMVY4aDFWN2gxVjZaIiBmaWxsPSJ1cmwoI2EpIi8+PC9zdmc+"),linear-gradient(to right,var(--btn-win7-face-hover) 45%,var(--btn-win7-shade-light-hovered) 45%);
+                border-color: var(--btn-win7-border-color-hovered);
+            }
+
+        .scroll-win-7::-webkit-scrollbar-button:hover:horizontal {
+            width: 16px;
+        }
+
+            .scroll-win-7::-webkit-scrollbar-button:hover:horizontal:start {
+                background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTciIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJhIiB4MT0iMCUiIHkxPSIxMDAlIiB4Mj0iMCUiIHkyPSIwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzMzMztzdG9wLW9wYWNpdHk6MSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2FhYTtzdG9wLW9wYWNpdHk6MSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxwYXRoIGQ9Ik05IDRIOHYxSDd2MUg2djFINXYxaDF2MWgxdjFoMXYxaDFWNFoiIGZpbGw9InVybCgjYSkiLz48L3N2Zz4="),linear-gradient(to bottom,var(--btn-win7-face-hover) 45%,var(--btn-win7-shade-light-hovered) 45%);
+                border-color: var(--btn-win7-border-color-hovered);
+            }
+
+            .scroll-win-7::-webkit-scrollbar-button:hover:horizontal:end {
+                background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTciIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJhIiB4MT0iMCUiIHkxPSIxMDAlIiB4Mj0iMCUiIHkyPSIwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzMzMztzdG9wLW9wYWNpdHk6MSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2FhYTtzdG9wLW9wYWNpdHk6MSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxwYXRoIGQ9Ik03IDRINnY3aDF2LTFoMVY5aDFWOGgxVjdIOVY2SDhWNUg3VjRaIiBmaWxsPSJ1cmwoI2EpIi8+PC9zdmc+"),linear-gradient(to bottom,var(--btn-win7-face-hover) 45%,var(--btn-win7-shade-light-hovered) 45%);
+                border-color: var(--btn-win7-border-color-hovered);
+            }
+
+    .scroll-win-7::-webkit-scrollbar-button:active {
+        background-color: var(--btn-win7-face);
+        border-color: var(--btn-win7-border-color);
+        border-radius: var(--border-radius);
+        box-shadow: var(--btn-win7-shadow);
+    }
+
+        .scroll-win-7::-webkit-scrollbar-button:active:vertical {
+            height: 17px;
+        }
+
+            .scroll-win-7::-webkit-scrollbar-button:active:vertical:start {
+                background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTciIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJhIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzMzMztzdG9wLW9wYWNpdHk6MSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2FhYTtzdG9wLW9wYWNpdHk6MSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxwYXRoIGQ9Ik04IDZIN3YxSDZ2MUg1djFINHYxaDdWOWgtMVY4SDlWN0g4VjZaIiBmaWxsPSJ1cmwoI2EpIi8+PC9zdmc+"),linear-gradient(to right,var(--btn-win7-face-active) 45%,var(--btn-win7-shade-light-active) 45%);
+                border-color: var(--btn-win7-border-color-active);
+            }
+
+            .scroll-win-7::-webkit-scrollbar-button:active:vertical:end {
+                background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTciIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJhIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzMzMztzdG9wLW9wYWNpdHk6MSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2FhYTtzdG9wLW9wYWNpdHk6MSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxwYXRoIGQ9Ik0xMSA2SDR2MWgxdjFoMXYxaDF2MWgxVjloMVY4aDFWN2gxVjZaIiBmaWxsPSJ1cmwoI2EpIi8+PC9zdmc+"),linear-gradient(to right,var(--btn-win7-face-active) 45%,var(--btn-win7-shade-light-active) 45%);
+                border-color: var(--btn-win7-border-color-active);
+            }
+
+        .scroll-win-7::-webkit-scrollbar-button:active:horizontal {
+            width: 16px;
+        }
+
+            .scroll-win-7::-webkit-scrollbar-button:active:horizontal:start {
+                background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTciIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJhIiB4MT0iMCUiIHkxPSIxMDAlIiB4Mj0iMCUiIHkyPSIwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzMzMztzdG9wLW9wYWNpdHk6MSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2FhYTtzdG9wLW9wYWNpdHk6MSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxwYXRoIGQ9Ik05IDRIOHYxSDd2MUg2djFINXYxaDF2MWgxdjFoMXYxaDFWNFoiIGZpbGw9InVybCgjYSkiLz48L3N2Zz4="),linear-gradient(to bottom,var(--btn-win7-face-active) 45%,var(--btn-win7-shade-light-active) 45%);
+                border-color: var(--btn-win7-border-color-active);
+            }
+
+            .scroll-win-7::-webkit-scrollbar-button:active:horizontal:end {
+                background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTciIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJhIiB4MT0iMCUiIHkxPSIxMDAlIiB4Mj0iMCUiIHkyPSIwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzMzMztzdG9wLW9wYWNpdHk6MSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2FhYTtzdG9wLW9wYWNpdHk6MSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxwYXRoIGQ9Ik03IDRINnY3aDF2LTFoMVY5aDFWOGgxVjdIOVY2SDhWNUg3VjRaIiBmaWxsPSJ1cmwoI2EpIi8+PC9zdmc+"),linear-gradient(to bottom,var(--btn-win7-face-active) 45%,var(--btn-win7-shade-light-active) 45%);
+                border-color: var(--btn-win7-border-color-active);
+            }
+
+/*--------*\
+    Win 10
+\*--------*/
+.scroll-win-10::-webkit-scrollbar {
+    width: 17px;
+    height: 17px;
+}
+
+.scroll-win-10::-webkit-scrollbar-corner,
+.scroll-win-10::-webkit-scrollbar-track {
+    background: #F0F0F0;
+}
+
+.scroll-win-10::-webkit-scrollbar-thumb {
+    background-color: #CDCDCD;
+    background-clip: padding-box;
+    border: 1px solid transparent;
+}
+
+    .scroll-win-10::-webkit-scrollbar-thumb:hover {
+        background-color: #A6A6A6;
+    }
+
+    .scroll-win-10::-webkit-scrollbar-thumb:active {
+        background-color: #606060;
+    }
+
+.scroll-win-10::-webkit-scrollbar-button:horizontal:end:increment,
+.scroll-win-10::-webkit-scrollbar-button:horizontal:start:decrement,
+.scroll-win-10::-webkit-scrollbar-button:vertical:end:increment,
+.scroll-win-10::-webkit-scrollbar-button:vertical:start:decrement {
+    display: block;
+}
+
+.scroll-win-10::-webkit-scrollbar-button:horizontal:end:decrement,
+.scroll-win-10::-webkit-scrollbar-button:horizontal:start:increment,
+.scroll-win-10::-webkit-scrollbar-button:vertical:end:decrement,
+.scroll-win-10::-webkit-scrollbar-button:vertical:start:increment {
+    display: none;
+}
+
+/* Arrows are drawn with two half-triangles in currentColor, so hover/active only change colors */
+.scroll-win-10::-webkit-scrollbar-button {
+    color: #606060;
+    background-color: #F0F0F0;
+    background-repeat: no-repeat;
+}
+
+    .scroll-win-10::-webkit-scrollbar-button:hover {
+        color: #000000;
+        background-color: #DADADA;
+    }
+
+    .scroll-win-10::-webkit-scrollbar-button:active {
+        color: #FFFFFF;
+        background-color: #606060;
+    }
+
+    .scroll-win-10::-webkit-scrollbar-button:vertical {
+        height: 17px;
+        background-size: 4px 4px;
+        background-position: calc(50% - 2px) 50%, calc(50% + 2px) 50%;
+    }
+
+    .scroll-win-10::-webkit-scrollbar-button:horizontal {
+        width: 17px;
+        background-size: 4px 4px;
+        background-position: 50% calc(50% - 2px), 50% calc(50% + 2px);
+    }
+
+    .scroll-win-10::-webkit-scrollbar-button:vertical:start {
+        background-image: linear-gradient(to bottom right, transparent 50%, currentColor 50%), linear-gradient(to bottom left, transparent 50%, currentColor 50%);
+    }
+
+    .scroll-win-10::-webkit-scrollbar-button:vertical:end {
+        background-image: linear-gradient(to top right, transparent 50%, currentColor 50%), linear-gradient(to top left, transparent 50%, currentColor 50%);
+    }
+
+    .scroll-win-10::-webkit-scrollbar-button:horizontal:start {
+        background-image: linear-gradient(to bottom right, transparent 50%, currentColor 50%), linear-gradient(to top right, transparent 50%, currentColor 50%);
+    }
+
+    .scroll-win-10::-webkit-scrollbar-button:horizontal:end {
+        background-image: linear-gradient(to bottom left, transparent 50%, currentColor 50%), linear-gradient(to top left, transparent 50%, currentColor 50%);
+    }
+
+/*--------*\
+    Firefox : no ::-webkit-scrollbar, colors only.
+    Kept inside @supports because Chromium ignores ::-webkit-scrollbar as soon as scrollbar-color is set.
+\*--------*/
+@supports not selector(::-webkit-scrollbar) {
+    .scroll-win-dos {
+        scrollbar-color: var(--scroll-dos-thumb) var(--scroll-dos-track);
+    }
+
+    .scroll-win-31 {
+        scrollbar-color: #808080 var(--win31-background);
+    }
+
+    .scroll-win-98 {
+        scrollbar-color: silver #DFDFDF;
+    }
+
+    .scroll-win-xp {
+        scrollbar-color: #C8D6FB #F4F3EE;
+    }
+
+    .scroll-win-7 {
+        scrollbar-color: #BCBCBC #F0F0F0;
+    }
+
+    .scroll-win-10 {
+        scrollbar-color: #CDCDCD #F0F0F0;
+    }
+}
