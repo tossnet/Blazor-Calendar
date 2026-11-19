@@ -47,7 +47,8 @@ partial class WeekView : CalendarBase, IAsyncDisposable
 
     private string WeekBackground(DateTime day) => HighlightToday && day.Date == DateTime.Today &&
         !string.IsNullOrWhiteSpace(TodayBackgroundColor)
-        ? $"background:{TodayBackgroundColor};color:{FontColor}" : GetBackgroundWithHighlight(day);
+        ? $"background-color:{TodayBackgroundColor};color:{FontColor}"
+        : GetBackgroundWithHighlight(day).Replace("background:", "background-color:");
 
     [Parameter]
     public EventCallback<int> OutsideCurrentMonthClick { get; set; }
