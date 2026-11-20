@@ -74,6 +74,25 @@ public sealed class MonthlyViewLanesTests : BunitContext
         Assert.Contains("--monthly-lanes:6;", cut.Find(".monthly-calendar").GetAttribute("style"));
     }
 
+    [Theory]
+    [InlineData(11, 23, "grid-column:1 / span 1; grid-row:6;")]
+    [InlineData(12, 2, "grid-column:1 / span 7; grid-row:6;|grid-column:1 / span 1; grid-row:7;")]
+    public void Render_MultiDayTaskWrapsAtWeekBoundary(int endMonth, int endDay, string followingSegments)
+    {
+        // Sunday is the last column in the French-culture month view.
+        Tasks task = new()
+        {
+            ID = 99, DateStart = new DateTime(2026, 11, 22), DateEnd = new DateTime(2026, endMonth, endDay),
+            Code = "WRAP"
+        };
+        IRenderedComponent<MonthlyView> cut = RenderMonth([task]);
+        var expected = new[] { "grid-column:7 / span 1; grid-row:5;" }.Concat(followingSegments.Split('|')).ToArray();
+        var segments = cut.FindAll(".monthly-task");
+        Assert.Equal(expected.Length, segments.Count);
+        for (int i = 0; i < expected.Length; i++)
+            Assert.StartsWith(expected[i], segments[i].GetAttribute("style"));
+    }
+
     protected override void Dispose(bool disposing)
     {
         if (disposing) culture.Dispose();
