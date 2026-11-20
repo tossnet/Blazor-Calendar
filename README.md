@@ -279,6 +279,10 @@ dotnet run --project samples/BlazorWebAssembly/BlazorWebAssembly.csproj --framew
 
 Open the local URL printed by the development server and navigate to Weekly view.
 
+### MonthlyView: current-day outline
+
+When `HighlightToday` is enabled, the outline stays visible above event tiles and the `+N` overflow badge, which remains clickable.
+
 ### WeekView: configurable current-day appearance
 
 ```razor
