@@ -34,6 +34,24 @@ For client-side and server-side Blazor - add script section to _Layout.cshtml (h
 ## Documentation
 **📚 [ Doc on Wiki](https://github.com/tossnet/Blazor-Calendar/wiki)**
 
+### Highlight New Year's Day every year
+
+Pass the following entry in the `HighlightedPeriods` array of a `MonthlyView` to mark 1 January, starting in 2027:
+
+```csharp
+new HighlightedPeriod
+{
+    DateStart = new DateTime(2027, 1, 1),
+    RecurrenceType = RecurrenceType.Yearly,
+    BackgroundColor = "#DBEAFE",
+    FontColor = "#1E3A8A",
+    Label = "New Year's Day",
+    Icon = "★"
+}
+```
+
+Omit `DateEnd` to highlight a single day. In the WASM `/monthlyview` sample, enable **Add Fake Hightlighted Days** and select January 2027 or a later January. The sample highlights the date and leaves it available for events.
+
 
 
 
