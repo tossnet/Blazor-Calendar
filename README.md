@@ -263,6 +263,8 @@ The feature defaults to disabled and requires a `RangeSelected` delegate. `DayHe
 
 Scrolling is opt-in, preserving the previous full-day layout by default. The initial viewport shows 06:00–17:00; all 24 hours remain in the grid and can be reached by scrolling. Headers stay visible. Each day shows `▲ count` on the left and `▼ count` on the right only for nonzero counts; its title stays centered. Counts include events partially clipped at either boundary (a long/all-day event may count in both directions), update after scrolling, resizing and task changes, and are based on rendered event bounds. Click or keyboard-activate a button to scroll to the nearest hidden event edge. A single shared viewport keeps all weekdays aligned.
 
+Press Tab to focus a visible overflow button. The focus outline is drawn inside the button so it remains visible in narrow weekday columns.
+
 Optional header colors augment the existing `HeaderStyle`; unset colors retain prior styling. The visible range must satisfy `0 <= VisibleStartHour < VisibleEndHour <= 24`. JS interop runs after rendering, supports independent calendar instances, and disconnects listeners/observers on disposal. The WebAssembly weekly example enables these options. If the host limits the component height, the visible interval shrinks; counters still reflect the actual viewport.
 
 ### WebAssembly time-range selection demo
