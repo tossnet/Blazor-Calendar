@@ -91,6 +91,8 @@ partial class WeekView : CalendarBase, IAsyncDisposable
     [Parameter] public int VisibleEndHour { get; set; } = 17;
     /// <summary>Show nonzero counts of events extending above/below the visible viewport.</summary>
     [Parameter] public bool ShowOverflowIndicators { get; set; } = true;
+    /// <summary>Give the weekday title more room when neither overflow indicator is visible.</summary>
+    [Parameter] public bool ExpandDayTitleWhenIndicatorsHidden { get; set; }
     /// <summary>Optional minimum weekday column width in CSS pixels. Unset retains the existing layout.</summary>
     [Parameter] public int? MinimumDayWidth { get; set; }
     [Inject] private IJSRuntime JS { get; set; } = default!;

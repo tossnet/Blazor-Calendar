@@ -90,6 +90,10 @@
             <option value="220">Wide (220px)</option>
         </select>
     </label>
+    <label class="ms-3">
+        <input type="checkbox" @bind="expandDayTitleWhenIndicatorsHidden" />
+        Give day titles more space when indicators are hidden
+    </label>
     <p class="mb-0">Columns share available space equally, but never shrink below the selected minimum. When necessary, use the calendar's horizontal scrollbar. This also works in the full-day layout.</p>
 </section>
 
@@ -100,6 +104,7 @@
 			  VisibleStartHour="@visibleStartHour"
 			  VisibleEndHour="@Math.Max(visibleEndHour, visibleStartHour + 1)"
 			  ShowOverflowIndicators="@showOverflowIndicators"
+			  ExpandDayTitleWhenIndicatorsHidden="@expandDayTitleWhenIndicatorsHidden"
 			  HeaderBackgroundColor="@(customHeaderColors ? "#d2e4f7" : null)"
 			  HeaderBorderColor="@(customHeaderColors ? "#9fb3c4" : null)"
 			  EnableRangeSelection="@EnableDemoRangeSelection" RangeSelected="DemoRangeSelected"
@@ -119,6 +124,7 @@
 
 @code {
     private int minimumDayWidth;
+    private bool expandDayTitleWhenIndicatorsHidden;
     private bool enableDemoRangeSelection = true;
     private TimeRangeSelectedParameter? selectedRange;
     private readonly HashSet<int> demoTaskIds = new();

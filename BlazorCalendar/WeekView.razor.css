@@ -109,6 +109,9 @@
     container: week-day-header / inline-size;
 }
 .week-scrollable .week-day-title { flex: 1 1 0; padding: 0 30px; }
+.week-scrollable.expand-day-title .day-header:not(:has(.week-overflow:not([hidden]))) .week-day-title {
+    padding-inline: 2px;
+}
 
 /* Weekday title: the most complete variant that fits the column is shown.
    The first letter of the weekday is always visible. */

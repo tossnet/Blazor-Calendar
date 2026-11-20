@@ -298,3 +298,12 @@ Both new colors are optional and apply only when `HighlightToday` is enabled and
 `MinimumDayWidth` is an optional positive integer in CSS pixels. Columns use equal fractions of available width and stop shrinking at this minimum; the shared calendar gains horizontal overflow when seven columns no longer fit. This applies to both the scrolling and full-day layouts. Leaving it null preserves the existing layout, including the 100px minimum of the scrolling view. The explicit parameter takes precedence over a grid-template-columns declaration in `Style`; unrelated styles remain intact.
 
 The WASM weekly sample provides Default, Compact (90px), Standard (150px) and Wide (220px) choices plus a scrolling/full-day switch. Change the minimum at runtime and use horizontal scrolling to reach later weekdays. Headers, hour labels, event placement and vertical scrolling stay aligned.
+
+### WeekView: more room for weekday titles
+
+```razor
+<WeekView MinimumDayWidth="150" EnableHourScrolling="true"
+          ExpandDayTitleWhenIndicatorsHidden="true" />
+```
+
+`ExpandDayTitleWhenIndicatorsHidden` defaults to `false`. Enable it to reclaim the space reserved for overflow buttons when neither button is visible in a weekday header. The header still picks the date format that fits, and restores the reserved space when a button appears. In the WASM weekly demo, select **Standard (150px)**, enable hour scrolling, and toggle **Give day titles more space when indicators are hidden**.
