@@ -129,17 +129,23 @@
                             taskColumn = columnEndTimes.Count + 1; // +1 because column 1 is for hours
                         }
 
-                        int startRow = item.EffectiveStart.Hour + 1;
-                        int spanHours = Math.Max(1, (int)Math.Ceiling((item.EffectiveEnd - item.EffectiveStart).TotalHours));
+                        double startHour = (item.EffectiveStart - day).TotalHours;
+                        double endHour = (item.EffectiveEnd - day).TotalHours;
+                        int firstHour = (int)Math.Floor(startHour);
+                        int spanHours = Math.Max(1, (int)Math.Ceiling(endHour) - firstHour);
+                        string offset = FormattableString.Invariant($"{100 * (startHour - firstHour) / spanHours:0.######}%");
+                        string height = FormattableString.Invariant($"{100 * (endHour - startHour) / spanHours:0.######}%");
 
                         classPin = string.IsNullOrWhiteSpace(item.Task.Comment) ? null : " pin";
 
-                        <div class="@($"hour-task {classPin} cursor-pointer border-start border-top border-bottom")"
-                             style="grid-column: @taskColumn; grid-row: @startRow / span @spanHours; @GetTaskStyle(item.Task)"
-                             draggable="@Draggable.ToString()" 
-                             @ondragstart="() => HandleDragStart(item.Task.ID)"
-                             @onclick="e => ClickTaskInternal(e, item.Task.ID, day)">
-                            @item.Task.Code
+                        <div class="hour-task-slot" style="grid-column: @taskColumn; grid-row: @(firstHour + 1) / span @spanHours;">
+                            <div class="@($"hour-task {classPin} cursor-pointer border-start border-top border-bottom")"
+                                 style="top: @offset; height: @height; @GetTaskStyle(item.Task)"
+                                 draggable="@Draggable.ToString()"
+                                 @ondragstart="() => HandleDragStart(item.Task.ID)"
+                                 @onclick="e => ClickTaskInternal(e, item.Task.ID, day)">
+                                @item.Task.Code
+                            </div>
                         </div>
                     }
                 }
